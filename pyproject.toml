@@ -7,7 +7,6 @@ readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.6"
-marshmallow = "^3.5.0"
 typing_extensions = "3.7.4"
 pycountry = "19.8.18"
 returns = "^0.14.0"
