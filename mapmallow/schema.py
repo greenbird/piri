@@ -1,8 +1,7 @@
-from typing import List, final
+from typing import Callable, List, final
 
 from attr import dataclass
 from jsonschema import ValidationError
-from jsonschema.schemas import Validator
 from returns.result import Failure, Result, Success
 
 
@@ -11,7 +10,7 @@ from returns.result import Failure, Result, Success
 class SchemaValidator(object):
     """Validates data with given JsonSchema Validator."""
 
-    validator: Validator
+    validator: object
 
     def __call__(
         self,

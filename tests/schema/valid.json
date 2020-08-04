@@ -1,0 +1,73 @@
+{
+    "name": "schema",
+    "array": true,
+    "iterate": true,
+    "path_to_iterable": ["path_to", "some_list"],
+
+    "attributes": [
+        {
+            "name": "attr1",
+            "mappings": [
+                {
+                    "path": ["path", "to", "value"],
+                    "default": "default value"
+                }
+            ],
+            "separator": "",
+            "if_statements": [
+                {
+                    "condition": "is",
+                    "target": "bob",
+                    "then": "arne"
+                }
+            ],
+            "default": "another default"
+        }
+    ],
+    "objects": [
+        {
+            "name": "object1",
+            "array": false,
+            "iterate": false,
+            "attributes": [
+                {
+                    "name": "height",
+                    "default": "bob"
+                }
+            ]
+        }
+    ],
+    "branching_objects": [
+        {
+            "name": "object2",
+            "array": true,
+            "iterate": false,
+            "branching_attributes": [
+                [
+                    {
+                        "name": "field_data",
+                        "default": "amount"
+                    },
+                    {
+                        "name": "field_data",
+                        "mappings": [
+                            {
+                                "path": ["path", "to", "amount"]
+                            }
+                        ]
+                    }
+                ],
+                [
+                    {
+                        "name": "field_name",
+                        "default": "currency"
+                    },
+                    {
+                        "name": "field_data",
+                        "default": "NOK"
+                    }
+                ]
+            ]
+        }
+    ]
+}
