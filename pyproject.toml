@@ -10,6 +10,7 @@ python = "^3.6"
 typing_extensions = "3.7.4"
 pycountry = "19.8.18"
 returns = "^0.14.0"
+jsonschema = "^3.2.0"
 
 [tool.poetry.dev-dependencies]
 mypy = "^0.782"
