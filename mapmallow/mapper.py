@@ -73,8 +73,8 @@ class Map(object):
             return self._map_object(collection, configuration).unwrap()
 
         # this is pretty complex, should be rewritten
-        return [
-            mapped.unwrap()  # type: ignore
+        return [  # type: ignore
+            mapped.unwrap()
             for mapped in
             [
                 self._map_object(

@@ -48,7 +48,7 @@ def test_array_true_but_no_loop_gives_array():
                 'mappings': [
                     {
                         'path': ['key'],
-                        'if_statements': []
+                        'if_statements': [],
                     },
                 ],
                 'separator': '',

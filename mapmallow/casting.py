@@ -248,8 +248,8 @@ class CastToDate(object):
     ) -> str:
         return re.sub(pattern, arrangement, input_string)
 
-    @safe
-    def _convert_ddmmyy_to_iso_date(  # noqa: WPS210, Hard to reduce variables
+    @safe  # noqa: WPS210, Hard to reduce variables
+    def _convert_ddmmyy_to_iso_date(  # noqa: WPS210
         self,
         date_string: str,
     ) -> str:

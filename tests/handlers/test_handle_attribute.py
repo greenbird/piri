@@ -1,7 +1,5 @@
 import decimal
 
-from returns.pipeline import is_successful
-
 from mapmallow.handlers import HandleAttribute
 
 
