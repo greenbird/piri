@@ -75,14 +75,15 @@
                     "default": null
                 }
             },
-            "anyOf": [
-                {
-                    "required": ["path"]
-                },
-                {
+            "if": {
+                "not": {
                     "required": ["default"]
                 }
-            ]
+            },
+            "then": {
+                "required": ["path"]
+            }
+
         },
         "attribute": {
             "type": "object",
@@ -117,14 +118,14 @@
                 }
             },
             "required": ["name"],
-            "anyOf": [
-                {
-                    "required": ["mappings"]
-                },
-                {
+            "if": {
+                "not": {
                     "required": ["default"]
                 }
-            ]
+            },
+            "then": {
+                "required": ["mappings"]
+            }
         },
         "branching_object": {
             "type": "object",
@@ -199,7 +200,17 @@
                     "default": []
                 }
             },
-            "required": ["name", "array"]
+            "required": ["name", "array"],
+            "if": {
+                "properties": {
+                    "iterate": {
+                        "const": true
+                    }
+                }
+            },
+            "then": {
+                "required": ["path_to_iterable"]
+            }
         }
     }
 }
