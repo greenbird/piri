@@ -73,21 +73,22 @@ class Map(object):
             return self._map_object(collection, configuration).unwrap()
 
         # this is pretty complex, should be rewritten
-        return [  # type: ignore
-            mapped.unwrap()
-            for mapped in
-            [
-                self._map_object(
-                    {
-                        **collection,
-                        **{loopable_data[NAME]: rep},
-                    },
-                    configuration,
-                )
-                for rep in loopable_data['data']
-            ]
-            if is_successful(mapped)
-        ]
+
+        mapped_objects = []
+
+        for rep in loopable_data['data']:
+
+            mapped = self._map_object(  # type: ignore
+                {
+                    **collection,
+                    **{loopable_data[NAME]: rep},
+                },
+                configuration,
+            )
+            if is_successful(mapped):
+                mapped_objects.append(mapped.unwrap())
+
+        return mapped_objects
 
     @maybe
     def _map_object(self, collection, configuration):

@@ -1,8 +1,9 @@
-from typing import List, final
+from typing import List
 
 from attr import dataclass
 from jsonschema import ValidationError
 from returns.result import Failure, Result, Success
+from typing_extensions import final
 
 
 @final
