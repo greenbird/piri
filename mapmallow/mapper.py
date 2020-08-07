@@ -11,7 +11,7 @@ from returns.pointfree import bind, fix
 from returns.result import ResultE, safe
 from typing_extensions import final
 
-from mapmallow.collection_handlers import FetchListByKeys
+from mapmallow.collection_handlers import fetch_list_by_keys
 from mapmallow.constants import (
     ARRAY,
     ATTRIBUTES,
@@ -46,7 +46,6 @@ class Map(object):
     """
 
     _handle_attribute = HandleAttribute()
-    _fetch_list = FetchListByKeys()
 
     def __call__(
         self,
@@ -179,7 +178,7 @@ class Map(object):
 
         return {
             NAME: configuration[PATH_TO_ITERABLE][-1],
-            'data': self._fetch_list(
+            'data': fetch_list_by_keys(
                 collection, configuration[PATH_TO_ITERABLE],
             ).unwrap(),
         }

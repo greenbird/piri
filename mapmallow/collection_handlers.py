@@ -3,9 +3,7 @@
 """Helpers for mapmallow mapping functions."""
 from typing import Any, Dict, List, Union
 
-from attr import dataclass
 from returns.result import safe
-from typing_extensions import final
 
 from mapmallow.valuetypes import MapValue, ValueTypes
 
@@ -17,7 +15,6 @@ def set_value_in_dict(
     path: List[str],
 ) -> None:
     """Set value in a dict(pass by ref) by path."""
-
     if not path:
         raise ValueError('path list empty')
 
@@ -51,34 +48,27 @@ def fetch_data_by_keys(
     )
 
 
-@final
-@dataclass(frozen=True, slots=True)
-class FetchListByKeys(object):
-    """Finds data that *must* be a list else it fails.
+@safe
+def fetch_list_by_keys(
+    collection: Dict[str, Any],
+    path: List[str],
+) -> list:
+    """Find data that *must* be a list else it fails.
 
     Example
-        >>> fetch = FetchListByKeys()
-        >>> fetch(
+        >>> fetch_list_by_keys(
         ...     {'object': {'some_list': ['1']}}, ['object', 'some_list'],
         ... ).unwrap()
         ['1']
     """
+    if not path:
+        raise ValueError('path list empty')
 
-    @safe
-    def __call__(
-        self,
-        collection: Dict[str, Any],
-        path: List[str],
-    ) -> list:
-        """Find data in collection by following a list of path."""
-        if not path:
-            raise ValueError('path list empty')
+    for key in path:
+        # this will return a Failure[KeyError] if not found
+        collection = collection[key]
 
-        for key in path:
-            # this will return a Failure[KeyError] if not found
-            collection = collection[key]
+    if isinstance(collection, list):  # type: ignore
+        return collection  # type: ignore
 
-        if isinstance(collection, list):  # type: ignore
-            return collection  # type: ignore
-
-        raise ValueError('Non list data found: ', str(collection))
+    raise ValueError('Non list data found: ', str(collection))
