@@ -16,25 +16,6 @@ from mapmallow.functions import (
 )
 
 
-class TestApplyDefault(object):
-    """Test Apply default function."""
-
-    _apply_def = ApplyDefault()
-
-    def test_apply_default(self):
-        """Test if we get a default value."""
-        assert self._apply_def(None, 'default').unwrap() == 'default'
-
-    def test_no_default_value(self):
-        """Test value returned when exists."""
-        assert self._apply_def('val', None).unwrap() == 'val'
-
-    def test_no_values(self):
-        """Test returns Failure."""
-        test = self._apply_def(None, None)
-        assert not is_successful(test)
-
-
 class TestApplySeparator(object):
     """Test ApplySeparator function."""
 
