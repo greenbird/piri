@@ -4,16 +4,9 @@
 
 from decimal import Decimal
 
-import pytest
 from returns.pipeline import is_successful
-from returns.primitives.exceptions import UnwrapFailedError
 
-from mapmallow.functions import (
-    ApplyCasting,
-    ApplyDefault,
-    ApplyIfStatements,
-    ApplySeparator,
-)
+from mapmallow.functions import ApplyCasting
 
 
 class TestCastingInteger(object):
