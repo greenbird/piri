@@ -16,43 +16,6 @@ from mapmallow.functions import (
 )
 
 
-class TestApplySeparator(object):
-    """Test ApplySeparator function."""
-
-    _apply_sep = ApplySeparator()
-
-    def test_separator(self):
-        """Test separator is applied between two values."""
-        test = [['val1', 'val2'], '-']
-        assert self._apply_sep(*test).unwrap() == 'val1-val2'
-
-    def test_separator_one_value(self):
-        """Test when theres only one value, no separator should be applied."""
-        test = [['val1'], '-']
-        assert self._apply_sep(*test).unwrap() == 'val1'
-
-    def test_one_integer_value_not_stringified(self):
-        """One value should allways return just the value uncasted."""
-        test = [[1], '']
-        assert self._apply_sep(*test).unwrap() == 1
-
-    def test_one_integer_value_with_other_value(self):
-        """Two values no matter the type should be cast to string."""
-        test = [[1, 'val2'], '-']
-        assert self._apply_sep(*test).unwrap() == '1-val2'
-
-    def test_no_value(self):
-        """When no value is given we should return Failure."""
-        test = [[], '-']
-        with pytest.raises(UnwrapFailedError):
-            self._apply_sep(*test).unwrap()
-
-    def test_no_separator(self):
-        """Test that no separator throws error."""
-        test = [['val1', 'val2'], None]
-        with pytest.raises(UnwrapFailedError):
-            self._apply_sep(*test).unwrap()
-
 
 class TestCasting(object):
     """Test casting function general error handling."""
