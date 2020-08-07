@@ -28,33 +28,27 @@ def set_value_in_dict(
     collection[path[-1]] = new_value
 
 
-@final
-@dataclass(frozen=True, slots=True)
-class FetchDataByKeys(object):
-    """Find data by set of keys."""
+@safe
+def fetch_data_by_keys(
+    collection: Union[Dict[str, Any], List[Any]],
+    path: List[Union[str, int]],
+) -> MapValue:
+    """Find data in collection by following a list of path."""
+    if not path:
+        raise ValueError('path list empty')
 
-    @safe
-    def __call__(
-        self,
-        collection: Union[Dict[str, Any], List[Any]],
-        path: List[Union[str, int]],
-    ) -> MapValue:
-        """Find data in collection by following a list of path."""
-        if not path:
-            raise ValueError('path list empty')
+    for key in path:
+        # this will return a Failure[KeyError] if not found
+        collection = collection[key]  # type: ignore
 
-        for key in path:
-            # this will return a Failure[KeyError] if not found
-            collection = collection[key]  # type: ignore
+    if isinstance(collection, ValueTypes):  # type: ignore
+        return collection  # type: ignore
 
-        if isinstance(collection, ValueTypes):  # type: ignore
-            return collection  # type: ignore
-
-        raise ValueError(
-            'Bad data found: {0} , with type: {1}'.format(
-                str(collection), str(type(collection)),
-            ),
-        )
+    raise ValueError(
+        'Bad data found: {0} , with type: {1}'.format(
+            str(collection), str(type(collection)),
+        ),
+    )
 
 
 @final

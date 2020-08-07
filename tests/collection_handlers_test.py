@@ -4,7 +4,7 @@
 from returns.pipeline import is_successful
 
 from mapmallow.collection_handlers import (
-    FetchDataByKeys,
+    fetch_data_by_keys,
     FetchListByKeys,
     set_value_in_dict,
 )
@@ -13,43 +13,41 @@ from mapmallow.collection_handlers import (
 class TestFetchDataByKeys(object):
     """Test FetchDataByKeys function."""
 
-    _fetch = FetchDataByKeys()
-
     def test(self):
         """Test that we can fetch key in dict."""
         test = [{'key': 'val1'}, ['key']]
-        assert self._fetch(*test).unwrap() == 'val1'
+        assert fetch_data_by_keys(*test).unwrap() == 'val1'
 
     def test_two_keys(self):
         """Test that we are able to map with multiple keys."""
         test = [{'key1': {'key2': 'val1'}}, ['key1', 'key2']]
-        assert self._fetch(*test).unwrap() == 'val1'
+        assert fetch_data_by_keys(*test).unwrap() == 'val1'
 
     def test_no_such_key(self):
         """Test Failure on missing key."""
         test = [{'key': 'val1'}, ['missing']]
-        t_result = self._fetch(*test)
+        t_result = fetch_data_by_keys(*test)
         assert not is_successful(t_result)
         assert 'missing' in str(t_result.failure())
 
     def test_no_path(self):
         """Test no path should return Failure."""
         test = [{'key': 'val'}, []]
-        t_result = self._fetch(*test)
+        t_result = fetch_data_by_keys(*test)
         assert not is_successful(t_result)
         assert 'path list empty' in str(t_result.failure())
 
     def test_no_data(self):
         """Test no data should return Failure."""
         test = [{}, ['keys']]
-        t_result = self._fetch(*test)
+        t_result = fetch_data_by_keys(*test)
         assert not is_successful(t_result)
         assert 'keys' in str(t_result.failure())
 
     def test_bad_valuetype(self):
         """Test that giving path to dict will give us an error."""
         test = [{'key': {'key1': 'val'}}, ['key']]
-        t_result = self._fetch(*test)
+        t_result = fetch_data_by_keys(*test)
         assert not is_successful(t_result)
         assert 'Bad data found' in str(t_result.failure())
 

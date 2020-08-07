@@ -10,7 +10,7 @@ from returns.pointfree import bind, fix, rescue
 from returns.result import ResultE, safe
 from typing_extensions import final
 
-from mapmallow.collection_handlers import FetchDataByKeys
+from mapmallow.collection_handlers import fetch_data_by_keys
 from mapmallow.constants import (
     CASTING,
     DEFAULT,
@@ -54,7 +54,6 @@ class HandleMapping(object):
         }
     """
 
-    _fetch_data = FetchDataByKeys()
     _apply_ifs = ApplyIfStatements()
     _apply_default = ApplyDefault()
 
@@ -71,7 +70,7 @@ class HandleMapping(object):
         """
         return flow(
             collection,
-            partial(self._fetch_data, path=cfg[PATH]),
+            partial(fetch_data_by_keys, path=cfg[PATH]),
             fix(lambda _: None),  # type: ignore
             bind(partial(self._apply_ifs, if_objects=cfg[IF_STATEMENTS])),
             rescue(  # type: ignore
