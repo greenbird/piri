@@ -38,6 +38,9 @@ class CastToDecimal(object):
         original_format: Optional[str] = None,
     ) -> decimal.Decimal:
         """Make this object callable."""
+
+        decimal.getcontext().rounding = decimal.ROUND_HALF_UP
+
         the_value = str(value_to_cast).replace(' ', EMPTY)
 
         if not self._decimal_pattern.match(the_value):

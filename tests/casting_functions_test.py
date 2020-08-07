@@ -2,69 +2,9 @@
 
 """Test mapping operation functions."""
 
-from decimal import Decimal
-
 from returns.pipeline import is_successful
 
 from mapmallow.functions import ApplyCasting
-
-
-class TestCastingInteger(object):
-    """Do extensive testing of our int casting functions."""
-
-    _cast = ApplyCasting()
-
-    def test_cast_string(self):
-        """Cast a string with numbers to integer."""
-        assert self._cast('123', {'to': 'integer'}).unwrap() == 123
-
-    def test_cast_negative_string(self):
-        """Cast string with negative number to integer."""
-        assert self._cast('-123', {'to': 'integer'}).unwrap() == -123
-
-    def test_cast_decimal_string(self):
-        """Cast a decimal string to integer."""
-        assert self._cast(
-            '123.0',
-            {'to': 'integer', 'original_format': 'decimal'},
-        ).unwrap() == 123
-
-    def test_cast_negative_decimal_string(self):
-        """Cast a negative decimal string to integer."""
-        assert self._cast(
-            '-123.0', {'to': 'integer', 'original_format': 'decimal'},
-        ).unwrap() == -123
-
-    def test_cast_decimal_string_rounds_up(self):
-        """Cast a decimal string >= .5 should round up."""
-        assert self._cast(
-            '123.5',
-            {'to': 'integer', 'original_format': 'decimal'},
-        ).unwrap() == 124
-
-    def test_cast_decimal_string_rounds_down(self):
-        """Cast a decimal string < .0 should round down."""
-        assert self._cast(
-            '123.49',
-            {'to': 'integer', 'original_format': 'decimal'},
-        ).unwrap() == 123
-
-    def test_abc_fails(self):
-        """Test that string with letters in fails."""
-        test = self._cast('abc', {'to': 'integer'})
-        assert not is_successful(test)
-        assert isinstance(test.failure(), ValueError)
-        assert 'Illegal characters in value' in str(test.failure())
-
-    def test_abc_with_decimal_argument_fails(self):
-        """Test that string with letters in fails when we supply 'decimal'."""
-        test = self._cast(
-            'abc',
-            {'to': 'integer', 'original_format': 'decimal'},
-        )
-        assert not is_successful(test)
-        assert isinstance(test.failure(), ValueError)
-        assert 'Illegal characters in value' in str(test.failure())
 
 
 class TestCastingDate(object):  # noqa: WPS214 too many methods ok.
