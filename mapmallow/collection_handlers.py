@@ -10,27 +10,22 @@ from typing_extensions import final
 from mapmallow.valuetypes import MapValue, ValueTypes
 
 
-@final
-@dataclass(frozen=True, slots=True)
-class SetValueInDict(object):
+@safe
+def set_value_in_dict(
+    new_value: MapValue,
+    collection: Dict[str, Any],
+    path: List[str],
+) -> None:
     """Set value in a dict(pass by ref) by path."""
 
-    @safe
-    def __call__(
-        self,
-        new_value: MapValue,
-        collection: Dict[str, Any],
-        path: List[str],
-    ) -> None:
-        """Find data in collection by following a list of path."""
-        if not path:
-            raise ValueError('path list empty')
+    if not path:
+        raise ValueError('path list empty')
 
-        for key in path[:-1]:
-            # this will return a Failure[KeyError] if not found
-            collection = collection[key]
+    for key in path[:-1]:
+        # this will return a Failure[KeyError] if not found
+        collection = collection[key]
 
-        collection[path[-1]] = new_value
+    collection[path[-1]] = new_value
 
 
 @final

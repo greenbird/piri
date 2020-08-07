@@ -6,7 +6,7 @@ from returns.pipeline import is_successful
 from mapmallow.collection_handlers import (
     FetchDataByKeys,
     FetchListByKeys,
-    SetValueInDict,
+    set_value_in_dict,
 )
 
 
@@ -80,28 +80,26 @@ class TestFetchListByKeys(object):
 
 
 class TestSetValueInDict(object):
-    """Test SetValueInDict function."""
-
-    _set = SetValueInDict()
+    """Test set_value_in_dict function."""
 
     def test(self):
         """Test that we can fetch key in dict."""
         dictionary = {'key': 'val1'}
         test = ['val2', dictionary, ['key']]
-        assert is_successful(self._set(*test))
+        assert is_successful(set_value_in_dict(*test))
         assert dictionary['key'] == 'val2'
 
     def test_multiple_path(self):
         """Test that we can fetch key in dict."""
         dictionary = {'key': {'key2': 'val1'}}
         test = ['val2', dictionary, ['key', 'key2']]
-        assert is_successful(self._set(*test))
+        assert is_successful(set_value_in_dict(*test))
         assert dictionary['key']['key2'] == 'val2'
 
     def test_no_path_raises_value_error(self):
         """Test that we get an error when we dont send a path."""
         test = ['val2', {'key': ['val1']}, []]
-        t_result = self._set(*test)
+        t_result = set_value_in_dict(*test)
         assert not is_successful(t_result)
         assert 'path list empty' in str(t_result.failure())
 
@@ -109,6 +107,6 @@ class TestSetValueInDict(object):
         """Test that missing keys are okay."""
         dictionary = {'key': ['val1']}
         test = ['val2', dictionary, ['bob']]
-        t_result = self._set(*test)
+        t_result = set_value_in_dict(*test)
         assert is_successful(t_result)
         assert dictionary['bob'] == 'val2'  # type: ignore
