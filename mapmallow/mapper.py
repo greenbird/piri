@@ -1,15 +1,9 @@
-# -*- coding: utf-8 -*-
+from typing import Any, Dict, List, Optional, Union
 
-"""Mapping functions for GBGO."""
-from typing import Any, Dict, List, Union
-
-from attr import dataclass
 from returns.curry import partial
 from returns.maybe import maybe
-from returns.pipeline import flow, is_successful
-from returns.pointfree import bind, fix
-from returns.result import ResultE, safe
-from typing_extensions import final
+from returns.pipeline import is_successful
+from returns.result import safe
 
 from mapmallow.collection_handlers import fetch_list_by_keys
 from mapmallow.constants import (
@@ -17,168 +11,184 @@ from mapmallow.constants import (
     ATTRIBUTES,
     BRANCHING_ATTRIBUTES,
     BRANCHING_OBJECTS,
-    ITERATE,
     NAME,
     OBJECTS,
     PATH_TO_ITERABLE,
 )
 from mapmallow.handlers import HandleAttribute
-from mapmallow.valuetypes import MapResult
 
 
-@final
-@dataclass(frozen=True, slots=True)
-class Map(object):
+@safe
+def map_data(
+    input_data,
+    configuration,
+) -> Union[list, dict]:
+    """Map entrypoint.
+
+    Try to get iterable data
+    if that fails then just run map_object normally, but make it into an array
+    if array is true.
+
+    If we had iterable data, iterate that data and run map_object with the
+    current iteration data added to the root of the input_data dictionary
     """
-    Maps a collection of data with the provided configuration and returns dict.
+    iterate_data = fetch_list_by_keys(
+        input_data, configuration[PATH_TO_ITERABLE],
+    )
 
-    .. versionadded:: 0.0.1
+    if not is_successful(iterate_data):
+        return map_object(input_data, configuration).map(
+            partial(set_array, array=configuration[ARRAY]),
+        ).unwrap()
 
-    :param configuration: :term:`configuration` data to use when mapping
-    :type configuration: Dict[str, Any]
+    mapped_objects: List[dict] = []
 
-    :param collection: The collection of data to find data in
-    :type collection: Union[Dict[str, Any], List[Any]]
-
-    :return: Success/Failure containers
-    :rtype: MapResult
-
-    """
-
-    _handle_attribute = HandleAttribute()
-
-    def __call__(
-        self,
-        collection: Union[Dict[str, Any], List[Any]],
-        configuration: Dict[str, Any],
-    ) -> ResultE[MapResult]:
-        """Entrypoint for all mapping."""
-        # if loops data, then loop PATH_TO_ITERABLE and put it into clction
-
-        return flow(
-            collection,
-            partial(self._get_loopable_data, configuration=configuration),
-            fix(lambda _: None),  # type: ignore
-            bind(partial(
-                self._map, collection=collection, configuration=configuration,
-            )),
+    # find returns function to work with iterables
+    for iteration in iterate_data.unwrap():
+        map_object(
+            {
+                **input_data,
+                **{configuration[PATH_TO_ITERABLE][-1]: iteration},
+            },
+            configuration,
+        ).map(
+            mapped_objects.append,
         )
 
-    @safe
-    def _map(self, loopable_data, collection, configuration):
-        if not loopable_data:
-            if configuration[ARRAY]:
-                return [self._map_object(collection, configuration).unwrap()]
-            return self._map_object(collection, configuration).unwrap()
+    return mapped_objects
 
-        # this is pretty complex, should be rewritten
 
-        mapped_objects = []
+def set_array(input_data, array):
+    """Return data wrapped in array if if array=True."""
+    if array:
+        return [input_data]
+    return input_data
 
-        for rep in loopable_data['data']:
 
-            mapped = self._map_object(  # type: ignore
-                {
-                    **collection,
-                    **{loopable_data[NAME]: rep},
-                },
-                configuration,
-            )
-            if is_successful(mapped):
-                mapped_objects.append(mapped.unwrap())
+@maybe
+def map_object(input_data, configuration) -> Optional[Dict[str, Any]]:
+    """Map one object.
 
-        return mapped_objects
+    One object has a collections of:
+    Attribute mappings,
+    Nested object mappings,
+    Branching object mappings,
 
-    @maybe
-    def _map_object(self, collection, configuration):
-        """Return something like this."""
-        # .map(object_data.update) updates the dictionary with result data
-        # if the function returns Something else nothing happens
+    All functions we call return a dictionary with the mapped values
+    so all we have to do is to call update on a shared object_data dict.
 
-        object_data: Dict[str, Any] = {}
+    return example:
+    return {
+        'attrib': 'val',
+        'object1': {'attrib1': 'val'}
+        'branching_object1: [{'attrib1': 'val'}]
+    }
+    """
+    object_data: Dict[str, Any] = {}
 
-        self._map_attributes(
-            collection, configuration[ATTRIBUTES],
-        ).map(object_data.update)
+    map_attributes(
+        input_data, configuration[ATTRIBUTES],
+    ).map(object_data.update)
 
-        self._map_objects(
-            collection, configuration[OBJECTS],
-        ).map(object_data.update)
+    map_objects(
+        input_data, configuration[OBJECTS],
+    ).map(object_data.update)
 
-        self._map_branching_objects(
-            collection, configuration[BRANCHING_OBJECTS],
-        ).map(object_data.update)
+    map_branching_objects(
+        input_data, configuration[BRANCHING_OBJECTS],
+    ).map(object_data.update)
 
-        # need this as long as empty dict is not seen as None by returns.maybe
-        return object_data if object_data else None
+    # need this as long as empty dict is not seen as None by returns.maybe
+    return object_data or None
 
-    @maybe
-    def _map_attributes(self, collection, attributes):
-        mapped_attributes: Dict[str, Any] = {}
 
-        for attribute in attributes:
-            mapped = self._handle_attribute(collection, attribute)
+@maybe
+def map_attributes(input_data, configuration) -> Optional[Dict[str, Any]]:
+    """For all attributes map attribute.
 
-            if is_successful(mapped):
-                mapped_attributes[attribute[NAME]] = mapped.unwrap()
+    name of attribute should be set
+    {
+        'attribute1': 'value',
+        'attribute2': 'value2',
+    }
+    """
+    attributes: Dict[str, Any] = {}
 
-        # need this as long as empty dict is not seen as None by returns.maybe
-        return mapped_attributes if mapped_attributes else None
+    for attribute_cfg in configuration:
+        attribute_value = HandleAttribute()(input_data, attribute_cfg)
 
-    @maybe
-    def _map_objects(self, collection, configurations):
-        mapped_objects = {}
+        if is_successful(attribute_value):
+            attributes[attribute_cfg[NAME]] = attribute_value.unwrap()
 
-        for cfg in configurations:
-            # call Map(), without reinitializing
-            mapped = self(collection, cfg)
+    return attributes or None
 
-            if is_successful(mapped):
-                mapped_objects[cfg[NAME]] = mapped.unwrap()
 
-        # need this as long as empty dict is not seen as None by returns.maybe
-        return mapped_objects if mapped_objects else None
+@maybe
+def map_objects(
+    input_data,
+    configuration,
+) -> Optional[Dict[str, Any]]:
+    """For all objects map object.
 
-    @maybe
-    def _map_branching_attributes(self, collection, b_attributes):
-        mapped_attributes: List[Dict[str, Any]] = []
+    name of object should be set.
+    {
+        'name1': object,
+        'name2': object2,
+    }
+    """
+    mapped_objects: Dict[str, Any] = {}
 
-        for sub_cfg in b_attributes:
-            self._map_attributes(
-                collection, sub_cfg,
-            ).map(
-                mapped_attributes.append,
-            )
+    for object_cfg in configuration:
+        object_value = map_data(input_data, object_cfg)
 
-        # need this as long as empty dict is not seen as None by returns.maybe
-        return mapped_attributes if mapped_attributes else None
+        if is_successful(object_value):
+            mapped_objects[object_cfg[NAME]] = object_value.unwrap()
 
-    @maybe
-    def _map_branching_objects(self, collection, b_objects):
-        mapped_objects = {}
+    return mapped_objects or None
 
-        for b_object in b_objects:
-            mapped = self._map_branching_attributes(  # type: ignore
-                collection, b_object[BRANCHING_ATTRIBUTES],
-            )
 
-            if is_successful(mapped):
-                mapped_objects[b_object[NAME]] = mapped.unwrap()
+@maybe
+def map_branching_attributes(  # noqa:234
+    input_data,
+    b_attributes,
+) -> Optional[List[Dict[str, Any]]]:
+    """Map branching attributes
 
-        # need this as long as empty dict is not seen as None by returns.maybe
-        return mapped_objects if mapped_objects else None
+    Branching attributes are a list of attribute mappings that will be
+    mapped to the same name in branching object.
+    """
+    mapped_attributes: List[Dict[str, Any]] = []
 
-    @safe
-    def _get_loopable_data(self, collection, configuration):
+    for sub_cfg in b_attributes:
+        map_attributes(
+            input_data, sub_cfg,
+        ).map(
+            mapped_attributes.append,
+        )
 
-        if not configuration[ITERATE]:
-            raise ValueError('No iterate data found in cfg({cfg})'.format(
-                cfg=configuration,
-            ))
+    # need this as long as empty dict is not seen as None by returns.maybe
+    return mapped_attributes or None
 
-        return {
-            NAME: configuration[PATH_TO_ITERABLE][-1],
-            'data': fetch_list_by_keys(
-                collection, configuration[PATH_TO_ITERABLE],
-            ).unwrap(),
-        }
+
+@maybe
+def map_branching_objects(
+    input_data,
+    configuration,
+) -> Optional[Dict[str, Any]]:
+    """Map branching object
+
+    Branching object is a case where we want to create the same object multiple
+    times, however we want to find the data in different places.
+    """
+    mapped_objects: Dict[str, Any] = {}
+
+    for b_object in configuration:
+        mapped = map_branching_attributes(
+            input_data, b_object[BRANCHING_ATTRIBUTES],
+        )
+
+        if is_successful(mapped):
+            mapped_objects[b_object[NAME]] = mapped.unwrap()
+
+    # need this as long as empty dict is not seen as None by returns.maybe
+    return mapped_objects or None

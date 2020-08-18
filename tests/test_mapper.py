@@ -1,4 +1,4 @@
-from mapmallow.mapper import Map
+from mapmallow.mapper import map_data
 
 
 def test_creating_key_to_name():
@@ -7,7 +7,7 @@ def test_creating_key_to_name():
     config = {
         'name': 'root',
         'array': False,
-        'iterate': False,
+        'path_to_iterable': [],
         'objects': [],
         'branching_objects': [],
         'attributes': [
@@ -27,7 +27,7 @@ def test_creating_key_to_name():
         ],
     }
 
-    assert Map()(
+    assert map_data(
         input_data,
         config,
     ).unwrap() == {'name': 'test name'}
@@ -39,7 +39,7 @@ def test_array_true_but_no_loop_gives_array():
     config = {
         'name': 'root',
         'array': True,
-        'iterate': False,
+        'path_to_iterable': [],
         'objects': [],
         'branching_objects': [],
         'attributes': [
@@ -59,7 +59,7 @@ def test_array_true_but_no_loop_gives_array():
         ],
     }
 
-    assert Map()(
+    assert map_data(
         input_data,
         config,
     ).unwrap() == [{'name': 'test name'}]
@@ -70,7 +70,6 @@ def test_double_repeatable():
     config = {
         'name': 'root',
         'array': True,
-        'iterate': True,
         'path_to_iterable': ['journals'],
         'attributes': [
             {
@@ -91,7 +90,6 @@ def test_double_repeatable():
             {
                 'name': 'invoices',
                 'array': True,
-                'iterate': True,
                 'path_to_iterable': [
                     'journals', 'journal', 'invoices',
                 ],
@@ -149,7 +147,7 @@ def test_double_repeatable():
         },
     ]
 
-    assert Map()(
+    assert map_data(
         input_data,
         config,
     ).unwrap() == expected_result
@@ -160,7 +158,7 @@ def test_most_features():
     config = {
         'name': 'schema',
         'array': False,
-        'iterate': False,
+        'path_to_iterable': [],
         'attributes': [
             {
                 'name': 'name',
@@ -203,7 +201,7 @@ def test_most_features():
             {
                 'name': 'address',
                 'array': False,
-                'iterate': False,
+                'path_to_iterable': [],
                 'objects': [],
                 'branching_objects': [],
                 'attributes': [
@@ -238,7 +236,6 @@ def test_most_features():
             {
                 'name': 'people',
                 'array': True,
-                'iterate': True,
                 'path_to_iterable': ['persons'],
                 'objects': [],
                 'branching_objects': [],
@@ -263,7 +260,7 @@ def test_most_features():
             {
                 'name': 'extrafield',
                 'array': True,
-                'iterate': False,
+                'path_to_iterable': [],
                 'branching_attributes': [
                     [
                         {
@@ -342,7 +339,7 @@ def test_most_features():
         ],
     }
 
-    assert Map()(
+    assert map_data(
         input_data,
         config,
     ).unwrap() == expected_result
