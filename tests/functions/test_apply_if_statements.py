@@ -16,6 +16,36 @@ def test_if_is():
     assert ApplyIfStatements()(*test).value_or(None) == 'value2'
 
 
+def test_if_not():
+    """Test that 1 if (not) statement works."""
+    test = [
+        'target_value',
+        [
+            {
+                'condition': 'not',
+                'target': 'not_target',
+                'then': 'value2',
+            },
+        ],
+    ]
+    assert ApplyIfStatements()(*test).value_or(None) == 'value2'
+
+
+def test_if_contains():
+    """Test that 1 if (contains) statement works."""
+    test = [
+        'target_value',
+        [
+            {
+                'condition': 'contains',
+                'target': '_value',
+                'then': 'value2',
+            },
+        ],
+    ]
+    assert ApplyIfStatements()(*test).value_or(None) == 'value2'
+
+
 def test_if_chained():
     """Test that two if (is) statement works."""
     test = [

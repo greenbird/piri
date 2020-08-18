@@ -17,3 +17,10 @@ def test_no_values():
     """Test returns Failure."""
     test = ApplyDefault()(None, None)
     assert not is_successful(test)
+
+
+def test_bad_mapped_value():
+    """Test if we get a Failure when we give bad mapped value."""
+    test = ApplyDefault()(['array'], None)
+    assert not is_successful(test)
+    assert 'Unable to give default value' in str(test.failure())
