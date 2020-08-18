@@ -152,7 +152,7 @@ def map_branching_attributes(  # noqa:234
     input_data,
     b_attributes,
 ) -> Optional[List[Dict[str, Any]]]:
-    """Map branching attributes
+    """Map branching attributes.
 
     Branching attributes are a list of attribute mappings that will be
     mapped to the same name in branching object.
@@ -175,7 +175,7 @@ def map_branching_objects(
     input_data,
     configuration,
 ) -> Optional[Dict[str, Any]]:
-    """Map branching object
+    """Map branching object.
 
     Branching object is a case where we want to create the same object multiple
     times, however we want to find the data in different places.

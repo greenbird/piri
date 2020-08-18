@@ -153,6 +153,111 @@ def test_double_repeatable():
     ).unwrap() == expected_result
 
 
+def test_mapping_where_data_is_not_found():
+    """Test that when we map and don't find data its okay."""
+    config = {
+        'name': 'root',
+        'array': True,
+        'path_to_iterable': ['journals'],
+        'attributes': [
+            {
+                'name': 'journal_id',
+                'mappings': [
+                    {
+                        'path': ['journals', 'journal', 'id'],
+                        'if_statements': [],
+                    },
+                ],
+                'separator': '',
+                'if_statements': [],
+                'casting': [],
+                'default': None,
+            },
+        ],
+        'objects': [
+            {
+                'name': 'invoices',
+                'array': True,
+                'path_to_iterable': [
+                    'journals', 'journal', 'invoices',
+                ],
+                'objects': [],
+                'branching_objects': [],
+                'attributes': [
+                    {
+                        'name': 'amount',
+                        'mappings': [
+                            {
+                                'path': ['invoices', 'amount'],
+                                'if_statements': [],
+                            },
+                        ],
+                        'separator': '',
+                        'if_statements': [],
+                        'casting': [],
+                        'default': None,
+                    },
+                ],
+            },
+        ],
+        'branching_objects': [
+            {
+                'name': 'extrafield',
+                'array': True,
+                'path_to_iterable': [],
+                'branching_attributes': [
+                    [
+                        {
+                            'name': 'datavalue',
+                            'mappings': [
+                                {
+                                    'path': ['extra', 'extra1'],
+                                    'if_statements': [],
+                                },
+                            ],
+                            'separator': '',
+                            'if_statements': [],
+                            'casting': [],
+                            'default': None,
+                        },
+                    ],
+                ],
+            },
+        ],
+    }
+    input_data = {
+        'journals': [
+            {
+                'journal': {
+                    'id': 1,
+                    'invoices': [{}, {'amount': 1.2}],
+                },
+            },
+            {
+                'journal': {
+                    'id': 2,
+                },
+            },
+        ],
+    }
+    expected_result = [
+        {
+            'journal_id': 1,
+            'invoices': [
+                {'amount': 1.2},
+            ],
+        },
+        {
+            'journal_id': 2,
+        },
+    ]
+
+    assert map_data(
+        input_data,
+        config,
+    ).unwrap() == expected_result
+
+
 def test_most_features():
     """Test that we can fetch key in dict."""
     config = {
