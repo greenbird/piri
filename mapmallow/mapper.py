@@ -17,6 +17,8 @@ from mapmallow.constants import (
 )
 from mapmallow.handlers import HandleAttribute
 
+MappedDict = Dict[str, Any]
+
 
 @safe
 def map_data(
@@ -66,7 +68,7 @@ def set_array(input_data, array):
 
 
 @maybe
-def map_object(input_data, configuration) -> Optional[Dict[str, Any]]:
+def map_object(input_data, configuration) -> Optional[MappedDict]:
     """Map one object.
 
     One object has a collections of:
@@ -84,7 +86,7 @@ def map_object(input_data, configuration) -> Optional[Dict[str, Any]]:
         'branching_object1: [{'attrib1': 'val'}]
     }
     """
-    object_data: Dict[str, Any] = {}
+    object_data: MappedDict = {}
 
     map_attributes(
         input_data, configuration[ATTRIBUTES],
@@ -103,7 +105,7 @@ def map_object(input_data, configuration) -> Optional[Dict[str, Any]]:
 
 
 @maybe
-def map_attributes(input_data, configuration) -> Optional[Dict[str, Any]]:
+def map_attributes(input_data, configuration) -> Optional[MappedDict]:
     """For all attributes map attribute.
 
     name of attribute should be set
@@ -112,7 +114,7 @@ def map_attributes(input_data, configuration) -> Optional[Dict[str, Any]]:
         'attribute2': 'value2',
     }
     """
-    attributes: Dict[str, Any] = {}
+    attributes: MappedDict = {}
 
     for attribute_cfg in configuration:
         attribute_value = HandleAttribute()(input_data, attribute_cfg)
@@ -127,7 +129,7 @@ def map_attributes(input_data, configuration) -> Optional[Dict[str, Any]]:
 def map_objects(
     input_data,
     configuration,
-) -> Optional[Dict[str, Any]]:
+) -> Optional[MappedDict]:
     """For all objects map object.
 
     name of object should be set.
@@ -136,7 +138,7 @@ def map_objects(
         'name2': object2,
     }
     """
-    mapped_objects: Dict[str, Any] = {}
+    mapped_objects: MappedDict = {}
 
     for object_cfg in configuration:
         object_value = map_data(input_data, object_cfg)
@@ -148,16 +150,16 @@ def map_objects(
 
 
 @maybe
-def map_branching_attributes(  # noqa:234
+def map_branching_attributes(
     input_data,
     b_attributes,
-) -> Optional[List[Dict[str, Any]]]:
+) -> Optional[List[MappedDict]]:
     """Map branching attributes.
 
     Branching attributes are a list of attribute mappings that will be
     mapped to the same name in branching object.
     """
-    mapped_attributes: List[Dict[str, Any]] = []
+    mapped_attributes: List[MappedDict] = []
 
     for sub_cfg in b_attributes:
         map_attributes(
@@ -174,13 +176,13 @@ def map_branching_attributes(  # noqa:234
 def map_branching_objects(
     input_data,
     configuration,
-) -> Optional[Dict[str, Any]]:
+) -> Optional[MappedDict]:
     """Map branching object.
 
     Branching object is a case where we want to create the same object multiple
     times, however we want to find the data in different places.
     """
-    mapped_objects: Dict[str, Any] = {}
+    mapped_objects: MappedDict = {}
 
     for b_object in configuration:
         mapped = map_branching_attributes(
