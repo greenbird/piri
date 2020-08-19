@@ -136,10 +136,6 @@
                 "array": {
                     "type": "boolean"
                 },
-                "iterate": {
-                    "type": "boolean",
-                    "default": false
-                },
                 "path_to_iterable": {
                     "type": "array",
                     "items": {
@@ -167,10 +163,6 @@
                 },
                 "array": {
                     "type": "boolean"
-                },
-                "iterate": {
-                    "type": "boolean",
-                    "default": false
                 },
                 "path_to_iterable": {
                     "type": "array",

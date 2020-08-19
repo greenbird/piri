@@ -2,7 +2,6 @@
 	"root": {
 		"name": "schema",
 		"array": true,
-		"iterate": true,
 		"path_to_iterable": ["path_to", "some_list"],
 
 		"attributes": [
@@ -29,7 +28,6 @@
 			{
 				"name": "object1",
 				"array": false,
-				"iterate": false,
 				"attributes": [
 					{
 						"name": "height",
@@ -42,7 +40,6 @@
 			{
 				"name": "object2",
 				"array": true,
-				"iterate": false,
 				"branching_attributes": [
 					[
 						{
