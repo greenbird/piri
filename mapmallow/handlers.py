@@ -109,17 +109,23 @@ def handle_attribute(
     mapped_values = [
         mapped.unwrap()
         for mapped in
-        [handle_mapping(collection, mapping) for mapping in cfg[MAPPINGS]]
+        [
+            handle_mapping(collection, mapping)
+            for mapping in cfg.get(MAPPINGS, [])
+        ]
         if is_successful(mapped)
     ]
 
+    # partially declare if statement and casting functions
+    ifs = partial(apply_if_statements, if_objects=cfg.get(IF_STATEMENTS, []))
+    cast = partial(apply_casting, casting=cfg.get(CASTING, {}))
+
     return flow(
-        mapped_values,
-        partial(apply_separator, separator=cfg[SEPARATOR]),
+        apply_separator(mapped_values, separator=cfg.get(SEPARATOR, '')),
         fix(lambda _: None),  # type: ignore
-        bind(partial(apply_if_statements, if_objects=cfg[IF_STATEMENTS])),
-        bind(partial(apply_casting, casting=cfg[CASTING])),
-        rescue(  # type: ignore
-            lambda _: apply_default(default=cfg[DEFAULT]),
+        bind(ifs),
+        bind(cast),
+        rescue(
+            lambda _: apply_default(default=cfg.get(DEFAULT)),
         ),
     )

@@ -158,7 +158,7 @@ def apply_casting(
         >>> apply_casting('123.12', {'to': 'decimal'}).unwrap()
         Decimal('123.12')
     """
-    if not value_to_cast:
+    if value_to_cast is None:
         return Failure(ValueError('value_to_cast is empty'))
 
     if TO not in casting or casting[TO] is None:

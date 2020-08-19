@@ -9,11 +9,8 @@ def test_get_key_in_dict():
     config = {
         'name': 'attrib',
         'mappings': [
-            {'path': ['key'], 'if_statements': []},
+            {'path': ['key']},
         ],
-        'separator': '',
-        'if_statements': [],
-        'casting': {},
     }
 
     assert handle_attribute(
@@ -28,10 +25,8 @@ def test_casting_to_decimal():
     config = {
         'name': 'attrib',
         'mappings': [
-            {'path': ['key'], 'if_statements': []},
+            {'path': ['key']},
         ],
-        'separator': '',
-        'if_statements': [],
         'casting': {'to': 'decimal'},
     }
 
@@ -77,7 +72,6 @@ def test_all():
                 'then': None,
             },
         ],
-        'casting': {},
         'default': 'default2',
     }
 
