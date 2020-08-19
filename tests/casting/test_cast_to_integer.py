@@ -5,6 +5,7 @@ from mapmallow.casting import CastToInteger
 
 target: Final[int] = 123
 
+
 def test_cast_string():
     """Cast a string with numbers to integer."""
     assert CastToInteger()('123').unwrap() == target
