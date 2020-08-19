@@ -200,17 +200,7 @@
                     "default": []
                 }
             },
-            "required": ["name", "array"],
-            "if": {
-                "properties": {
-                    "iterate": {
-                        "const": true
-                    }
-                }
-            },
-            "then": {
-                "required": ["path_to_iterable"]
-            }
+            "required": ["name", "array"]
         }
     }
 }
