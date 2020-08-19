@@ -1,6 +1,6 @@
 import decimal
 
-from mapmallow.handlers import HandleAttribute
+from mapmallow.handlers import handle_attribute
 
 
 def test_get_key_in_dict():
@@ -16,7 +16,7 @@ def test_get_key_in_dict():
         'casting': {},
     }
 
-    assert HandleAttribute()(
+    assert handle_attribute(
         input_data,
         config,
     ).unwrap() == 'val1'
@@ -35,7 +35,7 @@ def test_casting_to_decimal():
         'casting': {'to': 'decimal'},
     }
 
-    assert HandleAttribute()(
+    assert handle_attribute(
         input_data,
         config,
     ).unwrap() == decimal.Decimal('1123123.12')
@@ -81,7 +81,7 @@ def test_all():
         'default': 'default2',
     }
 
-    assert HandleAttribute()(
+    assert handle_attribute(
         input_data,
         config,
     ).unwrap() == 'default2'

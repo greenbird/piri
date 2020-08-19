@@ -15,7 +15,7 @@ from mapmallow.constants import (
     OBJECTS,
     PATH_TO_ITERABLE,
 )
-from mapmallow.handlers import HandleAttribute
+from mapmallow.handlers import handle_attribute
 
 MappedDict = Dict[str, Any]
 
@@ -117,7 +117,7 @@ def map_attributes(input_data, configuration) -> Optional[MappedDict]:
     attributes: MappedDict = {}
 
     for attribute_cfg in configuration:
-        attribute_value = HandleAttribute()(input_data, attribute_cfg)
+        attribute_value = handle_attribute(input_data, attribute_cfg)
 
         if is_successful(attribute_value):
             attributes[attribute_cfg[NAME]] = attribute_value.unwrap()

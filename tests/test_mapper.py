@@ -190,6 +190,7 @@ def test_mapping_where_data_is_not_found():
                             {
                                 'path': ['invoices', 'amount'],
                                 'if_statements': [],
+                                'default': None,
                             },
                         ],
                         'separator': '',
@@ -213,6 +214,7 @@ def test_mapping_where_data_is_not_found():
                                 {
                                     'path': ['extra', 'extra1'],
                                     'if_statements': [],
+                                    'default': None,
                                 },
                             ],
                             'separator': '',
