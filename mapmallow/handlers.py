@@ -57,11 +57,13 @@ def handle_mapping(
     """
     return flow(
         collection,
-        partial(fetch_data_by_keys, path=cfg[PATH]),
+        partial(fetch_data_by_keys, path=cfg.get(PATH, [])),
         fix(lambda _: None),  # type: ignore
-        bind(partial(apply_if_statements, if_objects=cfg[IF_STATEMENTS])),
+        bind(partial(
+            apply_if_statements, if_objects=cfg.get(IF_STATEMENTS, []),
+        )),
         rescue(  # type: ignore
-            lambda _: apply_default(cfg[DEFAULT]),
+            lambda _: apply_default(cfg.get(DEFAULT)),
         ),
     )
 
