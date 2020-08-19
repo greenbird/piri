@@ -28,9 +28,10 @@ from mapmallow.functions import (
 from mapmallow.valuetypes import MapValue
 
 
-@final
-@dataclass(frozen=True, slots=True)
-class HandleMapping(object):
+def handle_mapping(
+    collection: Union[Dict[str, Any], List[Any]],
+    cfg: Dict[str, Any],
+) -> ResultE[MapValue]:
     """Finds data in the collection and applies some functions to it.
 
     .. versionadded:: 0.0.1
@@ -52,28 +53,22 @@ class HandleMapping(object):
             "if_statementss": [{}, {}],
             "default": 'val'
         }
+
+    Flow description:
+
+    find data from path or None ->
+    apply if statements ->
+    return default value if Failure else mapped value
     """
-
-    def __call__(
-        self,
-        collection: Union[Dict[str, Any], List[Any]],
-        cfg: Dict[str, Any],
-    ) -> ResultE[MapValue]:
-        """Map data to value by cfg.
-
-        find data from path or None ->
-        apply if statements ->
-        return default value if Failure else mapped value
-        """
-        return flow(
-            collection,
-            partial(fetch_data_by_keys, path=cfg[PATH]),
-            fix(lambda _: None),  # type: ignore
-            bind(partial(apply_if_statements, if_objects=cfg[IF_STATEMENTS])),
-            rescue(  # type: ignore
-                lambda _: apply_default(cfg[DEFAULT]),
-            ),
-        )
+    return flow(
+        collection,
+        partial(fetch_data_by_keys, path=cfg[PATH]),
+        fix(lambda _: None),  # type: ignore
+        bind(partial(apply_if_statements, if_objects=cfg[IF_STATEMENTS])),
+        rescue(  # type: ignore
+            lambda _: apply_default(cfg[DEFAULT]),
+        ),
+    )
 
 
 @final
@@ -107,8 +102,6 @@ class HandleAttribute(object):
         }
 
     """
-
-    _handle_mapping = HandleMapping()
 
     def __call__(
         self,
@@ -148,6 +141,6 @@ class HandleAttribute(object):
         return [
             mapped.unwrap()
             for mapped in
-            [self._handle_mapping(collection, mapping) for mapping in cfg]
+            [handle_mapping(collection, mapping) for mapping in cfg]
             if is_successful(mapped)
         ]

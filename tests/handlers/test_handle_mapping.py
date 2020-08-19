@@ -1,6 +1,6 @@
 from returns.pipeline import is_successful
 
-from mapmallow.handlers import HandleMapping
+from mapmallow.handlers import handle_mapping
 
 
 def test_get_key_in_dict():
@@ -8,7 +8,7 @@ def test_get_key_in_dict():
     input_data = {'key': 'val1'}
     config = {'path': ['key'], 'if_statements': []}
 
-    assert HandleMapping()(
+    assert handle_mapping(
         input_data,
         config,
     ).unwrap() == 'val1'
@@ -19,14 +19,14 @@ def test_default_value_is_used():
     input_data = {'key': 'val'}
     config = {'path': [], 'if_statements': [], 'default': 'default'}
 
-    assert HandleMapping()(
+    assert handle_mapping(
         input_data, config,
     ).unwrap() == 'default'
 
 
 def test_default_value_not_none():
     """Test that providing bad data returns Failure instance."""
-    failure = HandleMapping()(
+    failure = handle_mapping(
         {'fail': 'failure'},
         {'path': [], 'if_statements': [], 'default': None},
     )
