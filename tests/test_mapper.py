@@ -7,22 +7,14 @@ def test_creating_key_to_name():
     config = {
         'name': 'root',
         'array': False,
-        'path_to_iterable': [],
-        'objects': [],
-        'branching_objects': [],
         'attributes': [
             {
                 'name': 'name',
                 'mappings': [
                     {
                         'path': ['key'],
-                        'if_statements': [],
                     },
                 ],
-                'separator': '',
-                'if_statements': [],
-                'casting': [],
-                'default': None,
             },
         ],
     }
@@ -39,22 +31,14 @@ def test_array_true_but_no_loop_gives_array():
     config = {
         'name': 'root',
         'array': True,
-        'path_to_iterable': [],
-        'objects': [],
-        'branching_objects': [],
         'attributes': [
             {
                 'name': 'name',
                 'mappings': [
                     {
                         'path': ['key'],
-                        'if_statements': [],
                     },
                 ],
-                'separator': '',
-                'if_statements': [],
-                'casting': [],
-                'default': None,
             },
         ],
     }
@@ -77,13 +61,8 @@ def test_double_repeatable():
                 'mappings': [
                     {
                         'path': ['journals', 'journal', 'id'],
-                        'if_statements': [],
                     },
                 ],
-                'separator': '',
-                'if_statements': [],
-                'casting': [],
-                'default': None,
             },
         ],
         'objects': [
@@ -93,26 +72,18 @@ def test_double_repeatable():
                 'path_to_iterable': [
                     'journals', 'journal', 'invoices',
                 ],
-                'objects': [],
-                'branching_objects': [],
                 'attributes': [
                     {
                         'name': 'amount',
                         'mappings': [
                             {
                                 'path': ['invoices', 'amount'],
-                                'if_statements': [],
                             },
                         ],
-                        'separator': '',
-                        'if_statements': [],
-                        'casting': [],
-                        'default': None,
                     },
                 ],
             },
         ],
-        'branching_objects': [],
     }
     input_data = {
         'journals': [
@@ -165,13 +136,8 @@ def test_mapping_where_data_is_not_found():
                 'mappings': [
                     {
                         'path': ['journals', 'journal', 'id'],
-                        'if_statements': [],
                     },
                 ],
-                'separator': '',
-                'if_statements': [],
-                'casting': [],
-                'default': None,
             },
         ],
         'objects': [
@@ -181,22 +147,14 @@ def test_mapping_where_data_is_not_found():
                 'path_to_iterable': [
                     'journals', 'journal', 'invoices',
                 ],
-                'objects': [],
-                'branching_objects': [],
                 'attributes': [
                     {
                         'name': 'amount',
                         'mappings': [
                             {
                                 'path': ['invoices', 'amount'],
-                                'if_statements': [],
-                                'default': None,
                             },
                         ],
-                        'separator': '',
-                        'if_statements': [],
-                        'casting': [],
-                        'default': None,
                     },
                 ],
             },
@@ -205,7 +163,6 @@ def test_mapping_where_data_is_not_found():
             {
                 'name': 'extrafield',
                 'array': True,
-                'path_to_iterable': [],
                 'branching_attributes': [
                     [
                         {
@@ -213,14 +170,8 @@ def test_mapping_where_data_is_not_found():
                             'mappings': [
                                 {
                                     'path': ['extra', 'extra1'],
-                                    'if_statements': [],
-                                    'default': None,
                                 },
                             ],
-                            'separator': '',
-                            'if_statements': [],
-                            'casting': [],
-                            'default': None,
                         },
                     ],
                 ],
@@ -265,7 +216,6 @@ def test_most_features():
     config = {
         'name': 'schema',
         'array': False,
-        'path_to_iterable': [],
         'attributes': [
             {
                 'name': 'name',
@@ -300,7 +250,6 @@ def test_most_features():
                         'then': None,
                     },
                 ],
-                'casting': {},
                 'default': 'default2',
             },
         ],
@@ -308,35 +257,22 @@ def test_most_features():
             {
                 'name': 'address',
                 'array': False,
-                'path_to_iterable': [],
-                'objects': [],
-                'branching_objects': [],
                 'attributes': [
                     {
                         'name': 'address1',
                         'mappings': [
                             {
                                 'path': ['a1'],
-                                'if_statements': [],
                             },
                         ],
-                        'separator': '',
-                        'if_statements': [],
-                        'casting': [],
-                        'default': None,
                     },
                     {
                         'name': 'address2',
                         'mappings': [
                             {
                                 'path': ['a2'],
-                                'if_statements': [],
                             },
                         ],
-                        'separator': '',
-                        'if_statements': [],
-                        'casting': [],
-                        'default': None,
                     },
                 ],
             },
@@ -344,21 +280,14 @@ def test_most_features():
                 'name': 'people',
                 'array': True,
                 'path_to_iterable': ['persons'],
-                'objects': [],
-                'branching_objects': [],
                 'attributes': [
                     {
                         'name': 'firstname',
                         'mappings': [
                             {
                                 'path': ['persons', 'name'],
-                                'if_statements': [],
                             },
                         ],
-                        'separator': '',
-                        'if_statements': [],
-                        'casting': [],
-                        'default': None,
                     },
                 ],
             },
@@ -367,15 +296,10 @@ def test_most_features():
             {
                 'name': 'extrafield',
                 'array': True,
-                'path_to_iterable': [],
                 'branching_attributes': [
                     [
                         {
                             'name': 'dataname',
-                            'mappings': [],
-                            'separator': '',
-                            'if_statements': [],
-                            'casting': [],
                             'default': 'one',
                         },
                         {
@@ -383,22 +307,13 @@ def test_most_features():
                             'mappings': [
                                 {
                                     'path': ['extra', 'extra1'],
-                                    'if_statements': [],
                                 },
                             ],
-                            'separator': '',
-                            'if_statements': [],
-                            'casting': [],
-                            'default': None,
                         },
                     ],
                     [
                         {
                             'name': 'dataname',
-                            'mappings': [],
-                            'separator': '',
-                            'if_statements': [],
-                            'casting': [],
                             'default': 'two',
                         },
                         {
@@ -406,13 +321,8 @@ def test_most_features():
                             'mappings': [
                                 {
                                     'path': ['extra', 'extra2'],
-                                    'if_statements': [],
                                 },
                             ],
-                            'separator': '',
-                            'if_statements': [],
-                            'casting': [],
-                            'default': None,
                         },
                     ],
                 ],

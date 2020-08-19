@@ -38,7 +38,7 @@ def map_data(
     current iteration data added to the root of the input_data dictionary
     """
     iterate_data = fetch_list_by_keys(
-        input_data, configuration[PATH_TO_ITERABLE],
+        input_data, configuration.get(PATH_TO_ITERABLE, []),
     )
 
     if not is_successful(iterate_data):
@@ -92,15 +92,15 @@ def map_object(input_data, configuration) -> Optional[MappedDict]:
     object_data: MappedDict = {}
 
     map_attributes(
-        input_data, configuration[ATTRIBUTES],
+        input_data, configuration.get(ATTRIBUTES, []),
     ).map(object_data.update)
 
     map_objects(
-        input_data, configuration[OBJECTS],
+        input_data, configuration.get(OBJECTS, []),
     ).map(object_data.update)
 
     map_branching_objects(
-        input_data, configuration[BRANCHING_OBJECTS],
+        input_data, configuration.get(BRANCHING_OBJECTS, []),
     ).map(object_data.update)
 
     # need this as long as empty dict is not seen as None by returns.maybe
