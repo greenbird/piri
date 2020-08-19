@@ -20,10 +20,10 @@ from mapmallow.constants import (
     SEPARATOR,
 )
 from mapmallow.functions import (
-    ApplyCasting,
-    ApplyDefault,
-    ApplyIfStatements,
-    ApplySeparator,
+    apply_casting,
+    apply_default,
+    apply_if_statements,
+    apply_separator,
 )
 from mapmallow.valuetypes import MapValue
 
@@ -54,9 +54,6 @@ class HandleMapping(object):
         }
     """
 
-    _apply_ifs = ApplyIfStatements()
-    _apply_default = ApplyDefault()
-
     def __call__(
         self,
         collection: Union[Dict[str, Any], List[Any]],
@@ -72,9 +69,9 @@ class HandleMapping(object):
             collection,
             partial(fetch_data_by_keys, path=cfg[PATH]),
             fix(lambda _: None),  # type: ignore
-            bind(partial(self._apply_ifs, if_objects=cfg[IF_STATEMENTS])),
+            bind(partial(apply_if_statements, if_objects=cfg[IF_STATEMENTS])),
             rescue(  # type: ignore
-                lambda _: self._apply_default(cfg[DEFAULT]),
+                lambda _: apply_default(cfg[DEFAULT]),
             ),
         )
 
@@ -112,10 +109,6 @@ class HandleAttribute(object):
     """
 
     _handle_mapping = HandleMapping()
-    _separate = ApplySeparator()
-    _apply_ifs = ApplyIfStatements()
-    _cast = ApplyCasting()
-    _apply_default = ApplyDefault()
 
     def __call__(
         self,
@@ -136,12 +129,12 @@ class HandleAttribute(object):
         return flow(
             collection,
             partial(self._map, cfg=cfg[MAPPINGS]),
-            bind(partial(self._separate, separator=cfg[SEPARATOR])),
+            bind(partial(apply_separator, separator=cfg[SEPARATOR])),
             fix(lambda _: None),  # type: ignore
-            bind(partial(self._apply_ifs, if_objects=cfg[IF_STATEMENTS])),
-            bind(partial(self._cast, casting=cfg[CASTING])),
+            bind(partial(apply_if_statements, if_objects=cfg[IF_STATEMENTS])),
+            bind(partial(apply_casting, casting=cfg[CASTING])),
             rescue(  # type: ignore
-                lambda _: self._apply_default(default=cfg[DEFAULT]),
+                lambda _: apply_default(default=cfg[DEFAULT]),
             ),
         )
 

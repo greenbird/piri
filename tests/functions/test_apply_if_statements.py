@@ -1,4 +1,4 @@
-from mapmallow.functions import ApplyIfStatements
+from mapmallow.functions import apply_if_statements
 
 
 def test_if_is():
@@ -13,7 +13,7 @@ def test_if_is():
             },
         ],
     ]
-    assert ApplyIfStatements()(*test).value_or(None) == 'value2'
+    assert apply_if_statements(*test).value_or(None) == 'value2'
 
 
 def test_if_not():
@@ -28,7 +28,7 @@ def test_if_not():
             },
         ],
     ]
-    assert ApplyIfStatements()(*test).value_or(None) == 'value2'
+    assert apply_if_statements(*test).value_or(None) == 'value2'
 
 
 def test_if_contains():
@@ -43,7 +43,7 @@ def test_if_contains():
             },
         ],
     ]
-    assert ApplyIfStatements()(*test).value_or(None) == 'value2'
+    assert apply_if_statements(*test).value_or(None) == 'value2'
 
 
 def test_if_chained():
@@ -63,7 +63,7 @@ def test_if_chained():
             },
         ],
     ]
-    assert ApplyIfStatements()(*test).unwrap() == 'value3'
+    assert apply_if_statements(*test).unwrap() == 'value3'
 
 
 def test_if_failed_condition():
@@ -78,7 +78,7 @@ def test_if_failed_condition():
             },
         ],
     ]
-    assert ApplyIfStatements()(*test).unwrap() == 'not_target_value'
+    assert apply_if_statements(*test).unwrap() == 'not_target_value'
 
 
 def test_if_failed_condition_goes_to_otherwise():
@@ -94,4 +94,4 @@ def test_if_failed_condition_goes_to_otherwise():
             },
         ],
     ]
-    assert ApplyIfStatements()(*test).unwrap() == 'yes'
+    assert apply_if_statements(*test).unwrap() == 'yes'

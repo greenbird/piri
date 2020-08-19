@@ -5,7 +5,7 @@
 import datetime
 import decimal
 import re
-from typing import Optional
+from typing import Callable, Optional
 
 from attr import dataclass
 from returns.pipeline import flow
@@ -15,11 +15,31 @@ from typing_extensions import final
 
 from mapmallow.constants import (
     COMMA,
+    DATE,
+    DECIMAL,
     EMPTY,
+    INTEGER,
     INTEGER_CONTAINING_DECIMALS,
     PERIOD,
 )
 from mapmallow.valuetypes import MapValue
+
+
+@safe
+def get_casting_function(cast_to: str) -> Callable:
+    """Return casting function depending on name."""
+    if cast_to == INTEGER:
+        return CastToInteger()
+
+    elif cast_to == DECIMAL:
+        return CastToDecimal()
+
+    elif cast_to == DATE:
+        return CastToDate()
+
+    raise NotImplementedError(
+        'Unsupported cast to value ({0})'.format(cast_to),
+    )
 
 
 @final
@@ -30,6 +50,8 @@ class CastToDecimal(object):
     _decimal_pattern = re.compile(r'^([0-9]|-|\.|,)+$')
     _decimal_with_period_after_commas = re.compile(r'^-?(\d+\,)*\d+\.\d+$')
     _decimal_with_comma_after_periods = re.compile(r'^-?(\d+\.)*\d+\,\d+$')
+
+    decimal.getcontext().rounding = decimal.ROUND_HALF_UP
 
     @safe
     def __call__(
