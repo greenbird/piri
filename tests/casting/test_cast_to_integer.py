@@ -5,7 +5,6 @@ from mapmallow.casting import CastToInteger
 
 target: Final[int] = 123
 
-
 def test_cast_string():
     """Cast a string with numbers to integer."""
     assert CastToInteger()('123').unwrap() == target
@@ -32,6 +31,14 @@ def test_cast_negative_decimal_string():
 
 
 def test_cast_decimal_string_rounds_up():
+    """Cast a decimal string >= .5 should round up."""
+    assert CastToInteger()(
+        '122.5',
+        'decimal',
+    ).unwrap() == target
+
+
+def test_once_more_cast_decimal_string_rounds_up():
     """Cast a decimal string >= .5 should round up."""
     assert CastToInteger()(
         '123.5',

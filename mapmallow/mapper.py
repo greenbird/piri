@@ -1,3 +1,4 @@
+import decimal
 from typing import Any, Dict, List, Optional, Union
 
 from returns.curry import partial
@@ -16,6 +17,8 @@ from mapmallow.constants import (
     PATH_TO_ITERABLE,
 )
 from mapmallow.handlers import handle_attribute
+
+decimal.getcontext().rounding = decimal.ROUND_HALF_UP
 
 MappedDict = Dict[str, Any]
 

@@ -47,8 +47,6 @@ class CastToDecimal(object):
     _decimal_with_period_after_commas = re.compile(r'^-?(\d+\,)*\d+\.\d+$')
     _decimal_with_comma_after_periods = re.compile(r'^-?(\d+\.)*\d+\,\d+$')
 
-    decimal.getcontext().rounding = decimal.ROUND_HALF_UP
-
     @safe
     def __call__(
         self,
@@ -56,8 +54,6 @@ class CastToDecimal(object):
         original_format: Optional[str] = None,
     ) -> decimal.Decimal:
         """Make this object callable."""
-        decimal.getcontext().rounding = decimal.ROUND_HALF_UP
-
         the_value = str(value_to_cast).replace(' ', EMPTY)
 
         if not self._decimal_pattern.match(the_value):
@@ -101,9 +97,14 @@ class CastToInteger(object):
         return flow(
             value_to_cast,
             self._cast_to_decimal,
-            map_(round),
+            map_(quantize_decimal),
             map_(int),
         )
+
+
+def quantize_decimal(number: decimal.Decimal) -> decimal.Decimal:
+    """Quantize a decimal to whole number."""
+    return number.quantize(decimal.Decimal('1.'))
 
 
 @final
