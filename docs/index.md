@@ -1,4 +1,6 @@
-[![CircleCI](https://circleci.com/bb/cloudwheel/mapmallow.svg?style=svg&circle-token=f7613e4f9b3530fed648a14ce8088adc1023c62d)](https://circleci.com/bb/cloudwheel/mapmallow) [![wemake-python-styleguide](https://img.shields.io/badge/style-wemake-000000.svg)](https://github.com/wemake-services/wemake-python-styleguide) [![coverage](https://circleci.com/api/v1.1/project/bitbucket/cloudwheel/mapmallow/latest/artifacts/0/home/circleci/project/htmlcov/coverage-badge.svg?circle-token=90a86670390b81f167032150a44d59de42a00557)](https://circleci.com/api/v1.1/project/bitbucket/cloudwheel/mapmallow/latest/artifacts/0/home/circleci/project/htmlcov/index.html?circle-token=90a86670390b81f167032150a44d59de42a00557)
+![tests](https://github.com/greenbird/piri/workflows/test/badge.svg)
+[![codecov](https://codecov.io/gh/greenbird/piri/branch/master/graph/badge.svg)](https://codecov.io/gh/greenbird/piri)
+[![wemake-python-styleguide](https://img.shields.io/badge/style-wemake-000000.svg)](https://github.com/wemake-services/wemake-python-styleguide)
 
 # Features
 
@@ -28,23 +30,16 @@ $ poetry add mapmallow
 
 # Quickstart
 ```python
-# -*- coding: utf-8 -*-
-
-from marshmallow import Schema, fields
-
-from mapmallow.process import Process
-from mapmallow.schema import ApplySchema
+from mapmallow.mapper import map_data
 
 my_config = {
     'name': 'schema',
     'array': False,
-    'loops_data': False,
     'objects': [
         {
             'name': 'invoices',
             'array': True,
-            'loops_data': True,
-            'loopable_data_path': ['root', 'invoices'],
+            'path_to_iterable': ['root', 'invoices'],
             'attributes': [
                 {
                     'name': 'amount',
@@ -98,27 +93,13 @@ example_data = {
 }
 
 
-class Invoice(Schema):
-    """Invoice Schema."""
 
-    amount = fields.Decimal(required=True)
-    debtor = fields.String(required=True)
+mapped_data = map_data(example_data, my_config)
 
+print(mapped_data)
 
-class MySchema(Schema):
-    """Base schema."""
-
-    invoices = fields.List(fields.Nested(Invoice))
-
-
-if __name__ == '__main__':
-    process = Process(
-        ApplySchema(MySchema()),
-    )
-    mapped_data = process(my_config, example_data)
-    print(mapped_data)
-    print(mapped_data.unwrap())
-
+with open('resultfile.json', 'w') as output_file:
+    output_file.write(mapped_data.unwrap())
 ```
 
 # Process
