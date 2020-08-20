@@ -1,160 +1,23 @@
-# Mapmallow
-Data Mapping for mortals with json mapping configuration
-___
-![test](https://github.com/greenbird/piri/workflows/test/badge.svg)
-[![codecov](https://codecov.io/gh/greenbird/piri/branch/master/graph/badge.svg)](https://codecov.io/gh/greenbird/piri)
-[![wemake-python-styleguide](https://img.shields.io/badge/style-wemake-000000.svg)](https://github.com/wemake-services/wemake-python-styleguide)
-___
+# Configuration Json data
+The configuration governs not only where to find data, but also the structure of the output which will mirror the structure in the configuration json.
 
-# Features
+The two main components of the configuration json is the object and attributes. An object can contain nested objects and/or attributes. In the attribute part of the file is where you actually tell the mapper where to find data. In the object you are deciding the structure and also telling the mapper if there are iterable data anywhere that needs to be iterated to create multiple instances.
 
-* All mapping done with configuration json
-* Maps list/dicts to other lists/dicts
-* Mapping by best effort principle
+## The Object
 
-## Contributing
-Please see [contribute](../contributing)
+An object has a name, it can have attributes, nested objects or a special type of objects called [branching objects](#branching-object). It will also know if itself is an array and the path to where the input data can be iterated to create multiple objects.
 
-## Installation
-
-!!! info
-    Package is on pypi. Use pip or poetry to install
-
-```sh
-poetry add mapmallow
-```
-```sh
-pip install mapmallow
-```
+| name | type | description | comment |
+| - | - | - | - |
+| `name` | str | name of the key it will get in parent object | the root will not get a name |
+| `array` | bool | tells the mapper if this should be an array or not | |
+| `path_to_iterable` | array of `str` `int` | path to itrable data where this and child parts of the configuration should be applied per iteration | |
+| `attributes` | array of [attributes](#attribute) | An array of this objects attribute mappings | |
+| `objects` | array of objects | here you can nest more objects. | |
+| `branching_objects ` | array of [branching objects](#branching_object) | | |
 
 
-## Quickstart
-```python
-import simplejson
-
-from mapmallow.mapper import map_data
-
-my_config = {
-    'name': 'schema',
-    'array': False,
-    'objects': [
-        {
-            'name': 'invoices',
-            'array': True,
-            'path_to_iterable': ['root', 'invoices'],
-            'attributes': [
-                {
-                    'name': 'amount',
-                    'mappings': [
-                        {
-                            'path': ['invoices', 'amount'],
-                        },
-                    ],
-                    'casting': {
-                        'to': 'decimal',
-                        'original_format': 'integer_containing_decimals',
-                    },
-                    'default': 0,
-                },
-                {
-                    'name': 'debtor',
-                    'mappings': [
-                        {
-                            'path': ['root', 'customer', 'first_name'],
-                        },
-                        {
-                            'path': ['root', 'customer', 'last_name'],
-                        },
-                    ],
-                    'separator': ' ',
-                },
-            ],
-            'objects': [],
-        },
-    ],
-}
-
-example_data = {
-    'root': {
-        'customer': {
-            'first_name': 'John',
-            'last_name': 'Smith',
-        },
-        'invoices': [
-            {
-                'amount': 10050,
-            },
-            {
-                'amount': 20050,
-            },
-            {
-                'amount': -15005,
-            },
-        ],
-    },
-}
-
-mapped_data = map_data(example_data, my_config)
-
-with open('resultfile.json', 'w') as output_file:
-    output_file.write(simplejson.dumps(mapped_data.unwrap()))
-```
-
-contents of resultfile.json
-```json
-{
-    "invoices": [
-        {
-            "amount": 100.5,
-            "debtor": "John Smith"
-        },
-        {
-            "amount": 200.5,
-            "debtor": "John Smith"
-        },
-        {
-            "amount": -150.05,
-            "debtor": "John Smith"
-        }
-    ]
-}
-
-```
-# Process
-
-The Process function tries to make it easy to run all steps in order. Since its a callable object then dependencies(functions) can be changed before calling. This is the execution order:
-
-* validate configuration data
-  * configuration must be valid and also we apply some output formatting to the configuration data.
-* run pre processing
-  * a pre_process function can be supplied that must change raw data to python dictionary if it isn't already
-* map data
-  * run mapping function with the validated configuration and pre_processed data.
-  * this outputs a dictionary
-* validate and marshall
-  * this loads the mapping result into a marshmallow Schema that will validate the data for us. after that it will return the dump(marshall) of the schema that can apply any output formatting rules needed.
-  * this is the only function that is required to provide when process is initiated.
-* create output
-  * run provided output function.
-  * if none is provided it simply returns the dictionary.
-  * to provide an output function simply add it while initiating Process. with the argument \_output=function. The function must receive dictionary and can return anything
-
-
-# Map
-
-Together with a [configuration file](#configuration-file) this function will create some data structured like the configuration file. The different pieces of the configuration file will tell the mapper how to structure the output.
-
-
-# Configuration File
-The configuration file governs not only where to find data, but also the structure of the output which will mirror the structure in the configuration file.
-
-The two main components of the configuration file is the object and attributes. An object can contain more object and/or attributes. In the attribute part of the file is where you actually tell the mapper where to find data. In the object you are deciding the structure and also telling the mapper if there are loopable data anywhere that needs to be looped.
-
-## Object
-
-An object has a name, it can have attributes, nested objects or a special type of objects called branching objects. It will also know if itself is an array and the path to where the input data can be looped to create more of itself.
-
-* name: the objects name, this is the name it will get in the parent object or if this is root, the dataset will be named this.
+* name: the objects name, this is the name it will get in the parent object.
 * array: forces result to be an array even if it is not
 * loops_data: tells us if we should loop some input data to create more of this object
 * loopable_data_path: path to loopable data ie: list of invoices
