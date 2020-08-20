@@ -29,3 +29,4 @@ nav:
   - Home:
       - Home: index.md
       - Contributing: contributing.md
+      - Changelog: changelog.md
