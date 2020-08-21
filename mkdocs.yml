@@ -28,12 +28,6 @@ markdown_extensions:
 nav:
   - Home:
       - Home: index.md
-      - Swagger: swagger.md
       - Configuration: configuration.md
       - Contributing: contributing.md
       - Changelog: changelog.md
-extra_css:
-  - stylesheets/swagger-ui.css
-extra_javascript:
-  - javascripts/swagger-ui-bundle.js
-  - javascripts/swagger-ui-standalone-preset.js
