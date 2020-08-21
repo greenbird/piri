@@ -5,6 +5,7 @@ site_description: Configurable json to json mapping
 theme:
   name: material
   palette:
+    scheme: slate
     primary: green
     accent: deep-orange
   icon:
@@ -28,6 +29,7 @@ markdown_extensions:
 nav:
   - Home:
       - Home: index.md
+      - Usage: usage.md
       - Configuration: configuration.md
       - Contributing: contributing.md
       - Changelog: changelog.md

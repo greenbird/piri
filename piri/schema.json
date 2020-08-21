@@ -83,7 +83,6 @@
             "then": {
                 "required": ["path"]
             }
-
         },
         "attribute": {
             "type": "object",
