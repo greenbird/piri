@@ -1,5 +1,5 @@
 # Piri
-Data Mapping for mortals with json mapping configuration
+Configurable Data Mapping for mortals
 ___
 ![test](https://github.com/greenbird/piri/workflows/test/badge.svg)
 [![codecov](https://codecov.io/gh/greenbird/piri/branch/master/graph/badge.svg)](https://codecov.io/gh/greenbird/piri)
@@ -9,16 +9,18 @@ ___
 
 ## Goal
 
-The goal of this library is to make configurable data transformation(mapping) easy and flexible. We achieve this by using simple but featurerich json configuration that also acts as a contract between dataprovider(customer) and you.
+The goal of this library is to make JSON to JSON transformation/mapping configurable. We achieve this by using a simple but feature-rich JSON configuration which then also acts as a contract.
 
 ## Features
 
-* All mapping done with configuration json
-* Transforms json
-* Mapping by best effort principle
-* Combine values from different places in input data
-* Cast values to other types
-* Apply if statements to values to change data
+* Mapping with configuration File.
+* Transforms JSON
+* Combine multiple values to one.
+* Default values
+* If statements
+    * is, contains, not
+* casting
+    * integer, decimal, iso date
 
 ## Contributing
 Please see [contribute](../contributing)
@@ -126,8 +128,8 @@ contents of resultfile.json
         }
     ]
 }
-
 ```
+
 # Process
 
 The Process function tries to make it easy to run all steps in order. Since its a callable object then dependencies(functions) can be changed before calling. This is the execution order:

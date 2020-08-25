@@ -1,9 +1,28 @@
 [tool.poetry]
 name = "piri"
-version = "2.0.0"
+version = "0.1.0"
 description = "Configurable and documentable Json transformation and mapping"
 authors = ["Thomas Borgen <thomas.borgen@greenbird.com>"]
+
+license = "Apache-2.0"
 readme = "docs/index.md"
+repository = "https://github.com/greenbird/piri"
+
+keywords = [
+  "Json mapping",
+  "data transformation",
+  "json to json",
+  "dict to dict",
+  "configurable"
+]
+
+classifiers = [
+  "Development Status :: 5 - Production/Stable",
+  "Intended Audience :: Developers",
+  "Operating System :: OS Independent",
+  "Topic :: Software Development :: Libraries :: Python Modules",
+  "Topic :: Utilities"
+]
 
 [tool.poetry.dependencies]
 python = "^3.6"
@@ -23,7 +42,6 @@ safety = "^1.8"
 pytest = "^5.2"
 pytest-cov = "^2.8"
 coverage-badge = "^1.0"
-tomlkit = "^0.5.8"
 mkdocs-material = "^5.5.7"
 
 [build-system]
