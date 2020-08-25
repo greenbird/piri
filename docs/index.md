@@ -1,4 +1,4 @@
-# Mapmallow
+# Piri
 Data Mapping for mortals with json mapping configuration
 ___
 ![test](https://github.com/greenbird/piri/workflows/test/badge.svg)
@@ -29,17 +29,17 @@ Please see [contribute](../contributing)
     Package is on pypi. Use pip or poetry to install
 
 ```sh
-pip install mapmallow
+pip install piri
 ```
 ```sh
-poetry add mapmallow
+poetry add piri
 ```
 
 ## Quickstart
 ```python
 import simplejson
 
-from mapmallow.mapper import map_data
+from piri.mapper import map_data
 
 my_config = {
     'name': 'schema',
@@ -105,6 +105,7 @@ mapped_data = map_data(example_data, my_config)
 
 with open('resultfile.json', 'w') as output_file:
     output_file.write(simplejson.dumps(mapped_data.unwrap()))
+
 ```
 
 contents of resultfile.json
@@ -145,8 +146,3 @@ The Process function tries to make it easy to run all steps in order. Since its 
   * run provided output function.
   * if none is provided it simply returns the dictionary.
   * to provide an output function simply add it while initiating Process. with the argument \_output=function. The function must receive dictionary and can return anything
-
-
-# Map
-
-Together with a [configuration file](#configuration-file) this function will create some data structured like the configuration file. The different pieces of the configuration file will tell the mapper how to structure the output.
