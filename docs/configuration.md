@@ -20,7 +20,7 @@ An object has a name, it can have attributes, nested objects or a special type o
 | path_to_iterable | array[str\|int] | path to itrable data where this and child parts of the configuration should be applied per iteration | |
 | _attributes_ | array[[attribute](#attribute)] | An array of this objects attribute mappings | |
 | _objects_ | array[[object](#object)] | Here you can nest more objects. | |
-| _branching_objects_ | array[[branching object](#branching_object)] | Array of a special kind of object | rarely used |
+| _branching_objects_ | array[[branching object](#branching-object)] | Array of a special kind of object | rarely used |
 
 
 ```json
@@ -43,7 +43,7 @@ The attributes are like 'color' of a car or 'amount' in an invoice. Attributes a
 | __name__ | str | The name it will get in the parent object | |
 | _mappings_ | array[[mapping](#mapping)] | list of mapping objects which is where to find data | `[]` |
 | seperator | str | string to separate each value in case multiple are found in mapping step | `''` |
-| if_statements | array[[if_statement](#if_statement)] | If statements that can change data based on conditions | `[]` |
+| if_statements | array[[if statement](#if-statement)] | If statements that can change data based on conditions | `[]` |
 | casting | [casting](#casting) | Lets you cast data to a spesific type [int, decimal, date] | `{}` |
 | _default_ | Any | If after all mapping, if statements and casting the result is None this value is used | `None` |
 
@@ -58,14 +58,14 @@ The attributes are like 'color' of a car or 'amount' in an invoice. Attributes a
 }
 ```
 
-## Mapping Object
+## Mapping
 
 This is the only place where actual interaction with the input data is done.
 
 | name | type | description | default |
 | --- | --- | --- | --- |
 | _path_ | array[str\|int] | path to data you want to retrieve. | `[]` |
-| if_statements | If statements that can change data based on conditions | `[]` |
+| if_statements | array[[if statement](#if-statement)] | If statements that can change data based on conditions | `[]` |
 | _default_ | Any | If no value is found or value is None after if_statements then this value is used | `None` |
 
 !!! note
@@ -81,7 +81,7 @@ You add a list of `strings` or `integers` that will get you to your data. so for
 }
 ```
 
-* if_statements: list of [if statement objects](#if-statement-object) that can change the data depending on conditions
+* if_statements: list of [if statements](#if-statement) that can change the data depending on conditions
 * default: a default value if none is found or value found is ```None```
 
 ```json
@@ -97,7 +97,7 @@ You add a list of `strings` or `integers` that will get you to your data. so for
 
 >input() -> 'default'
 
-## If Statement object
+## If Statement
 
 This is where you can change found(or not found) data to something else based on a condition. They are chained in the sense that what the first one produces will be the input to the next one. Thus if you want the original value if the first one fails, then leave out ```otherwise```
 
