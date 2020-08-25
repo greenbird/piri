@@ -2,18 +2,18 @@ import json
 
 import pytest
 from jsonschema import Draft7Validator
+from returns.result import safe
 
+from piri.common import ReadLocalFile
 from piri.schema import SchemaValidator
 
 
 @pytest.fixture(scope='session')
 def schema():
     """Get the schema."""
-    with open(
-        'piri/schema.json',
-        'r',
-    ) as schema_file:
-        return json.load(schema_file)
+    return ReadLocalFile()('piri/schema.json', 'r').bind(
+        safe(json.loads),
+    ).unwrap()
 
 
 @pytest.fixture(scope='session')
