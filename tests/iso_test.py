@@ -1,7 +1,7 @@
 import pytest
 from returns.primitives.exceptions import UnwrapFailedError
 
-from mapmallow.iso import GetCountryCode, GetCurrencyCode, GetLanguageCode
+from piri.iso import GetCountryCode, GetCurrencyCode, GetLanguageCode
 
 
 class TestGetCountryCode(object):

@@ -1,6 +1,6 @@
 from returns.pipeline import is_successful
 
-from mapmallow.handlers import handle_mapping
+from piri.handlers import handle_mapping
 
 
 def test_get_key_in_dict():

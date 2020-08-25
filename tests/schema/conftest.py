@@ -3,14 +3,14 @@ import json
 import pytest
 from jsonschema import Draft7Validator
 
-from mapmallow.schema import SchemaValidator
+from piri.schema import SchemaValidator
 
 
 @pytest.fixture(scope='session')
 def schema():
     """Get the schema."""
     with open(
-        'mapmallow/schema.json',
+        'piri/schema.json',
         'r',
     ) as schema_file:
         return json.load(schema_file)

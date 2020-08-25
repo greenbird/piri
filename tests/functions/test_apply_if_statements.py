@@ -1,4 +1,4 @@
-from mapmallow.functions import apply_if_statements
+from piri.functions import apply_if_statements
 
 
 def test_if_is():

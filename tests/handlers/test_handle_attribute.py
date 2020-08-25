@@ -1,6 +1,6 @@
 import decimal
 
-from mapmallow.handlers import handle_attribute
+from piri.handlers import handle_attribute
 
 
 def test_get_key_in_dict():

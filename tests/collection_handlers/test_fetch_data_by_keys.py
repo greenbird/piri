@@ -1,6 +1,6 @@
 from returns.pipeline import is_successful
 
-from mapmallow.collection_handlers import fetch_data_by_keys
+from piri.collection_handlers import fetch_data_by_keys
 
 
 def test():

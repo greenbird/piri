@@ -1,7 +1,7 @@
 import pytest
 from returns.primitives.exceptions import UnwrapFailedError
 
-from mapmallow.functions import apply_separator
+from piri.functions import apply_separator
 
 
 def test_separator():
