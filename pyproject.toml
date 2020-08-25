@@ -7,7 +7,7 @@ authors = ["Thomas Borgen <thomas.borgen@greenbird.com>"]
 license = "MIT"
 readme = "docs/index.md"
 repository = "https://github.com/greenbird/piri"
-homepage = ""
+documentation = "https://greenbird.github.io/piri/"
 
 keywords = [
   "Json mapping",
