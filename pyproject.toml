@@ -1,12 +1,13 @@
 [tool.poetry]
 name = "piri"
-version = "0.1.0"
+version = "1.0.0"
 description = "Configurable and documentable Json transformation and mapping"
 authors = ["Thomas Borgen <thomas.borgen@greenbird.com>"]
 
-license = "Apache-2.0"
+license = "MIT"
 readme = "docs/index.md"
 repository = "https://github.com/greenbird/piri"
+homepage = ""
 
 keywords = [
   "Json mapping",
