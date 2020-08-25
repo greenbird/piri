@@ -1,9 +1,9 @@
 [tool.poetry]
-name = "mapmallow"
+name = "piri"
 version = "2.0.0"
-description = "Set of mapping functions that will map according to a configuration file and do validation with marshmallow"
+description = "Configurable and documentable Json transformation and mapping"
 authors = ["Thomas Borgen <thomas.borgen@greenbird.com>"]
-readme = "README.md"
+readme = "docs/index.md"
 
 [tool.poetry.dependencies]
 python = "^3.6"
