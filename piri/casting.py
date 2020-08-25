@@ -9,7 +9,7 @@ from returns.pointfree import alt, bind, map_, rescue
 from returns.result import Failure, ResultE, safe
 from typing_extensions import final
 
-from mapmallow.constants import (
+from piri.constants import (
     COMMA,
     DATE,
     DECIMAL,
@@ -18,7 +18,7 @@ from mapmallow.constants import (
     INTEGER_CONTAINING_DECIMALS,
     PERIOD,
 )
-from mapmallow.valuetypes import MapValue
+from piri.valuetypes import MapValue
 
 
 @safe

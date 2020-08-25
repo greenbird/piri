@@ -6,8 +6,8 @@ from returns.maybe import maybe
 from returns.pipeline import is_successful
 from returns.result import safe
 
-from mapmallow.collection_handlers import fetch_list_by_keys
-from mapmallow.constants import (
+from piri.collection_handlers import fetch_list_by_keys
+from piri.constants import (
     ARRAY,
     ATTRIBUTES,
     BRANCHING_ATTRIBUTES,
@@ -16,7 +16,7 @@ from mapmallow.constants import (
     OBJECTS,
     PATH_TO_ITERABLE,
 )
-from mapmallow.handlers import handle_attribute
+from piri.handlers import handle_attribute
 
 decimal.getcontext().rounding = decimal.ROUND_HALF_UP
 

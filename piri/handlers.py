@@ -5,8 +5,8 @@ from returns.pipeline import flow, is_successful
 from returns.pointfree import bind, fix, rescue
 from returns.result import ResultE
 
-from mapmallow.collection_handlers import fetch_data_by_keys
-from mapmallow.constants import (
+from piri.collection_handlers import fetch_data_by_keys
+from piri.constants import (
     CASTING,
     DEFAULT,
     IF_STATEMENTS,
@@ -14,13 +14,13 @@ from mapmallow.constants import (
     PATH,
     SEPARATOR,
 )
-from mapmallow.functions import (
+from piri.functions import (
     apply_casting,
     apply_default,
     apply_if_statements,
     apply_separator,
 )
-from mapmallow.valuetypes import MapValue
+from piri.valuetypes import MapValue
 
 
 def handle_mapping(

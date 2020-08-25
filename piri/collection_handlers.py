@@ -2,7 +2,7 @@ from typing import Any, Dict, List, Union
 
 from returns.result import safe
 
-from mapmallow.valuetypes import MapValue, ValueTypes
+from piri.valuetypes import MapValue, ValueTypes
 
 
 @safe

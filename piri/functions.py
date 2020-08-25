@@ -4,8 +4,8 @@ from returns.pipeline import flow
 from returns.pointfree import bind
 from returns.result import Failure, ResultE, Success, safe
 
-from mapmallow.casting import get_casting_function
-from mapmallow.constants import (  # noqa: WPS235
+from piri.casting import get_casting_function
+from piri.constants import (  # noqa: WPS235
     CONDITION,
     CONTAINS,
     IS,
@@ -16,14 +16,12 @@ from mapmallow.constants import (  # noqa: WPS235
     THEN,
     TO,
 )
-from mapmallow.valuetypes import MapValue, ValueTypes
+from piri.valuetypes import MapValue, ValueTypes
 
 
 @safe
 def apply_if_statements(if_value, if_objects) -> MapValue:
     """Apply if statements to a value.
-
-    .. versionadded:: 0.1.0
 
     :param if_value: The value to use when evaluating if statements
     :type if_value: MapValue

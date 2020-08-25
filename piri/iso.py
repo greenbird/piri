@@ -3,7 +3,7 @@ from pycountry import countries, currencies, languages
 from returns.result import safe
 from typing_extensions import final
 
-from mapmallow.constants import (
+from piri.constants import (
     ALPHA_THREE,
     ALPHA_TWO,
     NAME,
