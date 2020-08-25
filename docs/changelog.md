@@ -1,12 +1,22 @@
 # Version history
 
-We follow semantic Versions with first version released as `1.0.0`. We do this to prevent `0Ver` cycle of never getting to v1.
+We follow semantic Versions with first version released as `1.0.0`. We do this to prevent [0Ver](https://0ver.org/) and never getting to v1.
 
 All Breaking releases are `major`
 All Feature releases are `minor`
-All 
+Everything else: `patch`
 
 
-# 2020-0x-0x First stable release
+# Version 1.0.0 Release: Piri Reis
+
+The first release focuses on key mapping functionality. We believe that is finding values from different places and combining them to one. Setting default values, Casting values, and applying if statements. This should suffice for a lot of usecases where one need to transform json into structurally different json.
 
 ## features
+
+* Mapping with configuration File.
+* Combine multiple values to one.
+* Default values
+* If statements
+  * is, contains, not
+* casting
+  * integer, decimal, iso date
