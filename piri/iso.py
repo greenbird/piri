@@ -3,13 +3,7 @@ from pycountry import countries, currencies, languages
 from returns.result import safe
 from typing_extensions import final
 
-from piri.constants import (
-    ALPHA_THREE,
-    ALPHA_TWO,
-    NAME,
-    NUMERIC,
-    OFFICIAL_NAME,
-)
+from piri.constants import ALPHA_THREE, ALPHA_TWO, NAME, NUMERIC, OFFICIAL_NAME
 
 
 @final
