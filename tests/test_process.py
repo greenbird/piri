@@ -46,7 +46,8 @@ def test_bad_config_gives_failure():
     with pytest.raises(ValueError) as ve:
         process(input_data, config)
 
-    assert 'array' in str(ve)
+        assert 'array' in str(ve)
+
 
 def test_array_true_but_no_loop_gives_array():
     """Test that we get an array if we set array = true in object."""

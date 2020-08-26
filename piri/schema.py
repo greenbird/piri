@@ -30,5 +30,5 @@ class SchemaValidator(object):
         return Failure(
             ValueError(
                 list(self.validator.iter_errors(input_data)),
-            )
+            ),
         )
