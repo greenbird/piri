@@ -126,15 +126,17 @@ The casting object lets you cast whatever value is found to some new value. Curr
 
 | name | type | description | default |
 | --- | --- | --- | --- |
-| __to__ | "integer"\|"decimal"|\"date" | What type to cast the value to | |
-| original_format | "integer_containing_decimals"\|decimal"\|"date(see below)" | For some values we need to specify extra information in order to correctly cast it.| `None` |
+| __to__ | one of ["integer", "decimal", "date"] | What type to cast the value to | |
+| original_format | "integer_containing_decimals" or spesific date format(see below)" | For some values we need to specify extra information in order to correctly cast it.| `None` |
 
-__original format__
+__about original format__
 
-| to | original format | description |
+!!! note
+    When `to` is `date` then original_format is `required`.
+
+| when to is | original format | description |
 | --- | --- | --- |
-| decimal | integer_containing_decimals | is used when some integer value should be casted to decimal, and we need to divide it by 100
-| integer | decimal | is used when we cast a decimal number to integer so we get rounding correct. (round up half `1.5 -> 2`)
+| decimal | integer_containing_decimals | is used when some integer value should be casted to decimal and we need to divide it by 100 |
 | date | `yyyy.mm.dd` `yy.mm.dd` `yymmdd` `dd.mm.yyyy` `dd.mm.yy` `ddmmyy` | The format of the input date. `.` means any delimiter. Output is always iso-date yyyy-mm-dd |
 
 
