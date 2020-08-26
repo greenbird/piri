@@ -3,6 +3,7 @@ Configurable Data Mapping for mortals
 ___
 ![test](https://github.com/greenbird/piri/workflows/test/badge.svg)
 [![codecov](https://codecov.io/gh/greenbird/piri/branch/master/graph/badge.svg)](https://codecov.io/gh/greenbird/piri)
+[![Python Version](https://img.shields.io/pypi/pyversions/piri.svg)](https://pypi.org/project/piri/)
 [![wemake-python-styleguide](https://img.shields.io/badge/style-wemake-000000.svg)](https://github.com/wemake-services/wemake-python-styleguide)
 ___
 
@@ -30,8 +31,7 @@ Please see [contribute](../contributing)
 
 ## Installation
 
-!!! info
-    Package is on pypi. Use pip or poetry to install
+Package is on pypi. Use pip or poetry to install
 
 ```sh
 pip install piri
@@ -44,7 +44,7 @@ poetry add piri
 ```python
 import simplejson
 
-from piri.mapper import map_data
+from piri.process import process
 
 my_config = {
     'name': 'schema',
@@ -106,10 +106,10 @@ example_data = {
     },
 }
 
-mapped_data = map_data(example_data, my_config)
+mapped_data = process(example_data, my_config)
 
 with open('resultfile.json', 'w') as output_file:
-    output_file.write(simplejson.dumps(mapped_data.unwrap()))
+    output_file.write(simplejson.dumps(mapped_data))
 
 ```
 
@@ -132,22 +132,3 @@ contents of resultfile.json
     ]
 }
 ```
-
-# Process
-
-The Process function tries to make it easy to run all steps in order. Since its a callable object then dependencies(functions) can be changed before calling. This is the execution order:
-
-* validate configuration data
-  * configuration must be valid and also we apply some output formatting to the configuration data.
-* run pre processing
-  * a pre_process function can be supplied that must change raw data to python dictionary if it isn't already
-* map data
-  * run mapping function with the validated configuration and pre_processed data.
-  * this outputs a dictionary
-* validate and marshall
-  * this loads the mapping result into a marshmallow Schema that will validate the data for us. after that it will return the dump(marshall) of the schema that can apply any output formatting rules needed.
-  * this is the only function that is required to provide when process is initiated.
-* create output
-  * run provided output function.
-  * if none is provided it simply returns the dictionary.
-  * to provide an output function simply add it while initiating Process. with the argument \_output=function. The function must receive dictionary and can return anything
