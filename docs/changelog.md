@@ -25,6 +25,6 @@ The first release focuses on key mapping functionality. We believe that is findi
 * Combine multiple values to one.
 * Default values
 * If statements
-  * is, contains, not
+    * is, contains, not
 * casting
-  * integer, decimal, iso date
+    * integer, decimal, iso date
