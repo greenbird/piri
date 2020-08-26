@@ -13,6 +13,6 @@ def test_invalid(mapping_validator, invalid):
     test: dict = {'if_statements': []}
     validate_result = mapping_validator(test)
     assert not is_successful(validate_result)
-    assert isinstance(validate_result.failure(), list)
-    assert isinstance(validate_result.failure()[0], ValidationError)
+    assert isinstance(validate_result.failure(), ValueError)
+    assert isinstance(validate_result.failure().args[0][0], ValidationError)
     assert 'path' in str(validate_result.failure())

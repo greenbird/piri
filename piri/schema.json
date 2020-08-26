@@ -15,10 +15,10 @@
                     "type": ["string","boolean", "number", "integer"]
                 },
                 "then": {
-                    "type": ["string","boolean", "number", "integer"]
+                    "type": ["string","boolean", "number", "integer", "null"]
                 },
                 "otherwise": {
-                    "type": ["string","boolean", "number", "integer"]
+                    "type": ["string","boolean", "number", "integer", "null"]
                 }
             },
             "required": ["condition", "target", "then"]

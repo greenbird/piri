@@ -13,6 +13,6 @@ def test_invalid(attribute_validator, invalid):
     test: dict = {'seperator': ' '}
     validate_result = attribute_validator(test)
     assert not is_successful(validate_result)
-    assert isinstance(validate_result.failure(), list)
-    assert isinstance(validate_result.failure()[0], ValidationError)
+    assert isinstance(validate_result.failure(), ValueError)
+    assert isinstance(validate_result.failure().args[0][0], ValidationError)
     assert 'name' in str(validate_result.failure())

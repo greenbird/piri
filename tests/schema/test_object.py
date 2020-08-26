@@ -12,5 +12,5 @@ def test_invalid(object_validator, invalid):
     """Test that we get a list of errors."""
     validate_result = object_validator(invalid)
     assert not is_successful(validate_result)
-    assert isinstance(validate_result.failure(), list)
-    assert isinstance(validate_result.failure()[0], ValidationError)
+    assert isinstance(validate_result.failure(), ValueError)
+    assert isinstance(validate_result.failure().args[0][0], ValidationError)

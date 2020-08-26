@@ -32,8 +32,8 @@ class Process(object):
 
 
 def process(
-    configuration: dict,
     input_data: dict,
+    configuration: dict,
 ) -> Union[list, dict]:
     """Call Process and unwrap value if no error, otherwise raise."""
     return Process()(

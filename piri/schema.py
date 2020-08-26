@@ -7,7 +7,7 @@ from typing_extensions import Final, final
 
 from piri.common import ReadLocalFile
 
-schema: Final[dict] = ReadLocalFile()(
+SCHEMA: Final[dict] = ReadLocalFile()(
     'piri/schema.json', 'r',
 ).bind(safe(json.loads)).unwrap()
 
@@ -17,7 +17,7 @@ schema: Final[dict] = ReadLocalFile()(
 class SchemaValidator(object):
     """Validates data with given JsonSchema Validator."""
 
-    validator: Draft7Validator = Draft7Validator(schema)
+    validator: Draft7Validator = Draft7Validator(SCHEMA)
 
     def __call__(
         self,
@@ -28,5 +28,7 @@ class SchemaValidator(object):
             return Success(input_data)
 
         return Failure(
-            list(self.validator.iter_errors(input_data)),  # type: ignore
+            ValueError(
+                list(self.validator.iter_errors(input_data)),
+            )
         )
