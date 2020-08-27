@@ -1,4 +1,5 @@
 import json
+import os
 
 from attr import dataclass
 from jsonschema import Draft7Validator
@@ -8,7 +9,7 @@ from typing_extensions import Final, final
 from piri.common import ReadLocalFile
 
 SCHEMA: Final[dict] = ReadLocalFile()(
-    'piri/schema.json', 'r',
+    '{0}/schema.json'.format(os.path.dirname(__file__)), 'r',
 ).bind(safe(json.loads)).unwrap()
 
 
