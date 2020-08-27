@@ -4,11 +4,6 @@ The configuration governs not only where to find data, but also the structure of
 The two main components of the configuration json is the object and attributes. An object can contain nested objects and/or attributes. In the attribute part of the file is where you actually tell the mapper where to find data. In the object you are deciding the structure and also telling the mapper if there are iterable data anywhere that needs to be iterated to create multiple instances.
 
 
-```
-<span style="color: var(--md-primary-fg-color)"
-<span style="color: var(--md-accent-fg-color)">
-```
-
 ## Object
 
 An object has a name, it can have attributes, nested objects or a special type of objects called [branching objects](#branching-object). It will also know if itself is an array and the path to where the input data can be iterated to create multiple objects.
