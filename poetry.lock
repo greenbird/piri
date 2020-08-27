@@ -116,14 +116,6 @@ toml = ["toml"]
 
 [[package]]
 category = "dev"
-description = "Generate coverage badges for Coverage.py."
-name = "coverage-badge"
-optional = false
-python-versions = "*"
-version = "1.0.1"
-
-[[package]]
-category = "dev"
 description = "A utility for ensuring Google-style docstrings stay up to date with the source code."
 name = "darglint"
 optional = false
@@ -1157,7 +1149,7 @@ docs = ["sphinx", "jaraco.packaging (>=3.2)", "rst.linker (>=1.9)"]
 testing = ["jaraco.itertools", "func-timeout"]
 
 [metadata]
-content-hash = "f4af42985e383ff3f066d7caa96ef799e96cbdf0dd6137be289adc39457f2b3a"
+content-hash = "0339c2ceecf22731f0f57332d0f727630a8714f875ffbe809e960f5e0ba8d50b"
 python-versions = "^3.6"
 
 [metadata.files]
@@ -1240,10 +1232,6 @@ coverage = [
     {file = "coverage-5.2.1-cp39-cp39-win32.whl", hash = "sha256:9e536783a5acee79a9b308be97d3952b662748c4037b6a24cbb339dc7ed8eb89"},
     {file = "coverage-5.2.1-cp39-cp39-win_amd64.whl", hash = "sha256:b8f58c7db64d8f27078cbf2a4391af6aa4e4767cc08b37555c4ae064b8558d9b"},
     {file = "coverage-5.2.1.tar.gz", hash = "sha256:a34cb28e0747ea15e82d13e14de606747e9e484fb28d63c999483f5d5188e89b"},
-]
-coverage-badge = [
-    {file = "coverage-badge-1.0.1.tar.gz", hash = "sha256:142fd121f3bd14956aff3c45bff6f8bc37bd74c6350626a950ebb6accb24276e"},
-    {file = "coverage_badge-1.0.1-py2.py3-none-any.whl", hash = "sha256:3796de21b4e190d38beb8806956946fbdb02fe3a2a7452b460a9cff958009833"},
 ]
 darglint = [
     {file = "darglint-1.5.3-py3-none-any.whl", hash = "sha256:82796a76320e4d89d0d9e461c284565e08b1eb2d511fcc3b7102073ac9c8b51c"},
