@@ -1,25 +1,28 @@
 # Version history
 
-We follow semantic Versions with first version released as `1.0.0`. We do this to prevent [0Ver](https://0ver.org/) and never getting to v1.
+| Change | Bumps |
+| - | - |
+| Breaking | major |
+| New Feature | minor |
+| otherwise | patch |
 
-All Breaking releases are `major`
-All Feature releases are `minor`
-Everything else: `patch`
+
+## Patch 1.0.2 - Bugfix
+
+Loading schema.json used relatve path that did not work when package was imported by other package. Now we use `'{0}/schema.json'.format(os.path.dirname(__file__))` to get absolute path to our schema.json.
 
 
-# Version 1.0.1
-
-## Features
+## Patch 1.0.1
 
 * adds python versions badge
 * removes bad part of documentation
 
 
-# Version 1.0.0 Release: Piri Reis
+## Version 1.0.0 Release: Piri Reis
 
-The first release focuses on key mapping functionality. We believe that is finding values from different places and combining them to one. Setting default values, Casting values, and applying if statements. This should suffice for a lot of usecases where one need to transform json into structurally different json.
+The first release focuses on key mapping functionality. Finding values from multiple places and combining them to one. Setting default values, Casting values, and applying if statements. This should suffice for a lot of usecases where one need to transform json into structurally different json.
 
-## Features
+### Features
 
 * Mapping with configuration File.
 * Combine multiple values to one.
