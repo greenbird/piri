@@ -19,12 +19,12 @@ __This enables you to change any input into the output you desire.__
 
 ## Typical usecases
 
-* You `get` data form api, but need to transform it for your backend system
-* `post`ing data to an api that needs data on a different format than what your system produces
-* all your backends speak different language? pipe it through __Piri__
+* You `GET` data form api, but need to transform it for your backend system
+* `POST`ing data to an api that needs data on a different format than what your system produces
+* All your backends speak different language? pipe it through __Piri__
 * Customer delivers weirdly formatted data? Use __Piri__ to make it sexy
-* have CSV but need nicely structured JSON? make CSV into a JSON list and transform it with __Piri__
-* have XML but need to change it? make it into JSON, transform it with __Piri__ and then dump it to XML again.
+* Have CSV but need nicely structured JSON? make CSV into a JSON list and transform it with __Piri__
+* Have XML but need to change it? make it into JSON, transform it with __Piri__ and then dump it to XML again.
 * Customers legacy system needs CSV. Use __Piri__ to transform your nicely structured JSON data into a JSON List that can be easily dumped to CSV
 
 ## Goal
