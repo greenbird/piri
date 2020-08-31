@@ -11,6 +11,22 @@ ___
 [Source Code](https://github.com/greenbird/piri) |
 [Task Tracker](https://github.com/greenbird/piri/issues)**
 
+## What is Piri
+
+Piri is a JSON to JSON mapper. That means that we read input JSON and create output JSON. How the output is created is based on instructions from a configuration file. The configuration file tells us how the output structure should be and from where in the input to where in the output values should be set. In addition to this Piri supports data transformation with `data casting`, `if conditions`, `combination of data from multiple places` and of course setting `default` values.
+
+__This enables you to change any input into the output you desire.__
+
+## Typical usecases
+
+* You `get` data form api, but need to transform it for your backend system
+* `post`ing data to an api that needs data on a different format than what your system produces
+* all your backends speak different language? pipe it through __Piri__
+* Customer delivers weirdly formatted data? Use __Piri__ to make it sexy
+* have CSV but need nicely structured JSON? make CSV into a JSON list and transform it with __Piri__
+* have XML but need to change it? make it into JSON, transform it with __Piri__ and then dump it to XML again.
+* Customers legacy system needs CSV. Use __Piri__ to transform your nicely structured JSON data into a JSON List that can be easily dumped to CSV
+
 ## Goal
 
 The goal of this library is to make JSON to JSON transformation/mapping configurable. We achieve this by using a simple but feature-rich JSON configuration which then also acts as a contract.
