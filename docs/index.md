@@ -43,9 +43,11 @@ The goal of this library is to make JSON to JSON transformation/mapping easy, co
 
 ## Why
 
-Piri was bourne because I really dislike mapping. Documenting whatever decisions made in your code so that some product owner understands it is also _no me gusto_. Transforming data from one format to another is something software engineers does allmost daily... It should be easy! And documenting it shouldn't be something you have to worry about.
+Piri was born because we really dislike mapping. Documenting whatever decisions made in your code so that some product owner understands it is also _no me gusto_. Transforming data from one format to another is something software engineers do allmost daily... It should be easy! And documenting it shouldn't be something you have to worry about.
 
-After the Worst POC in History I never wanted to do mapping by scripts and code again. This lead to the idea that it should be possible to create a file which governs how the structure should look and how the data should be transformed. This would then be the `single source of truth` and with Piri we have achieved this.
+After the Worst POC in History we never wanted to do mapping by scripts and code again. This lead to the idea that it should be possible to create a file which governs how the structure should look and how the data should be transformed. This would then be the `single source of truth` and with Piri we have achieved this.
+
+We believe that this will make collaboration between teams faster and easier. Use Piri to agree with data formats between Front-end and Back-end. Between the 3rd party system and your back-end. You can even use Piri for testing existing integrations ;-)
 
 ## Features
 

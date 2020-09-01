@@ -37,7 +37,7 @@ The attributes are like 'color' of a car or 'amount' in an invoice. Attributes a
 | --- | --- | --- | --- |
 | __name__ | str | The name it will get in the parent object | |
 | _mappings_ | array[[mapping](#mapping)] | list of mapping objects which is where to find data | `[]` |
-| seperator | str | string to separate each value in case multiple are found in mapping step | `''` |
+| separator | str | string to separate each value in case multiple are found in mapping step | `''` |
 | if_statements | array[[if statement](#if-statement)] | If statements that can change data based on conditions | `[]` |
 | casting | [casting](#casting) | Lets you cast data to a spesific type [int, decimal, date] | `{}` |
 | _default_ | Any | If after all mapping, if statements and casting the result is None this value is used | `None` |

@@ -3,7 +3,7 @@
 ## General Python info
 In this package we make extensive use of the [Returns library](https://github.com/dry-python/returns). Its a library that forces us to try and write None free code and also wraps exceptions. It changes return values to Result 'Monads' with Success and Failure return containers or Maybe and Nothing containers. This helps us to do kind of railway-oriented-programming when working with mapping.
 
-We also use [marshmallow](https://marshmallow.readthedocs.io), which is the tool we se to describe models and do validation.
+We also use [marshmallow](https://marshmallow.readthedocs.io), which is the tool we use to describe models and do validation.
 
 ## New Environment Tools
 Lately we have gotten a few great python environment managers. The first being [PyEnv](https://github.com/pyenv/pyenv). Pyenv makes working with multiple versions of python easier. The second tool is [Poetry](https://poetry.eustace.io/). Poetry lets us create a lock file of all our dependencies, this means that both version of python and version of each dependency and its dependencies will be equal for everyone working on the project. It also uses the new pyproject.toml file which is the 'new' setup.py and requirements.txt in 1 file. Poetry also handles building and publishing.
