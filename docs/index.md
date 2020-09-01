@@ -13,7 +13,7 @@ ___
 
 ## What is Piri
 
-Piri is a JSON to JSON mapper. That means that we read input JSON and create output JSON. How the output is created is based on instructions from a configuration file. The configuration file tells us how the output structure should be and from where in the input to where in the output values should be set. In addition to this Piri supports data transformation with `data casting`, `if conditions`, `combination of data from multiple places` and of course setting `default` values.
+Piri is a JSON to JSON mapper. That means that we read input JSON and create output JSON. How the output is created is based on instructions from a configuration file. The configuration file governs the the output structure and tells piri where in the input to find data and where to place it in the output. In addition to this Piri supports data transformation with `data casting`, `if conditions`, `combination of data from multiple places` and of course setting `default` values.
 
 __This enables you to change any input into the output you desire.__
 
@@ -39,18 +39,18 @@ Coming...
 
 ## Goal
 
-The goal of this library is to make JSON to JSON transformation/mapping easy, configurable and documentable. We achieve this by using a simple but feature-rich JSON configuration which then also will act as a contract between parties.
+The goal of this library is to make JSON to JSON transformation/mapping easy, configurable and documentable. We achieve this by using a simple but feature-rich JSON configuration which then also acts as documentation and as a contract between parties.
 
 ## Why
 
 Piri was bourne because I really dislike mapping. Documenting whatever decisions made in your code so that some product owner understands it is also _no me gusto_. Transforming data from one format to another is something software engineers does allmost daily... It should be easy! And documenting it shouldn't be something you have to worry about.
 
-After the Worst POC in History I never wanted to do mapping by scripts and code again. This lead to the idea that it should be possible to create a file which governs how the structure should look and how the data should be transformed. This would then be the `single source of truth` and Piri has achieved this.
+After the Worst POC in History I never wanted to do mapping by scripts and code again. This lead to the idea that it should be possible to create a file which governs how the structure should look and how the data should be transformed. This would then be the `single source of truth` and with Piri we have achieved this.
 
 ## Features
 
 * Mapping with configuration File.
-* JsonSchema validation of config said file.
+* [JSON Schema](https://json-schema.org/) validation of the config file.
 * Structurally Transform JSON
 * Combine multiple values to one.
 * Default values
