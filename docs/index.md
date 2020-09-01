@@ -27,7 +27,7 @@ __This enables you to change any input into the output you desire.__
 * Have XML but need to change it? make it into JSON, transform it with __Piri__ and then dump it to XML again.
 * Customers legacy system needs CSV. Use __Piri__ to transform your nicely structured JSON data into a JSON List that can be easily dumped to CSV
 
-## Official Free Piri Solutions
+## Official Open Piri Solutions
 
 [piri-cli](https://github.com/greenbird/piri-cli), commandline interface for file to file mapping.
 
