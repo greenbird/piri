@@ -24,12 +24,14 @@ markdown_extensions:
       permalink: true
   - pymdownx.magiclink
   - pymdownx.superfences
+  - pymdownx.tabbed
   - pymdownx.tasklist:
       custom_checkbox: true
 nav:
   - Home:
       - Home: index.md
       - Usage: usage.md
+      - Introduction: introduction.md
       - Configuration: configuration.md
       - Contributing: contributing.md
       - Changelog: changelog.md
