@@ -156,6 +156,8 @@ We will now introduce the `mappings` key, it's and array of `mapping` objects.
 
 The `mapping` object is the only place where you actually fetch data from the input. And you do that by specifying a `path`. The `path` describes the steps to take to get to the value we are interested in.
 
+### Mapping.path with flat structure
+
 === "config.json"
 
     ```json hl_lines="13"
@@ -201,7 +203,7 @@ The `mapping` object is the only place where you actually fetch data from the in
     ```
 
 
-## Fetch data from a nested structure with path
+### Mapping.path with nested structure
 
 === "config.json"
 
@@ -251,6 +253,68 @@ The `mapping` object is the only place where you actually fetch data from the in
         }
     }
     ```
+
+
+### Mapping.path with data in lists
+
+Consider the following json:
+```json
+{
+    "data": ["Keanu", "Reeves", "The Matrix"]
+}
+```
+
+In our `mapping` object we supply `path` which is a list of how we get to our data. So how do we get the `lastname` in that data?
+
+Easy, we reference the `index` of the list. The first data in the list starts at `0`, second element `1`, third `2` and so on. This number is the `index` and to get the last name we must use the index: `1`
+
+=== "config.json"
+
+    ```json hl_lines="9 17"
+    {
+        "name": "root",
+        "array": false,
+        "attributes": [
+            {
+                "name": "firstname",
+                "mappings": [
+                    {
+                        "path": ["data", 0]
+                    }
+                ]
+            },
+            {
+                "name": "lastname",
+                "mappings": [
+                    {
+                        "path": ["data", 1]
+                    }
+                ]
+            }
+        ]
+    }
+    ```
+
+=== "input.json"
+
+    ```json
+    {
+        "data": ["Keanu", "Reeves", "The Matrix"]
+    }
+    ```
+
+=== "output.json"
+
+    ```json hl_lines="3"
+    {
+        "firstname": "Keanu",
+        "lastname": "Reeves"
+    }
+    ```
+
+!!! Note
+    We still have to reference the `"data"` key first, so our `path` goes first to `data` then it finds the value at index `1`
+
 
 ## Combining values
 
@@ -372,7 +436,7 @@ If statements are really useful for changing the values depending on some condit
 
 `otherwise` can also be used to specify should happen if the condition is `false`. If `otherwise` is not provided then output will be the original value.
 
-### Chain if statements ++
+### Chain If Statements
 
 `if_statements` is a list of `if statement` objects. We designed it like this so that we can chain them. The output of the first one will be the input of the next one.
 
@@ -558,4 +622,134 @@ Check our the [configuration docs on casting](../configuration#casting-object) f
 
 Finally! Last topic and the most interesting one!
 
-Usually the data that you are processing is not 1 chunk or 1 thing, but a list of things(data) that we want to iterate and for each and every piece of data we want to transform it. This is the section that lets you do that, but first lets look at `mapping.path` with list data.
+Usually the data that you are processing is not one thing, but a list of things(data). We want to iterate the list and for each and every piece of data in that list we want to transform it. This is the section that lets you do that.
+
+Lets say we are creating a website for an RPG game that dumps its data in a flat format. Every line is a player with a `name`, `class`, `money`, and `x`, `y` coordinates for where he is in the world.
+
+=== "data.json"
+
+    ```json
+    {
+        "data": [
+            ["SuperAwesomeNick", 1, 500],
+            ["OtherAwesomeDude", 2, 300],
+            ["PoorDude", 2, 10]
+        ]
+    }
+    ```
+
+Now to make the frontend dudes happy we would liketo structure this nicely... something like:
+
+```json
+{
+    "players": [
+        {
+            "nickname": "SuperAwesomeNick",
+            "class": "warrior",
+            "gold": 500,
+        },
+        {
+            "nickname": "OtherAwesomeDude",
+            ...
+        }
+    ]
+}
+```
+
+### Introducing Path to Iterable
+
+We can use `path_to_iterable` on an `object` which works similar to `mapping.path`, but it applies the current `object` and all its attrbute mappings and nested objects to each and every element in whatever list `path_to_iterable` points to.
+
+Lets solve the above example!
+
+=== "config.json"
+
+    ```json hl_lines="8 13"
+    {
+        "name": "root",
+        "array": false,
+        "objects": [
+            {
+                "name": "players",
+                "array": true,
+                "path_to_iterable": ["data"],
+                "attributes": [
+                    {
+                        "name": "nickname",
+                        "mappings": [
+                            {
+                                "path": ["data", 0],
+                            }
+                        ]
+                    },
+                    {
+                        "name": "class",
+                        "mappings": [
+                            {
+                                "path": ["data", 1]
+                            }
+                        ],
+                        "if_statements": [
+                            {
+                                "condition": "is",
+                                "target": 1,
+                                "then": "warrior",
+                                "otherwise": "cleric"
+                            }
+                        ]
+                    },
+                    {
+                        "name": "gold",
+                        "mappings": [
+                            {
+                                "path": ["data", 2]
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+    ```
+
+=== "input.json"
+
+    ```json
+    {
+        "data": [
+            ["SuperAwesomeNick", 1, 500],
+            ["OtherAwesomeDude", 2, 300],
+            ["PoorDude", 2, 10]
+        ]
+    }
+    ```
+
+=== "output.json"
+
+    ```json
+    {
+        "players": [
+            {
+                "nickname": "SuperAwesomeNick",
+                "class": "warrior",
+                "gold": 500
+            },
+            {
+                "nickname": "OtherAwesomeDude",
+                "class": "cleric",
+                "gold": 300
+            },
+            {
+                "nickname": "PoorDude",
+                "class": "cleric",
+                "gold": 10
+            }
+        ]
+    }
+    ```
+
+Not that we still have to reference the key when mapping. The key name is the last name in the list of `path_to_iterable`, so lets say we also had items.
+
+And thats it!
+
+Congratulations the introduction course is done!
