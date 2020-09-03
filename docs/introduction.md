@@ -99,6 +99,7 @@ To actually map some data we can add `attributes`.
     ```
 
 === "output.json"
+
     ```json
     {
         "firstname": "Thomas"
@@ -137,6 +138,7 @@ Congratulations, you've just mapped a default value to an attribute!
     ```
 
 === "output.json"
+
     ```json hl_lines="2"
     {
         "person": {
@@ -188,6 +190,7 @@ The `mapping` object is the only place where you actually fetch data from the in
     ```
 
 === "output.json"
+
     ```json hl_lines="3"
     {
         "person": {
@@ -240,6 +243,7 @@ The `mapping` object is the only place where you actually fetch data from the in
     ```
 
 === "output.json"
+
     ```json hl_lines="3"
     {
         "actor": {
@@ -299,6 +303,7 @@ It's fairly normal to only need `name` but getting `firstname` _and_ `lastname` 
     ```
 
 === "output.json"
+
     ```json hl_lines="3"
     {
         "actor": {
@@ -316,7 +321,10 @@ Use `separator` to control with what char values should be separated.
 
 Are useful for when you for example get some numbers in your data that are supposed to represent different types.
 
-You can then check if the value equals `1` and output `type_one`.
+
+### Simple if statement
+
+Let's check if the value equals `1` and output `type_one`.
 
 === "config.json"
 
@@ -353,6 +361,7 @@ You can then check if the value equals `1` and output `type_one`.
     ```
 
 === "output.json"
+
     ```json hl_lines="3"
     {
         "readable_type": "type_one"
@@ -363,9 +372,9 @@ If statements are really useful for changing the values depending on some condit
 
 `otherwise` can also be used to specify should happen if the condition is `false`. If `otherwise` is not provided then output will be the original value.
 
-## Chain if statements and add to attribute object aswell.
+### Chain if statements ++
 
-If statements is a list of `if statement` objects. We designed it like this so that we can chain them. The output of the first one will be the input of the next one.
+`if_statements` is a list of `if statement` objects. We designed it like this so that we can chain them. The output of the first one will be the input of the next one.
 
 the `mapping` object is not the only one that can have if statements, the `attribute` can also have them. This allows for some interesting combinations.
 
@@ -438,6 +447,7 @@ the `mapping` object is not the only one that can have if statements, the `attri
     ```
 
 === "output2.json"
+
     ```json
     {
         "readable_type": "funk"
@@ -452,4 +462,100 @@ You can even add if statements for every `mapping` object you add into `mappings
 
 ## Casting values
 
+You've learned how to structure your output with objects, find values and asigning them to attributes, combining values and applying if statements. Its now time to learn how to cast values.
+
+Casting values is very useful for when we get string(text) data that should be numbers. Or when you get badly(non-iso) formatted date values that you want to change to ISO dates
+
+Casting is straightforward. You map your value like you would and then add the casting object.
+
+### Casting to decimal
+
+=== "config.json"
+
+    ```json hl_lines="12 13 14"
+    {
+        "name": "root",
+        "array": false,
+        "attributes": [
+            {
+                "name": "my_number",
+                "mappings": [
+                    {
+                        "path": ["string_number"]
+                    }
+                ],
+                "casting": {
+                    "to": "decimal"
+                }
+            }
+        ]
+    }
+    ```
+
+=== "input.json"
+
+    ```json
+    {
+        "my_number": "123.12"
+    }
+    ```
+
+=== "output.json"
+
+    ```json
+    {
+        "my_number": 123.12
+    }
+    ```
+
+### Casting to ISO Date
+
+When casting to a `date` we always have to supply the `original_format` which is the format that the input data is on. without knowing this there would be know way to know fore sure in every case if it was dd.mm.yy or yy.mm.dd
+
+=== "config.json"
+
+    ```json hl_lines="12 13 14"
+    {
+        "name": "root",
+        "array": false,
+        "attributes": [
+            {
+                "name": "my_iso_date",
+                "mappings": [
+                    {
+                        "path": ["yymmdd_date"]
+                    }
+                ],
+                "casting": {
+                    "to": "date",
+                    "original_format": "yymmdd"
+                }
+            }
+        ]
+    }
+    ```
+
+=== "input.json"
+
+    ```json
+    {
+        "yymmdd_date": "101020"
+    }
+    ```
+
+=== "output.json"
+
+    ```json
+    {
+        "my_iso_date": "2010-10-20"
+    }
+    ```
+
+
+Check our the [configuration docs on casting](../configuration#casting-object) for more info
+
 ## Working with lists
+
+Finally! Last topic and the most interesting one!
+
+Usually the data that you are processing is not 1 chunk or 1 thing, but a list of things(data) that we want to iterate and for each and every piece of data we want to transform it. This is the section that lets you do that, but first lets look at `mapping.path` with list data.
