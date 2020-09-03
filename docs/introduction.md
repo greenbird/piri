@@ -314,6 +314,142 @@ Use `separator` to control with what char values should be separated.
 
 ## If statements
 
+Are useful for when you for example get some numbers in your data that are supposed to represent different types.
+
+You can then check if the value equals `1` and output `type_one`.
+
+=== "config.json"
+
+    ```json hl_lines="10 11 12 13 14 15 16"
+    {
+        "name": "root",
+        "array": false,
+        "attributes": [
+            {
+                "name": "readable_type",
+                "mappings": [
+                    {
+                        "path": ["type"],
+                        "if_statements": [
+                            {
+                                "condition": "is",
+                                "target": "1",
+                                "then": "type_one"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+    ```
+
+=== "input.json"
+
+    ```json hl_lines="5 6"
+    {
+        "type": "1"
+    }
+    ```
+
+=== "output.json"
+    ```json hl_lines="3"
+    {
+        "readable_type": "type_one"
+    }
+    ```
+
+If statements are really useful for changing the values depending on some condition. Check the [list](../configuration/#if-statement) of supported conditions.
+
+`otherwise` can also be used to specify should happen if the condition is `false`. If `otherwise` is not provided then output will be the original value.
+
+## Chain if statements and add to attribute object aswell.
+
+If statements is a list of `if statement` objects. We designed it like this so that we can chain them. The output of the first one will be the input of the next one.
+
+the `mapping` object is not the only one that can have if statements, the `attribute` can also have them. This allows for some interesting combinations.
+
+=== "config.json"
+
+    ```json hl_lines="14 20 25 32 35"
+    {
+        "name": "root",
+        "array": false,
+        "attributes": [
+            {
+                "name": "readable_type",
+                "mappings": [
+                    {
+                        "path": ["type"],
+                        "if_statements": [
+                            {
+                                "condition": "is",
+                                "target": "1",
+                                "then": "boring-type"
+                            },
+                            {
+                                "condition": "is",
+                                "target": "2",
+                                "then": "boring-type-two",
+                                "otherwise": "fun-type"
+                            },
+                            {
+                                "condition": "contains",
+                                "target": "fun",
+                                "then": "funky_type"
+                            }
+                        ]
+                    }
+                ],
+                "if_statements": [
+                    {
+                        "condition": "not",
+                        "target": "funky_type",
+                        "then": "junk",
+                        "otherwise": "funk"
+                    }
+                ]
+            }
+        ]
+    }
+    ```
+
+=== "input.json"
+
+    ```json
+    {
+        "type": "1"
+    }
+    ```
+
+=== "output.json"
+    ```json
+    {
+        "readable_type": "funk"
+    }
+    ```
+
+=== "input2.json"
+
+    ```json
+    {
+        "type": "2"
+    }
+    ```
+
+=== "output2.json"
+    ```json
+    {
+        "readable_type": "funk"
+    }
+    ```
+
+Using input.json the places that are highlighted is everywhere the value changes.
+
+For input2.json the first if statement is false and no value change. The second if statement is true so value is changed to `boring-type-two`. The third if statement is false so no value change. The last if statement checks if the value is `not` `funky_type` which is true, so the value is changed to `junk`.
+
+You can even add if statements for every `mapping` object you add into `mappings` so this can handle some quite complicated condition with multiple values.
+
 ## Casting values
 
 ## Working with lists
