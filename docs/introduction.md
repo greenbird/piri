@@ -560,7 +560,7 @@ Casting is straightforward. You map your value like you would and then add the c
 
     ```json
     {
-        "my_number": "123.12"
+        "string_number": "123.12"
     }
     ```
 
