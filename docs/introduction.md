@@ -630,11 +630,14 @@ Lets say we are creating a website for an RPG game that dumps its data in a flat
 
     ```json
     {
-        "data": [
-            ["SuperAwesomeNick", 1, 500],
-            ["OtherAwesomeDude", 2, 300],
-            ["PoorDude", 2, 10]
-        ]
+        "data": {
+            "something_uninteresting": [1, 2, 3],
+            "character_data": [
+                ["SuperAwesomeNick", 1, 500],
+                ["OtherAwesomeDude", 2, 300],
+                ["PoorDude", 2, 10]
+            ]
+        }
     }
     ```
 
@@ -664,7 +667,7 @@ Lets solve the above example!
 
 === "config.json"
 
-    ```json hl_lines="8 13"
+    ```json hl_lines="8 14 22 38"
     {
         "name": "root",
         "array": false,
@@ -672,13 +675,13 @@ Lets solve the above example!
             {
                 "name": "players",
                 "array": true,
-                "path_to_iterable": ["data"],
+                "path_to_iterable": ["data", "character_data"],
                 "attributes": [
                     {
                         "name": "nickname",
                         "mappings": [
                             {
-                                "path": ["data", 0],
+                                "path": ["character_data", 0]
                             }
                         ]
                     },
@@ -686,7 +689,7 @@ Lets solve the above example!
                         "name": "class",
                         "mappings": [
                             {
-                                "path": ["data", 1]
+                                "path": ["character_data", 1]
                             }
                         ],
                         "if_statements": [
@@ -702,7 +705,7 @@ Lets solve the above example!
                         "name": "gold",
                         "mappings": [
                             {
-                                "path": ["data", 2]
+                                "path": ["character_data", 2]
                             }
                         ]
                     }
@@ -716,11 +719,14 @@ Lets solve the above example!
 
     ```json
     {
-        "data": [
-            ["SuperAwesomeNick", 1, 500],
-            ["OtherAwesomeDude", 2, 300],
-            ["PoorDude", 2, 10]
-        ]
+        "data": {
+            "something_uninteresting": [1, 2, 3],
+            "character_data": [
+                ["SuperAwesomeNick", 1, 500],
+                ["OtherAwesomeDude", 2, 300],
+                ["PoorDude", 2, 10]
+            ]
+        }
     }
     ```
 
@@ -748,7 +754,7 @@ Lets solve the above example!
     }
     ```
 
-Not that we still have to reference the key when mapping. The key name is the last name in the list of `path_to_iterable`, so lets say we also had items.
+Not that we still have to reference the key when mapping. The key name(`character_data`) is the last name in the list of `path_to_iterable`.
 
 And thats it!
 
