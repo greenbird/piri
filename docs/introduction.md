@@ -514,7 +514,7 @@ the `mapping` object is not the only one that can have if statements, the `attri
 
     ```json
     {
-        "readable_type": "funk"
+        "readable_type": "junk"
     }
     ```
 
@@ -754,8 +754,10 @@ Lets solve the above example!
     }
     ```
 
-Not that we still have to reference the key when mapping. The key name(`character_data`) is the last name in the list of `path_to_iterable`.
+Note that we still have to reference the key when mapping. The key name(`character_data`) is the last name in the list of `path_to_iterable`.
 
 And thats it!
 
 Congratulations the introduction course is done!
+
+Time to map some data and have fun doing it!
