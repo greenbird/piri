@@ -23,6 +23,7 @@ PATH: Final = 'path'
 # IF STATEMENT
 CONDITION: Final = 'condition'
 IS: Final = 'is'
+IN: Final = 'in'
 NOT: Final = 'not'
 CONTAINS: Final = 'contains'
 TARGET: Final = 'target'

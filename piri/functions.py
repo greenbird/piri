@@ -8,6 +8,7 @@ from piri.casting import get_casting_function
 from piri.constants import (  # noqa: WPS235
     CONDITION,
     CONTAINS,
+    IN,
     IS,
     NOT,
     ORIGINAL_FORMAT,
@@ -90,6 +91,9 @@ def _apply_statement(
 
     if condition == NOT:
         evaluation = if_value != if_object[TARGET]
+
+    if condition == IN:
+        evaluation = if_value in if_object[TARGET]
 
     if condition == CONTAINS:
         evaluation = if_object[TARGET] in str(if_value)
