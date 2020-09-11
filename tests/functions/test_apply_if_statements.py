@@ -1,3 +1,5 @@
+from returns.result import Success
+
 from piri.functions import apply_if_statements
 
 
@@ -13,7 +15,52 @@ def test_if_is():
             },
         ],
     ]
-    assert apply_if_statements(*test).value_or(None) == 'value2'
+    assert apply_if_statements(*test) == Success('value2')
+
+
+def test_if_is_condition_false():
+    """Test if condition False."""
+    test = [
+        'not_target_value',
+        [
+            {
+                'condition': 'is',
+                'target': 'target_value',
+                'then': 'value2',
+            },
+        ],
+    ]
+    assert apply_if_statements(*test) == Success('not_target_value')
+
+
+def test_if_in():
+    """Test that 1 if (in) statement works."""
+    test = [
+        'target_value',
+        [
+            {
+                'condition': 'in',
+                'target': ['target_value'],
+                'then': 'value2',
+            },
+        ],
+    ]
+    assert apply_if_statements(*test) == Success('value2')
+
+
+def test_if_in_condition_false():
+    """Test if in condition False."""
+    test = [
+        'not_target_value',
+        [
+            {
+                'condition': 'in',
+                'target': 'target_value',
+                'then': 'value2',
+            },
+        ],
+    ]
+    assert apply_if_statements(*test) == Success('not_target_value')
 
 
 def test_if_not():
@@ -28,7 +75,22 @@ def test_if_not():
             },
         ],
     ]
-    assert apply_if_statements(*test).value_or(None) == 'value2'
+    assert apply_if_statements(*test) == Success('value2')
+
+
+def test_if_not_condition_false():
+    """Test if not condition False."""
+    test = [
+        'target_value',
+        [
+            {
+                'condition': 'not',
+                'target': 'target_value',
+                'then': 'value2',
+            },
+        ],
+    ]
+    assert apply_if_statements(*test) == Success('target_value')
 
 
 def test_if_contains():
@@ -43,7 +105,22 @@ def test_if_contains():
             },
         ],
     ]
-    assert apply_if_statements(*test).value_or(None) == 'value2'
+    assert apply_if_statements(*test) == Success('value2')
+
+
+def test_if_contains_condition_false():
+    """Test if contains condition False."""
+    test = [
+        'not_target_value',
+        [
+            {
+                'condition': 'contains',
+                'target': 'does_not_contain',
+                'then': 'value2',
+            },
+        ],
+    ]
+    assert apply_if_statements(*test) == Success('not_target_value')
 
 
 def test_if_chained():
@@ -63,22 +140,7 @@ def test_if_chained():
             },
         ],
     ]
-    assert apply_if_statements(*test).unwrap() == 'value3'
-
-
-def test_if_failed_condition():
-    """Test if condition False."""
-    test = [
-        'not_target_value',
-        [
-            {
-                'condition': 'is',
-                'target': 'target_value',
-                'then': 'value2',
-            },
-        ],
-    ]
-    assert apply_if_statements(*test).unwrap() == 'not_target_value'
+    assert apply_if_statements(*test) == Success('value3')
 
 
 def test_if_failed_condition_goes_to_otherwise():
@@ -94,4 +156,4 @@ def test_if_failed_condition_goes_to_otherwise():
             },
         ],
     ]
-    assert apply_if_statements(*test).unwrap() == 'yes'
+    assert apply_if_statements(*test) == Success('yes')
