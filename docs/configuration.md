@@ -99,8 +99,8 @@ This is where you can change found(or not found) data to something else based on
 
 | name | type | description | default |
 | --- | --- | --- | --- |
-| __condition__ | "is"\|"not"\|"contains" | What condition to use when checking `value` against `target` | |
-| __target__ | str\|number\|bool | Target what we do our condition against ie: `value == target` when condition is `is` | |
+| __condition__ | one of ["is", "not", "in", "contains"] | What condition to use when checking `value` against `target` | |
+| __target__ | str\|number\|bool\|array | Target what we do our condition against ie: `value == target` when condition is `is` | |
 | __then__ | str\|number\|bool | value that we will return if the condition is true | |
 | otherwise | str\|number\|bool | Optional value that we can return if the condition is false | `None` |
 

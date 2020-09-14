@@ -106,7 +106,7 @@ To actually map some data we can add `attributes`.
     }
     ```
 
-Congratulations, you've just mapped a default value to an attribute!
+Congratulations, you've just mapped a default value to an attribute! - Click `output.json` tab to see the output.
 
 ## Structuring with objects
 
@@ -432,7 +432,7 @@ Let's check if the value equals `1` and output `type_one`.
     }
     ```
 
-If statements are really useful for changing the values depending on some condition. Check the [list](../configuration/#if-statement) of supported conditions.
+If statements are really useful for changing the values depending on some condition. [Check the list of supported conditions](../configuration/#if-statement).
 
 `otherwise` can also be used to specify should happen if the condition is `false`. If `otherwise` is not provided then output will be the original value.
 
