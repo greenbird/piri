@@ -5,23 +5,37 @@
     "$ref": "#/definitions/mapping_object",
     "definitions": {
         "if_statement": {
-            "description": "Allows for `is`, `not` and `contains` evaluation and ability to set a value depending on the outcome",
+            "description": "Allows for `is`, `not`, `in` and `contains` evaluation and ability to set a value depending on the outcome",
             "type": "object",
             "properties": {
                 "condition": {
-                    "enum": ["is", "not", "contains"]
+                    "enum": ["is", "not", "in", "contains"]
                 },
                 "target": {
-                    "type": ["string","boolean", "number", "integer"]
+                    "type": ["string", "boolean", "number", "integer"]
                 },
                 "then": {
-                    "type": ["string","boolean", "number", "integer", "null"]
+                    "type": ["string", "boolean", "number", "integer", "null"]
                 },
                 "otherwise": {
-                    "type": ["string","boolean", "number", "integer", "null"]
+                    "type": ["string", "boolean", "number", "integer", "null"]
                 }
             },
-            "required": ["condition", "target", "then"]
+            "required": ["condition", "target", "then"],
+            "if": {
+                "properties": {
+                    "condition": {
+                        "const": "in"
+                    }
+                }
+            },
+            "then": {
+                "properties": {
+                    "target": {
+                        "type": ["string", "array"]
+                    }
+                }
+            }
         },
         "casting": {
             "type": "object",
