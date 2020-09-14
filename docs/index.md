@@ -19,7 +19,7 @@ __This enables you to change any input into the output you desire.__
 
 ## Typical usecases
 
-* You `GET` data form api, but need to transform it for your backend system
+* You `GET` data from api, but need to transform it for your backend system
 * `POST`ing data to an api that needs data on a different format than what your system produces
 * All your backends speak different language? pipe it through __Piri__
 * Customer delivers weirdly formatted data? Use __Piri__ to make it sexy

@@ -7,6 +7,10 @@
 | otherwise | patch |
 
 
+## Minor 1.1.0 - IN condition support in if statements
+
+This minor release adds support for `in` condition for `if_statement`s. This lets you check if the value you found is `in` some list of values _or_ part of a string.
+
 ## Patch 1.0.2 - Bugfix
 
 Loading schema.json used relatve path that did not work when package was imported by other package. Now we use `'{0}/schema.json'.format(os.path.dirname(__file__))` to get absolute path to our schema.json.
