@@ -21,7 +21,7 @@ the [introduction](../introduction) uses piri-cli, head over there for a quick s
 
 ### Piri WEB
 
-Piri Web is a web api built with the [falcon framework](https://falconframework.org/). We have one-click deploy buttons for `GCP Run` and `Heroku`. It enables you to very easily set up a webserver where you can post data with configuration and raw data in the body and get mapped data in the body of the response. This also does not require to write any python code.
+Piri Web is a web api built with the [falcon framework](https://falconframework.org/). We have one-click deploy buttons for `GCP Run` and `Heroku`. It enables you to very easily set up a webserver where you can post configuration and raw data in the body and get mapped data in the body of the response. This also does not require to write any python code.
 
 Usefull when:
 
