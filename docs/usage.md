@@ -5,7 +5,7 @@ We have decided to only support json to json mapping. This is because quite fran
 
 ## Running Piri
 
-There are multiple ways of running piri with the most convenient for testing being with `piri-cli`. Then theres `piri-web` thats a webserver where you can post configuration and data, and it returns the mapped result. Last but not least, theres running `piri` as a package in your python code. This section will shed light on when to use which and add some quickstart examples.
+There are multiple ways of running piri with the most convenient for testing being with `piri-cli`. Then theres `piri-web` which is a webserver where you can post configuration and data, and it returns the mapped result. Last but not least, theres running `piri` as a package in your python code. This section will shed light on when to use which and add some quickstart examples.
 
 ### Piri CLI
 
@@ -27,7 +27,7 @@ Usefull when:
 
 * You can loadbalance it and deploy multiple instances
 * You are on a platform like GCP, AWS, Heroku
-* You are already in a microservice oriented environment
+* You are already in a microservice/webservice oriented environment
 
 Look at the [git repo](https://github.com/greenbird/piri-web) for deployment guide
 
