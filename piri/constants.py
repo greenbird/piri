@@ -30,8 +30,12 @@ TARGET: Final = 'target'
 THEN: Final = 'then'
 OTHERWISE: Final = 'otherwise'
 
-# Casting
+# Slicing
+FROM: Final = 'from'
 TO: Final = 'to'
+
+# Casting
+# 'to' from slicing
 INTEGER: Final = 'integer'
 DECIMAL: Final = 'decimal'
 DATE: Final = 'date'

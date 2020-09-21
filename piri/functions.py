@@ -2,12 +2,13 @@ from typing import Any, Dict, List, Optional
 
 from returns.pipeline import flow
 from returns.pointfree import bind
-from returns.result import Failure, ResultE, Success, safe
+from returns.result import Failure, Result, ResultE, Success, safe
 
 from piri.casting import get_casting_function
 from piri.constants import (  # noqa: WPS235
     CONDITION,
     CONTAINS,
+    FROM,
     IN,
     IS,
     NOT,
@@ -137,6 +138,35 @@ def apply_separator(
         return mapped_values[0]
 
     return separator.join([str(mapped) for mapped in mapped_values])
+
+
+def apply_slicing(
+    value_to_slice: Optional[MapValue],
+    slicing: Dict[str, Any],
+) -> Result[MapValue, ValueError]:
+    """Slice value from index to index.
+
+    :param slicing: :term:`slicing` object
+    :type slicing: dict
+
+    :param value_to_slice: The value to slice
+    :type value_to_slice: MapValue
+
+    :return: Success/Failure containers
+    :rtype: MapValue
+
+    Example
+        >>> apply_slicing('123', {'from': 1}).unwrap()
+        '23'
+        >>> apply_slicing('test', {'from': 1, 'to': 3}).unwrap()
+        'es'
+    """
+    if value_to_slice is None:
+        return Failure(ValueError('value_to_slice is empty'))
+
+    return Success(
+        str(value_to_slice)[slicing[FROM]:slicing.get(TO)],
+    )
 
 
 def apply_casting(
