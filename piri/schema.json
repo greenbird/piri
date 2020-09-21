@@ -37,6 +37,20 @@
                 }
             }
         },
+        "slicing": {
+            "description": "Lets you slice found value from inclusive index[from] to exclusive index[to] leave 'to' as null to get to end of string",
+            "type": "object",
+            "properties": {
+                "from": {
+                    "type": "integer"
+                },
+                "to": {
+                    "type": ["integer", "null"],
+                    "default": null
+                }
+            },
+            "required": ["from"]
+        },
         "casting": {
             "type": "object",
             "properties": {
@@ -76,6 +90,10 @@
                     "items": {
                         "type": ["string", "integer"]
                     }
+                },
+                "slicing": {
+                    "$ref": "#definitions/slicing",
+                    "default": {}
                 },
                 "if_statements": {
                     "type": "array",
