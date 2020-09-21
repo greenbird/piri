@@ -25,5 +25,5 @@ def test_slice_start_to_middle():
 
 
 def test_slice_start_to_end():
-    """test that we can slice from start to end."""
+    """Test that we can slice from start to end."""
     assert apply_slicing('test', {'from': 0, 'to': None}) == Success('test')
