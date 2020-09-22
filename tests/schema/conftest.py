@@ -27,6 +27,16 @@ def if_statement_validator(schema):
 
 
 @pytest.fixture(scope='session')
+def slicing_validator(schema):
+    """Return a validator for slicing part of schema."""
+    return SchemaValidator(
+        Draft7Validator(
+            schema['definitions']['slicing'],
+        ),
+    )
+
+
+@pytest.fixture(scope='session')
 def casting_validator(schema):
     """Return a validator for casting part of schema."""
     return SchemaValidator(
