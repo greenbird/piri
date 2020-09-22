@@ -42,9 +42,18 @@ def map_data(
     )
 
     if not is_successful(iterate_data):
-        return map_object(input_data, configuration).map(
+        error_message = iterate_data.failure()
+
+        mapped_object = map_object(input_data, configuration).map(
             partial(set_array, array=configuration[ARRAY]),
-        ).unwrap()
+        )
+
+        # When Failure happens on the previous Failure, the previous exception
+        # will get swallowed.
+        if not is_successful(mapped_object):
+            raise Exception(error_message)
+
+        return mapped_object.unwrap()
 
     mapped_objects: List[dict] = []
 
