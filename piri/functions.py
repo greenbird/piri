@@ -2,7 +2,7 @@ from typing import Any, Dict, List, Optional
 
 from returns.pipeline import flow
 from returns.pointfree import bind
-from returns.result import Failure, Result, ResultE, Success, safe
+from returns.result import Failure, ResultE, Success, safe
 
 from piri.casting import get_casting_function
 from piri.constants import (  # noqa: WPS235
