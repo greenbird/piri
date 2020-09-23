@@ -42,9 +42,12 @@ def map_data(
     )
 
     if not is_successful(iterate_data):
-        error_message = iterate_data.failure()
+        error_message: Exception = iterate_data.failure()
 
-        mapped_object = map_object(input_data, configuration).map(
+        mapped_object = map_object(  # type: ignore
+            input_data,
+            configuration,
+        ).map(
             partial(set_array, array=configuration[ARRAY]),
         )
 
