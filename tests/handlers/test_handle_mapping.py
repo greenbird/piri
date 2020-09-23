@@ -24,6 +24,38 @@ def test_default_value_is_used():
     ).unwrap() == 'default'
 
 
+def test_slicing_is_applied():
+    """Test that applying slicing works."""
+    input_data = {'key': 'value'}
+    config = {
+        'path': ['key'],
+        'slicing': {
+            'from': 2,
+            'to': 3,
+        },
+    }
+    assert handle_mapping(
+        input_data, config,
+    ).unwrap() == 'l'
+
+
+def test_if_statements_are_applied():
+    """Test that applying if statements works."""
+    input_data = {'key': 'val'}
+    config = {
+        'if_statements': [{
+            'condition': 'is',
+            'target': None,
+            'then': 'otherval',
+        }],
+        'default': 'bob'
+    }
+    assert handle_mapping(
+        input_data, config,
+    ).unwrap() == 'otherval'
+
+
+
 def test_default_value_not_none():
     """Test that providing bad data returns Failure instance."""
     failure = handle_mapping(

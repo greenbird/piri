@@ -2,7 +2,7 @@ from typing import Any, Dict, List, Union
 
 from returns.curry import partial
 from returns.pipeline import flow, is_successful
-from returns.pointfree import bind, fix, rescue
+from returns.pointfree import bind, fix, map_, rescue
 from returns.result import ResultE
 
 from piri.collection_handlers import fetch_data_by_keys
@@ -13,12 +13,14 @@ from piri.constants import (
     MAPPINGS,
     PATH,
     SEPARATOR,
+    SLICING,
 )
 from piri.functions import (
     apply_casting,
     apply_default,
     apply_if_statements,
     apply_separator,
+    apply_slicing,
 )
 from piri.valuetypes import MapValue
 
@@ -59,6 +61,9 @@ def handle_mapping(
         collection,
         partial(fetch_data_by_keys, path=cfg.get(PATH, [])),
         fix(lambda _: None),  # type: ignore
+        map_(partial(
+            apply_slicing, slicing=cfg.get(SLICING, {}),
+        )),
         bind(partial(
             apply_if_statements, if_objects=cfg.get(IF_STATEMENTS, []),
         )),

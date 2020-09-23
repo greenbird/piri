@@ -31,6 +31,7 @@ THEN: Final = 'then'
 OTHERWISE: Final = 'otherwise'
 
 # Slicing
+SLICING: Final = 'slicing'
 FROM: Final = 'from'
 TO: Final = 'to'
 
