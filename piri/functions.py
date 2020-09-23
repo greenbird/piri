@@ -143,7 +143,7 @@ def apply_separator(
 def apply_slicing(
     value_to_slice: Optional[MapValue],
     slicing: Dict[str, Any],
-) -> Result[MapValue, ValueError]:
+) -> Optional[MapValue]:
     """Slice value from index to index.
 
     :param slicing: :term:`slicing` object
@@ -156,17 +156,18 @@ def apply_slicing(
     :rtype: MapValue
 
     Example
-        >>> apply_slicing('123', {'from': 1}).unwrap()
+        >>> apply_slicing('123', {'from': 1})
         '23'
-        >>> apply_slicing('test', {'from': 1, 'to': 3}).unwrap()
+        >>> apply_slicing('test', {'from': 1, 'to': 3})
         'es'
     """
     if value_to_slice is None:
-        return Failure(ValueError('value_to_slice is empty'))
+        return value_to_slice
 
-    return Success(
-        str(value_to_slice)[slicing[FROM]:slicing.get(TO)],
-    )
+    if not slicing:
+        return value_to_slice
+
+    return str(value_to_slice)[slicing[FROM]:slicing.get(TO)]
 
 
 def apply_casting(
