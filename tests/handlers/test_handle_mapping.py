@@ -55,7 +55,6 @@ def test_if_statements_are_applied():
     ).unwrap() == 'otherval'
 
 
-
 def test_default_value_not_none():
     """Test that providing bad data returns Failure instance."""
     failure = handle_mapping(
