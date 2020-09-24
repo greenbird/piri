@@ -110,6 +110,8 @@ Lets you slice a value from index `from` to index `to`. Slicing is implemented e
 ```
 > input('hello') -> 'el'
 
+!!! Note
+    All values are turned into `string` before slicing is applied. This lets you also slice any values independant on their original type in the input data. If the config Slicing object is empty, this str casting is also skipped. Any result after slicing is also a string. So if you need a different format use [casting to change it](#casting)
 
 ## If Statement
 
@@ -135,7 +137,7 @@ This is where you can change found(or not found) data to something else based on
 
 > input('1') -> 'first_type'
 
-## Casting object
+## Casting
 The casting object lets you cast whatever value is found to some new value. Currently integer, decimal and date are supported and original format is optional helper data that we need for some special cases where the format of the input value cannot be asserted automatically.
 
 | name | type | description | default |
