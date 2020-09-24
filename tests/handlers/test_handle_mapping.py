@@ -48,7 +48,7 @@ def test_if_statements_are_applied():
             'target': None,
             'then': 'otherval',
         }],
-        'default': 'bob'
+        'default': 'bob',
     }
     assert handle_mapping(
         input_data, config,
