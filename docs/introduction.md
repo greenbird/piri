@@ -528,7 +528,7 @@ You can also slice numbers, bools and any other json value since we cast the val
     ```
 
 !!! Hint
-    If you need to take values from end of string, like the 5 last characters, then you can use a negative `from` value to count from the end instead. This works just like pythons slicing functionality.
+    If you need to take values from end of string, like the 5 last characters, then you can use a negative `from` value to count from the end instead. This works just like [pythons slicing functionality.](https://stackoverflow.com/a/509295)
 
 
 ## If statements
