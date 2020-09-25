@@ -381,6 +381,156 @@ To find more values and combine them, simply add another `mapping` object to `ma
 
 Use `separator` to control with what char values should be separated.
 
+
+## Slicing
+
+You can use slicing to cut values at value[from:to] which is very useful when you are only interested in part of a value. The value is turned into a string with `str()` before slicing is applied.
+
+### String slice
+
+Lets say that we have some value like this `street-Santas Polar city 45`. We would really like to filter away the `street-` part of that value. And that is exactly what Slicing is for.
+
+=== "config.json"
+
+    ```json hl_lines="19 20 21"
+    {
+        "name": "root",
+        "array": false,
+        "objects": [
+            {
+                "name": "fantasy",
+                "array": true,
+                "path_to_iterable": ["data"],
+                "attributes": [
+                    {
+                        "name": "name",
+                        "mappings": [{"path": ["data", 0]}]
+                    },
+                    {
+                        "name": "street",
+                        "mappings": [
+                            {
+                                "path": ["data", 1],
+                                "slicing": {
+                                    "from": 7
+                                }
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+    ```
+
+=== "input.json"
+
+    ```json
+    {
+        "data": [
+            ["santa", "street-Santas Polar city 45"],
+            ["unicorn", "street-Fluffy St. 40"]
+        ]
+    }
+    ```
+
+=== "output.json"
+
+    ```json hl_lines="5 9"
+    {
+        "fantasy": [
+            {
+                "name": "santa",
+                "street": "Santas Polar city 45"
+            },
+            {
+                "name": "unicorn",
+                "street": "Fluffy St. 40"
+            }
+        ]
+    }
+    ```
+
+!!! Hint
+    If you have some max length on a database table, then you can use string slicing to make sure the length does not exceed a certain length with the `to` key. Some databases also has for example two address fields for when the length of one is too short. Then map both with slicing [from=0 to=50] and from=50 to=None respectively and you'll solve the problem.
+
+
+### Slicing numbers and casting
+
+You can also slice numbers, bools and any other json value since we cast the value to string first. This means that if you for example get a social security number but is only interested in the `date` part of it, you can slice it. And then even cast the value to a `date`.
+
+`2020123112345` -> `"20201231"` -> `"2020-12-31"`
+
+=== "config.json"
+
+    ```json hl_lines="19 20 21 22 25 26 27 28"
+    {
+        "name": "root",
+        "array": false,
+        "objects": [
+            {
+                "name": "fantasy",
+                "array": true,
+                "path_to_iterable": ["data"],
+                "attributes": [
+                    {
+                        "name": "name",
+                        "mappings": [{"path": ["data", 0]}]
+                    },
+                    {
+                        "name": "birthday",
+                        "mappings": [
+                            {
+                                "path": ["data", 1],
+                                "slicing": {
+                                    "from": 0,
+                                    "to": 8
+                                }
+                            }
+                        ],
+                        "casting": {
+                            "to": "date",
+                            "original_format": "yyyymmdd"
+                        }
+                    }
+                ]
+            }
+        ]
+    }
+    ```
+
+=== "input.json"
+
+    ```json
+    {
+        "data": [
+            ["santa", 2020123112345],
+            ["unicorn", 1991123012346]
+        ]
+    }
+    ```
+
+=== "output.json"
+
+    ```json hl_lines="5 9"
+    {
+        "fantasy": [
+            {
+                "name": "santa",
+                "birthday": "2020-12-31"
+            },
+            {
+                "name": "unicorn",
+                "birthday": "1991-12-30"
+            }
+        ]
+    }
+    ```
+
+!!! Hint
+    If you need to take values from end of string, like the 5 last characters, then you can use a negative `from` value to count from the end instead. This works just like pythons slicing functionality.
+
+
 ## If statements
 
 Are useful for when you for example get some numbers in your data that are supposed to represent different types.
