@@ -452,7 +452,7 @@ Lets say that we have some value like this `street-Santas Polar city 45`. We wou
     ```
 
 !!! Hint
-    If you have some max length on a database table, then you can use string slicing to make sure the length does not exceed a certain length with the `to` key. Some databases also has for example two address fields for when the length of one is too short. Then map both with slicing [from=0 to=50] and from=50 to=None respectively and you'll solve the problem.
+    If you have some max length on a database table, then you can use string slicing to make sure the length does not exceed a certain length with the `to` key. Some databases also has for example two address fields for when the length of one is too short. Then map both with slicing `"from" :0, "to": 50` and `"from": 50, "to": null` respectively and you'll solve the problem.
 
 
 ### Slicing numbers and casting
