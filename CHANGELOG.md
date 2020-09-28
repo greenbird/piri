@@ -7,6 +7,15 @@
 | otherwise | patch |
 
 
+## Minor 1.2.0 - Slicing support
+
+This release adds support for slicing values. With slicing you can decide from where to where to cut a value. This enables us to pick only the interesting parts of the input values.
+
+* Adds Slicing feature
+* Adds Slicing entry to docs/configuration.md
+* Adds Slicing parth to docs/introduction.md
+
+
 ## Minor 1.1.0 - IN condition support in if statements
 
 This minor release adds support for `in` condition for `if_statement`s. This lets you check if the value you found is `in` some list of values _or_ part of a string.
