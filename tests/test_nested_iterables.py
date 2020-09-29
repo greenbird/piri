@@ -5,34 +5,18 @@ def test_iterable_data_handler():
 
     data = {
         'data': [
-            {
-                'nested': [
-                    {
-                        'another': [
-                            {
-                                'a': 'a',
-                            },
-                            {
-                                'a': 'b'
-                            }
-                        ]
-                    }
-                ]
-            },
-            {
-                'nested': [
-                    {
-                        'another': [
-                            {
-                                'a': 'c',
-                            },
-                            {
-                                'a': 'd'
-                            }
-                        ]
-                    }
-                ]
-            }
+            {'nested': [
+                {'another': [
+                    {'a': 'a'},
+                    {'a': 'b'},
+                ]},
+            ]},
+            {'nested': [
+                {'another': [
+                    {'a': 'c'},
+                    {'a': 'd'},
+                ]},
+            ]},
         ]
     }
 
@@ -43,9 +27,5 @@ def test_iterable_data_handler():
     ]
 
     result = iterable_data_handler(data, paths_to_iterables)
-    print('hei')
-    print('result', result)
-    print()
-    res = [r for r in result]
-    print('res', res)
-    assert 1 == 2
+    assert len(result) == 4
+    assert result[3]['another']['a'] == 'd'
