@@ -8,20 +8,28 @@ def test_iterable_data_handler():
             {
                 'nested': [
                     {
-                        'a': 'a',
-                    },
-                    {
-                        'a': 'b'
+                        'another': [
+                            {
+                                'a': 'a',
+                            },
+                            {
+                                'a': 'b'
+                            }
+                        ]
                     }
                 ]
             },
             {
                 'nested': [
                     {
-                        'a': 'c',
-                    },
-                    {
-                        'a': 'd'
+                        'another': [
+                            {
+                                'a': 'c',
+                            },
+                            {
+                                'a': 'd'
+                            }
+                        ]
                     }
                 ]
             }
@@ -31,9 +39,13 @@ def test_iterable_data_handler():
     paths_to_iterables = [
         ['data'],
         ['data', 'nested'],
+        ['nested', 'another']
     ]
 
     result = iterable_data_handler(data, paths_to_iterables)
     print('hei')
-    print([r for r in result])
+    print('result', result)
+    print()
+    res = [r for r in result]
+    print('res', res)
     assert 1 == 2

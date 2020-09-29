@@ -64,16 +64,15 @@ def map_data(
 
 
 def iterable_data_handler(data, paths):
-    temp_data = {**data}
-    print('temp_data', temp_data)
+    print('data', data)
     path, rest = paths[0], paths[1:]
 
     if not rest:
-        return create_array_bob(data, path)
+        return yield_iterable(data, path)
 
     my_list = []
 
-    for item in create_array_bob(temp_data, path):
+    for item in yield_iterable(data, path):
 
         my_list.extend(
             iterable_data_handler(item, rest),
@@ -82,29 +81,14 @@ def iterable_data_handler(data, paths):
     return my_list
 
 
-def create_array_bob(data, path):
-    return [
+def yield_iterable(data, path):
+    yield from ([
         {
             **data,
             **{path[-1]: item},
         }
         for item in fetch_list_by_keys(data, path).unwrap()
-    ]
-
-    """
-    iterable_data = fetch_list_by_keys(temp_data, path).unwrap()
-    print('iterable_data', iterable_data)
-
-    return [
-        {
-            **temp_data,
-            **{path[-1]: iter_item},
-        }
-        for iter_item in iterable_data
-    ]
-    """
-
-
+    ])
 
 
 def set_array(input_data, array):
