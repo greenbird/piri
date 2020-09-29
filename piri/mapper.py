@@ -63,32 +63,6 @@ def map_data(
     return mapped_objects
 
 
-def iterable_data_handler(raw_data, paths) -> list:
-    """Iterate and create all combinations from list of paths."""
-    path, rest = paths[0], paths[1:]
-    if not rest:
-        return create_iterable(raw_data, path)
-
-    my_list = []
-
-    for iterable in create_iterable(raw_data, path):
-        my_list.extend(
-            iterable_data_handler(iterable, rest),
-        )
-    return my_list
-
-
-def create_iterable(input_data, path) -> list:
-    """Return set of set of data per entry in list at path."""
-    return [
-        {
-            **input_data,
-            **{path[-1]: iterable},
-        }
-        for iterable in fetch_list_by_keys(input_data, path).unwrap()
-    ]
-
-
 def set_array(input_data, array):
     """Return data wrapped in array if if array=True."""
     if array:

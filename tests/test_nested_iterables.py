@@ -1,9 +1,9 @@
-from piri.mapper import iterable_data_handler
+from piri.collection_handlers import iterable_data_handler
 
 
 def test_iterable_data_handler():
-
-    data = {
+    """Test that we can iterate multiple levels in one go."""
+    input_data = {
         'data': [
             {'nested': [
                 {'another': [
@@ -17,15 +17,15 @@ def test_iterable_data_handler():
                     {'a': 'd'},
                 ]},
             ]},
-        ]
+        ],
     }
 
     paths_to_iterables = [
         ['data'],
         ['data', 'nested'],
-        ['nested', 'another']
+        ['nested', 'another'],
     ]
 
-    result = iterable_data_handler(data, paths_to_iterables)
-    assert len(result) == 4
-    assert result[3]['another']['a'] == 'd'
+    iterables = iterable_data_handler(input_data, paths_to_iterables)
+    assert len(iterables) == 4
+    assert iterables[3]['another']['a'] == 'd'
