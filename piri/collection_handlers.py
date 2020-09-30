@@ -1,8 +1,6 @@
 from typing import Any, Dict, List, Union
 
-from returns.result import Failure, ResultE, Success, _Success, safe
-from returns.pipeline import is_successful
-from returns.functions import tap
+from returns.result import ResultE, Success, safe
 
 from piri.valuetypes import MapValue, ValueTypes
 
@@ -90,10 +88,11 @@ def iterable_data_handler(raw_data, paths) -> ResultE[list]:
     return Success(my_list)
 
 
-def create_iterable(input_data, path) -> _Success[list]:
+def create_iterable(input_data, path) -> ResultE[list]:
     """Return set of set of data per entry in list at path."""
-    return fetch_list_by_keys(  # type: ignore
-        input_data, path,
+    return fetch_list_by_keys(
+        input_data,
+        path,
     ).map(
         lambda iterables: [
             {
