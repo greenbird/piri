@@ -23,9 +23,11 @@ def test_iterable_data_handler():
     paths_to_iterables = [
         ['data'],
         ['data', 'nested'],
+        ['does', 'not', 'exist'],
         ['nested', 'another'],
     ]
 
-    iterables = iterable_data_handler(input_data, paths_to_iterables)
+    iterables = iterable_data_handler(input_data, paths_to_iterables).unwrap()
     assert len(iterables) == 4
     assert iterables[3]['another']['a'] == 'd'
+    # assert False

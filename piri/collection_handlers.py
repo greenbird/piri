@@ -1,6 +1,8 @@
 from typing import Any, Dict, List, Union
 
-from returns.result import safe
+from returns.result import Failure, ResultE, Success, _Success, safe
+from returns.pipeline import is_successful
+from returns.functions import tap
 
 from piri.valuetypes import MapValue, ValueTypes
 
@@ -71,27 +73,35 @@ def fetch_list_by_keys(
     raise ValueError('Non list data found: ', str(collection))
 
 
-def iterable_data_handler(raw_data, paths) -> list:
+def iterable_data_handler(raw_data, paths) -> ResultE[list]:
     """Iterate and create all combinations from list of paths."""
     path, rest = paths[0], paths[1:]
     if not rest:
         return create_iterable(raw_data, path)
 
-    my_list = []
+    my_list: list = []
 
-    for iterable in create_iterable(raw_data, path):
-        my_list.extend(
-            iterable_data_handler(iterable, rest),
+    for iterable in create_iterable(raw_data, path).unwrap():
+
+        iterable_data_handler(iterable, rest).map(
+            my_list.extend,
         )
-    return my_list
+
+    return Success(my_list)
 
 
-def create_iterable(input_data, path) -> list:
+def create_iterable(input_data, path) -> _Success[list]:
     """Return set of set of data per entry in list at path."""
-    return [
-        {
-            **input_data,
-            **{path[-1]: iterable},
-        }
-        for iterable in fetch_list_by_keys(input_data, path).unwrap()
-    ]
+    return fetch_list_by_keys(  # type: ignore
+        input_data, path,
+    ).map(
+        lambda iterables: [
+            {
+                **input_data,
+                **{path[-1]: iterable},
+            }
+            for iterable in iterables
+        ],
+    ).fix(
+        lambda _: [input_data],
+    )
