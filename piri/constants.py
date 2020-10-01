@@ -3,7 +3,7 @@ from typing_extensions import Final
 # Objects
 NAME = 'name'
 ARRAY: Final = 'array'
-PATH_TO_ITERABLE: Final = 'path_to_iterable'
+PATHS_TO_ITERABLES: Final = 'paths_to_iterables'
 
 ATTRIBUTES: Final = 'attributes'
 OBJECTS: Final = 'objects'

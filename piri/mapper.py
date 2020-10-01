@@ -6,7 +6,7 @@ from returns.maybe import maybe
 from returns.pipeline import is_successful
 from returns.result import safe
 
-from piri.collection_handlers import fetch_list_by_keys
+from piri.collection_handlers import iterable_data_handler
 from piri.constants import (
     ARRAY,
     ATTRIBUTES,
@@ -14,7 +14,7 @@ from piri.constants import (
     BRANCHING_OBJECTS,
     NAME,
     OBJECTS,
-    PATH_TO_ITERABLE,
+    PATHS_TO_ITERABLES,
 )
 from piri.handlers import handle_attribute
 
@@ -37,8 +37,8 @@ def map_data(
     If we had iterable data, iterate that data and run map_object with the
     current iteration data added to the root of the input_data dictionary
     """
-    iterate_data = fetch_list_by_keys(
-        input_data, configuration.get(PATH_TO_ITERABLE, []),
+    iterate_data = iterable_data_handler(
+        input_data, configuration.get(PATHS_TO_ITERABLES, []),
     )
 
     if not is_successful(iterate_data):
@@ -51,10 +51,7 @@ def map_data(
     # find returns function to work with iterables
     for iteration in iterate_data.unwrap():
         map_object(
-            {
-                **input_data,
-                **{configuration[PATH_TO_ITERABLE][-1]: iteration},
-            },
+            iteration,
             configuration,
         ).map(
             mapped_objects.append,
