@@ -47,6 +47,16 @@ def casting_validator(schema):
 
 
 @pytest.fixture(scope='session')
+def iterable_validator(schema):
+    """Return a validator for casting part of schema."""
+    return SchemaValidator(
+        Draft7Validator(
+            schema['definitions']['iterable'],
+        ),
+    )
+
+
+@pytest.fixture(scope='session')
 def mapping_validator(schema):
     """Return a validator for mapping part of schema."""
     return SchemaValidator(
