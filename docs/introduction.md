@@ -809,15 +809,15 @@ Now to make the frontend dudes happy we would liketo structure this nicely... so
 }
 ```
 
-### Introducing Path to Iterable
+### Introducing Iterables
 
-We can use `path_to_iterable` on an `object` which works similar to `mapping.path`, but it applies the current `object` and all its attrbute mappings and nested objects to each and every element in whatever list `path_to_iterable` points to.
+We can use `iterables` on an `object` which works similar to `mapping.path`, but it applies the current `object` and all its attribute mappings and nested objects to each and every element in whatever list `iterables` points to.
 
 Lets solve the above example!
 
 === "config.json"
 
-    ```json hl_lines="8 14 22 38"
+    ```json hl_lines="8 9 10 11 12 13 19 27 43"
     {
         "name": "root",
         "array": false,
@@ -825,13 +825,18 @@ Lets solve the above example!
             {
                 "name": "players",
                 "array": true,
-                "path_to_iterable": ["data", "character_data"],
+                "iterables": [
+                    {
+                        "alias": "character",
+                        "path": ["data", "character_data"],
+                    }
+                ],
                 "attributes": [
                     {
                         "name": "nickname",
                         "mappings": [
                             {
-                                "path": ["character_data", 0]
+                                "path": ["character", 0]
                             }
                         ]
                     },
@@ -839,7 +844,7 @@ Lets solve the above example!
                         "name": "class",
                         "mappings": [
                             {
-                                "path": ["character_data", 1]
+                                "path": ["character", 1]
                             }
                         ],
                         "if_statements": [
@@ -855,7 +860,7 @@ Lets solve the above example!
                         "name": "gold",
                         "mappings": [
                             {
-                                "path": ["character_data", 2]
+                                "path": ["character", 2]
                             }
                         ]
                     }
@@ -904,10 +909,157 @@ Lets solve the above example!
     }
     ```
 
-Note that we still have to reference the key when mapping. The key name(`character_data`) is the last name in the list of `path_to_iterable`.
+
+`iterables` is an array of `iterable` objects that _must_ contain an `alias` and a `path`. `alias` is will be the name of the `key` that you will then be able to reference and `path` is the path to the iterable list/array in the input data.
+
+!!! Note
+    In our mappings.path we reference the key name(`character`) which is the `alias` we set up. Behind the scenes what really happens is that we add this `character` key to the root input data and run mapping for each val/obj in the list.
+
+    This means that you must be sure to use unique aliases since otherwise you will overwrite other data.
+
+### Iterables Continued
+
+So you think that was cool? Well, we can have as many as we want.
+
+consider the following input:
+
+```json hl_lines="2 4 6 15 17"
+{
+    "data": [
+        {
+            "nested": [
+                {
+                    "another": [
+                        {"a": "a"},
+                        {"a": "b"}
+                    ],
+                    "name": "nested1"
+                }
+            ]
+        },
+        {
+            "nested": [
+                {
+                    "another": [
+                        {"a": "c"},
+                        {"a": "d"}
+                    ],
+                    "name": "nested2"
+                }
+            ]
+        }
+    ]
+}
+```
+
+Theres 3 levels of lists. But lets say we want to flatten this structure. Then we will have to get all combinations of `data.nested.another.a` = `a`, `b`, `c` and `d`.
+
+Well its easy, first we just add iterables to `"data"`, then we must iterate `"nested"`, then we must iterate `"another"`.
+
+
+=== "config.json"
+
+    ```json
+    {
+        "name": "root",
+        "array": true,
+        "iterables": [
+            {
+                "alias": "data",
+                "path": ["data"]
+            },
+            {
+                "alias": "nested",
+                "path": ["data", "nested"]
+            },
+            {
+                "alias": "another",
+                "path": ["nested", "another"]
+            }
+        ],
+        "attributes": [
+            {
+                "name": "nested_name",
+                "mappings": [
+                    {
+                        "path": ["nested", "name"]
+                    }
+                ]
+            },
+            {
+                "name": "value_of_a",
+                "mappings": [
+                    {
+                        "path": ["another", "a"]
+                    }
+                ]
+            }
+        ]
+    }
+    ```
+
+=== "input.json"
+
+    ```json
+    {
+        "data": [
+            {
+                "nested": [
+                    {
+                        "another": [
+                            {"a": "a"},
+                            {"a": "b"}
+                        ],
+                        "name": "nested1"
+                    }
+                ]
+            },
+            {
+                "nested": [
+                    {
+                        "another": [
+                            {"a": "c"},
+                            {"a": "d"}
+                        ],
+                        "name": "nested2"
+                    }
+                ]
+            }
+        ]
+    }
+    ```
+
+=== "output.json"
+
+    ```json hl_lines="4 8 12 16"
+    [
+        {
+            "nested_name": "nested1",
+            "value_of_a": "a"
+        },
+        {
+            "nested_name": "nested1",
+            "value_of_a": "b"
+        },
+        {
+            "nested_name": "nested2",
+            "value_of_a": "c"
+        },
+        {
+            "nested_name": "nested2",
+            "value_of_a": "d"
+        }
+    ]
+    ```
+
+
+We will write a more in depth explanation of iterables and how they work internally. [Link to the issue](https://github.com/greenbird/piri/issues/113)
+
 
 And thats it!
 
 Congratulations the introduction course is done!
 
 Time to map some data and have fun doing it!
+
+Have a look in [usecases](../usecases/usecases) section for some quick starts and tutorials
