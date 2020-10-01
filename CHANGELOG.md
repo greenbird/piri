@@ -7,7 +7,14 @@
 | otherwise | patch |
 
 
-## Minor 1.2.0 - Slicing support
+## 2.0.0 - Iterables
+
+This release introduces a breaking change where `path_to_iterable` is renamed to `iterables`. `iterables` is also now a list of `iterable` objects that contain an `alias` and a `path`. This lets you iterate over multiple list recursively from 1 object.
+
+* Breaking: Adds recursive multiple iteration with `iterables`
+* Fix: Points links in docs to read the docs
+
+## 1.2.0 - Slicing support
 
 This release adds support for slicing values. With slicing you can decide from where to where to cut a value. This enables us to pick only the interesting parts of the input values.
 
@@ -16,16 +23,16 @@ This release adds support for slicing values. With slicing you can decide from w
 * Adds Slicing parth to docs/introduction.md
 
 
-## Minor 1.1.0 - IN condition support in if statements
+## 1.1.0 - IN condition support in if statements
 
 This minor release adds support for `in` condition for `if_statement`s. This lets you check if the value you found is `in` some list of values _or_ part of a string.
 
-## Patch 1.0.2 - Bugfix
+## 1.0.2 - Bugfix
 
 Loading schema.json used relatve path that did not work when package was imported by other package. Now we use `'{0}/schema.json'.format(os.path.dirname(__file__))` to get absolute path to our schema.json.
 
 
-## Patch 1.0.1
+## 1.0.1
 
 * adds python versions badge
 * removes bad part of documentation
