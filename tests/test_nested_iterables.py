@@ -21,10 +21,22 @@ def test_iterable_data_handler():
     }
 
     paths_to_iterables = [
-        ['data'],
-        ['data', 'nested'],
-        ['does', 'not', 'exist'],
-        ['nested', 'another'],
+        {
+            'alias': 'data',
+            'path': ['data'],
+        },
+        {
+            'alias': 'nested',
+            'path': ['data', 'nested'],
+        },
+        {
+            'alias': 'doesnotexist',
+            'path': ['does', 'not', 'exist'],
+        },
+        {
+            'alias': 'another',
+            'path': ['nested', 'another'],
+        },
     ]
 
     iterables = iterable_data_handler(input_data, paths_to_iterables).unwrap()

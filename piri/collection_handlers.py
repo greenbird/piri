@@ -92,18 +92,18 @@ def iterable_data_handler(raw_data, paths) -> ResultE[list]:
     return Success(my_list)
 
 
-def create_iterable(input_data, path) -> ResultE[list]:
-    """Return set of set of data per entry in list at path."""
+def create_iterable(input_data, iterable) -> ResultE[list]:
+    """Return set of set of data per entry in list at iterable[path]."""
     return fetch_list_by_keys(
         input_data,
-        path,
+        iterable['path'],
     ).map(
-        lambda iterables: [
+        lambda collections: [
             {
                 **input_data,
-                **{path[-1]: iterable},
+                **{iterable['alias']: collection},
             }
-            for iterable in iterables
+            for collection in collections
         ],
     ).fix(
         lambda _: [input_data],
