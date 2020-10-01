@@ -64,7 +64,7 @@ We believe that this will make collaboration between teams faster and easier. Us
     * integer, decimal, iso date
 
 ## Contributing
-Please see [contribute](../contributing)
+Please see [contribute](https://piri.readthedocs.io/en/stable/contributing)
 
 ## Installation
 
@@ -76,6 +76,10 @@ pip install piri
 ```sh
 poetry add piri
 ```
+
+## Introduction
+
+Have a look at our introduction course [here](https://piri.readthedocs.io/en/stable/introduction)
 
 ## Quickstart
 ```python
@@ -90,7 +94,12 @@ my_config = {
         {
             'name': 'invoices',
             'array': True,
-            'path_to_iterable': ['root', 'invoices'],
+            'iterables': [
+                {
+                    'alias': 'invoices',
+                    'path': ['root', 'invoices'],
+                },
+            ],
             'attributes': [
                 {
                     'name': 'amount',
