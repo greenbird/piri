@@ -27,7 +27,7 @@ def test_invalid_path_required(iterable_validator):
 
 
 def test_alias_and_path_bad_type(iterable_validator):
-    """Test that alias must be string and path must be array"""
+    """Test that alias must be string and path must be array."""
     test: dict = {'alias': True, 'path': 'test'}
     validate_result = iterable_validator(test)
     assert not is_successful(validate_result)

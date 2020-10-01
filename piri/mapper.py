@@ -12,9 +12,9 @@ from piri.constants import (
     ATTRIBUTES,
     BRANCHING_ATTRIBUTES,
     BRANCHING_OBJECTS,
+    ITERABLES,
     NAME,
     OBJECTS,
-    ITERABLES,
 )
 from piri.handlers import handle_attribute
 

@@ -324,7 +324,7 @@ def test_most_features():
                     {
                         'alias': 'persons',
                         'path': ['persons'],
-                    }
+                    },
                 ],
                 'attributes': [
                     {
