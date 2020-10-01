@@ -78,7 +78,12 @@ def test_double_repeatable():
     config = {
         'name': 'root',
         'array': True,
-        'paths_to_iterables': [['journals']],
+        'iterables': [
+            {
+                'alias': 'journals',
+                'path': ['journals'],
+            },
+        ],
         'attributes': [
             {
                 'name': 'journal_id',
@@ -93,8 +98,11 @@ def test_double_repeatable():
             {
                 'name': 'invoices',
                 'array': True,
-                'paths_to_iterables': [
-                    ['journals', 'journal', 'invoices'],
+                'iterables': [
+                    {
+                        'alias': 'invoices',
+                        'path': ['journals', 'journal', 'invoices'],
+                    },
                 ],
                 'attributes': [
                     {
@@ -153,7 +161,12 @@ def test_mapping_where_data_is_not_found():
     config = {
         'name': 'root',
         'array': True,
-        'paths_to_iterables': [['journals']],
+        'iterables': [
+            {
+                'alias': 'journals',
+                'path': ['journals'],
+            },
+        ],
         'attributes': [
             {
                 'name': 'journal_id',
@@ -168,8 +181,11 @@ def test_mapping_where_data_is_not_found():
             {
                 'name': 'invoices',
                 'array': True,
-                'paths_to_iterables': [
-                    ['journals', 'journal', 'invoices'],
+                'iterables': [
+                    {
+                        'alias': 'invoices',
+                        'path': ['journals', 'journal', 'invoices'],
+                    },
                 ],
                 'attributes': [
                     {
@@ -304,7 +320,12 @@ def test_most_features():
             {
                 'name': 'people',
                 'array': True,
-                'paths_to_iterables': [['persons']],
+                'iterables': [
+                    {
+                        'alias': 'persons',
+                        'path': ['persons'],
+                    }
+                ],
                 'attributes': [
                     {
                         'name': 'firstname',
