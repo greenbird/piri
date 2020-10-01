@@ -7,7 +7,9 @@ ___
 [![wemake-python-styleguide](https://img.shields.io/badge/style-wemake-000000.svg)](https://github.com/wemake-services/wemake-python-styleguide)
 ___
 
-**[Documentation](https://greenbird.github.io/piri/) |
+**Documentation
+([Stable](https://piri.readthedocs.io/) |
+[Latest](https://piri.readthedocs.io/en/latest/)) |
 [Source Code](https://github.com/greenbird/piri) |
 [Task Tracker](https://github.com/greenbird/piri/issues)**
 
