@@ -14,7 +14,7 @@ from piri.constants import (
     BRANCHING_OBJECTS,
     NAME,
     OBJECTS,
-    PATHS_TO_ITERABLES,
+    ITERABLES,
 )
 from piri.handlers import handle_attribute
 
@@ -38,7 +38,7 @@ def map_data(
     current iteration data added to the root of the input_data dictionary
     """
     iterate_data = iterable_data_handler(
-        input_data, configuration.get(PATHS_TO_ITERABLES, []),
+        input_data, configuration.get(ITERABLES, []),
     )
 
     if not is_successful(iterate_data):
