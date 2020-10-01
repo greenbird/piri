@@ -12,7 +12,7 @@ An object has a name, it can have attributes, nested objects or a special type o
 | --- | --- | --- | --- |
 | __name__ | str | name of the key it will get in parent object | the root will not get a name |
 | __array__ | bool | tells the mapper if this should be an array or not | |
-| path_to_iterable | array[str\|int] | path to itrable data where this and child parts of the configuration should be applied per iteration | |
+| iterables | array[[iterable](#iterable)] | Lets you iterate over lists in input data and apply configuration to every iteration of the lists | |
 | _attributes_ | array[[attribute](#attribute)] | An array of this objects attribute mappings | |
 | _objects_ | array[[object](#object)] | Here you can nest more objects. | |
 | _branching_objects_ | array[[branching object](#branching-object)] | Array of a special kind of object | rarely used |
@@ -20,14 +20,33 @@ An object has a name, it can have attributes, nested objects or a special type o
 
 ```json
 {
-	"name": "object_name",
-	"array": true,
-	"path_to_iterable": ["path", "to", "list"],
-	"objects": [],
-	"branching_objects": [],
-	"attributes": []
+    "name": "object_name",
+    "array": true,
+    "iterables": [],
+    "objects": [],
+    "branching_objects": [],
+    "attributes": []
 }
 ```
+
+## Iterable
+
+Iterables are your bread and butter for looping lists in the input data and apply current objects mapping and all children to each an every one of the iterations.
+
+| name | type | description |
+| --- | --- | --- |
+| __alias__ | str | The aliased name the current iteration will get in the data which mapping is applied to |
+| __path__ | array[str\|int] | path to the iterable list/array in the input data |
+
+```json
+{
+    "alias": "keyname",
+    "path": ["path", "to", "list"]
+}
+```
+[Explanation of path](#explanation-of-path)
+
+[Iterables will get more explained](https://github.com/greenbird/piri/issues/113)
 
 ## Attribute
 
@@ -44,12 +63,12 @@ The attributes are like 'color' of a car or 'amount' in an invoice. Attributes a
 
 ```json
 {
-	"name": "attribute_name",
-	"mappings": [],
-	"separator": "",
-	"if_statements": [],
-	"casting": {},
-	"default": "default value"
+    "name": "attribute_name",
+    "mappings": [],
+    "separator": "",
+    "if_statements": [],
+    "casting": {},
+    "default": "default value"
 }
 ```
 
@@ -66,13 +85,13 @@ This is the only place where actual interaction with the input data is done.
 !!! note
     either `path` or `default` must contain a something
 
-__Explanation of path__
+### Explanation of path
 
 You add a list of `strings` or `integers` that will get you to your data. so for example if you needed to get to the second element in the list called `my_list` in the following json then your `path` will be `["my_list", 1]` and you will get the value `index1`
 
 ```json
 {
-	"my_list": ["index0", "index1"]
+    "my_list": ["index0", "index1"]
 }
 ```
 
@@ -81,9 +100,9 @@ You add a list of `strings` or `integers` that will get you to your data. so for
 
 ```json
 {
-	"path": ["path", "to", "data"],
-	"if_statements": [],
-	"default": "default"
+    "path": ["path", "to", "data"],
+    "if_statements": [],
+    "default": "default"
 }
 ```
 >input({'path': { 'to': { 'data': 'value'}}}) -> 'value'
@@ -104,8 +123,8 @@ Lets you slice a value from index `from` to index `to`. Slicing is implemented e
 
 ```json
 {
-	"from": 1,
-	"to": 3,
+    "from": 1,
+    "to": 3,
 }
 ```
 > input('hello') -> 'el'
@@ -127,10 +146,10 @@ This is where you can change found(or not found) data to something else based on
 
 ```json
 {
-	"condition": "is",
-	"target": "1",
-	"then": "first_type",
-	"otherwise": "default_type"
+    "condition": "is",
+    "target": "1",
+    "then": "first_type",
+    "otherwise": "default_type"
 }
 ```
 > input('2') -> 'default_type'
@@ -178,11 +197,11 @@ __Examples__
 The branching object is a special object that does not have attributes or object childs but has a special branching_attributes child. The point of this object is to make sure that we can map data from different sources into the same element. for example, we have an object called "extradata" with the attributes 'name' and 'data'. This is kind of a field that can _be_ many things. like 'name' = 'extra_address_line1', and another one with 'extra_address_line2'. This must then get its data from different places, and thats what these branching objects are for.
 
 
-| name | type | description | default |
-| --- | --- | --- | --- |
-| __name__ | str | Name of the object | |
-| __array__ | bool | if it should be an array or not | |
-| path_to_iterable | array[str, int] | path to list | `[]` |
+| name | type | description |
+| --- | --- | --- |
+| __name__ | str | Name of the object |
+| __array__ | bool | if it should be an array or not |
+| iterables | array[[iterable](#iterable)] | Lets you iterate over lists in input data and apply configuration to every iteration of the lists |
 | __branching_attributes__ | array[array[[attribute](#attribute)]] | list of list of attributes where each list of attributes will create a branching object. |
 
 
