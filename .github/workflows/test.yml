@@ -24,7 +24,7 @@ jobs:
     - name: Update pip to latest version for py3.6
       if: matrix.python-version == 3.6
       run: |
-        poetry run pip install -U pip
+        poetry run python -m pip install -U pip
 
     - name: Set up cache
       uses: actions/cache@v1
