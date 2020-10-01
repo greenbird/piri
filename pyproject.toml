@@ -42,7 +42,7 @@ safety = "^1.8"
 
 pytest = "^5.2"
 pytest-cov = "^2.8"
-mkdocs-material = "^5.5.7"
+mkdocs-material = "^6.0.1"
 
 [build-system]
 requires = ["poetry>=0.12"]

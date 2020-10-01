@@ -12,7 +12,7 @@ theme:
     logo: material/language-python
   language: en
   features:
-    - tabs
+    - navigation.tabs
 repo_name: greenbird/piri
 repo_url: https://github.com/greenbird/piri
 edit_uri: ""
