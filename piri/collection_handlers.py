@@ -73,7 +73,6 @@ def fetch_list_by_keys(
 
 def iterable_data_handler(raw_data, paths) -> ResultE[list]:
     """Iterate and create all combinations from list of paths."""
-
     if not paths:
         return Failure(ValueError('No paths'))
 

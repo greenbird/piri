@@ -167,10 +167,13 @@
                 "array": {
                     "type": "boolean"
                 },
-                "path_to_iterable": {
+                "paths_to_iterables": {
                     "type": "array",
                     "items": {
-                        "type": ["string", "integer"]
+                        "type": "array",
+                        "items": {
+                            "type": ["string", "integer"]
+                        }
                     }
                 },
                 "branching_attributes": {
@@ -195,10 +198,13 @@
                 "array": {
                     "type": "boolean"
                 },
-                "path_to_iterable": {
+                "paths_to_iterables": {
                     "type": "array",
                     "items": {
-                        "type": ["string", "integer"]
+                        "type": "array",
+                        "items": {
+                            "type": ["string", "integer"]
+                        }
                     }
                 },
                 "objects": {

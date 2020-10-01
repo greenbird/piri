@@ -1,3 +1,5 @@
+from returns.pipeline import is_successful
+
 from piri.mapper import map_data
 
 
@@ -47,6 +49,70 @@ def test_array_true_but_no_loop_gives_array():
         input_data,
         config,
     ).unwrap() == [{'name': 'test name'}]
+
+
+def test_missing_data_gives_nothing():
+    """Test that we get an array if we set array = true in object."""
+    input_data = {'key': 'test name'}
+    config = {
+        'name': 'root',
+        'array': True,
+        'attributes': [
+            {
+                'name': 'name',
+                'mappings': [
+                    {
+                        'path': ['missing'],
+                    },
+                ],
+            },
+        ],
+    }
+
+    assert not is_successful(map_data(
+        input_data,
+        config,
+    ))
+
+
+def test_missing_data_creates_no_object():
+    """Test that if an object mapping result is empty we create now 'key'."""
+    input_data = {'key': 'test name'}
+    config = {
+        'name': 'root',
+        'array': True,
+        'attributes': [
+            {
+                'name': 'an_attribute',
+                'default': 'val',
+            },
+        ],
+        'objects': [
+            {
+                'name': 'test',
+                'array': False,
+                'attributes': [
+                    {
+                        'name': 'name',
+                        'mappings': [
+                            {
+                                'path': ['missing'],
+                            },
+                        ],
+                    },
+                ],
+            },
+        ],
+    }
+
+    expected_result = [{
+        'an_attribute': 'val',
+    }]
+
+    assert map_data(
+        input_data,
+        config,
+    ).unwrap() == expected_result
 
 
 def test_double_repeatable():
