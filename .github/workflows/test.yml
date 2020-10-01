@@ -16,6 +16,11 @@ jobs:
       with:
         python-version: ${{ matrix.python-version }}
 
+    - name: Update pip to latest version for py3.6
+      if: matrix.python-version == 3.6
+      run: |
+        pip install -U pip
+
     - name: Install poetry
       run: |
         curl -sSL \
