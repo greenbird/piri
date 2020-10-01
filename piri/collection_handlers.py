@@ -1,6 +1,6 @@
 from typing import Any, Dict, List, Union
 
-from returns.result import ResultE, Success, safe
+from returns.result import Failure, ResultE, Success, safe
 
 from piri.valuetypes import MapValue, ValueTypes
 
@@ -73,7 +73,12 @@ def fetch_list_by_keys(
 
 def iterable_data_handler(raw_data, paths) -> ResultE[list]:
     """Iterate and create all combinations from list of paths."""
+
+    if not paths:
+        return Failure(ValueError('No paths'))
+
     path, rest = paths[0], paths[1:]
+
     if not rest:
         return create_iterable(raw_data, path)
 

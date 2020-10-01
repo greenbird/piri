@@ -30,4 +30,9 @@ def test_iterable_data_handler():
     iterables = iterable_data_handler(input_data, paths_to_iterables).unwrap()
     assert len(iterables) == 4
     assert iterables[3]['another']['a'] == 'd'
-    # assert False
+
+
+def test_iterable_no_paths_returns_failure():
+    """Test that when there are no paths we get a Failure."""
+    iterables = iterable_data_handler({}, [])
+    assert 'No paths' in str(iterables.failure())
