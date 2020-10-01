@@ -2,6 +2,7 @@ from typing import Any, Dict, List, Union
 
 from returns.result import Failure, ResultE, Success, safe
 
+from piri.constants import ALIAS, PATH
 from piri.valuetypes import MapValue, ValueTypes
 
 
@@ -96,12 +97,12 @@ def create_iterable(input_data, iterable) -> ResultE[list]:
     """Return set of set of data per entry in list at iterable[path]."""
     return fetch_list_by_keys(
         input_data,
-        iterable['path'],
+        iterable[PATH],
     ).map(
         lambda collections: [
             {
                 **input_data,
-                **{iterable['alias']: collection},
+                **{iterable[ALIAS]: collection},
             }
             for collection in collections
         ],

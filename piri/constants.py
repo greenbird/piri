@@ -16,9 +16,13 @@ IF_STATEMENTS: Final = 'if_statements'
 CASTING: Final = 'casting'
 DEFAULT: Final = 'default'
 
-# Mapping
+# Iterables
+ALIAS: Final = 'alias'
 PATH: Final = 'path'
-# DEFAULT
+
+# Mapping
+# 'path' from iterables
+# 'default'
 
 # IF STATEMENT
 CONDITION: Final = 'condition'
