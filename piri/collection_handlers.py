@@ -36,14 +36,7 @@ def fetch_data_by_keys(
         # this will return a Failure[KeyError] if not found
         collection = collection[key]  # type: ignore
 
-    if isinstance(collection, ValueTypes):  # type: ignore
-        return collection  # type: ignore
-
-    raise ValueError(
-        'Bad data found: {0} , with type: {1}'.format(
-            str(collection), str(type(collection)),
-        ),
-    )
+    return collection  # type: ignore
 
 
 @safe
