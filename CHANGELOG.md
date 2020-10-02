@@ -12,7 +12,11 @@
 This release introduces a breaking change where `path_to_iterable` is renamed to `iterables`. `iterables` is also now a list of `iterable` objects that contain an `alias` and a `path`. This lets you iterate over multiple lists recursively from 1 object.
 
 * Breaking: Adds recursive multiple iteration with `iterables`
+* Updates docs/configuration.md
+* Updates docs/introduction.md
 * Fix: Points links in docs to read the docs
+
+[Docs 2.0.0](https://piri.readthedocs.io/en/2.0.0/)
 
 ## 1.2.0 - Slicing support
 
@@ -21,6 +25,8 @@ This release adds support for slicing values. With slicing you can decide from w
 * Adds Slicing feature
 * Adds Slicing entry to docs/configuration.md
 * Adds Slicing parth to docs/introduction.md
+
+[Docs 1.2.0](https://piri.readthedocs.io/en/1.2.1/)
 
 
 ## 1.1.0 - IN condition support in if statements
