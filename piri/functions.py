@@ -1,3 +1,4 @@
+import re
 from typing import Any, Dict, List, Optional
 
 from returns.pipeline import flow
@@ -8,10 +9,13 @@ from piri.casting import get_casting_function
 from piri.constants import (  # noqa: WPS235
     CONDITION,
     CONTAINS,
+    DEFAULT_GROUP,
     FROM,
+    GROUP,
     IN,
     IS,
     NOT,
+    SEARCH_PATTERN,
     ORIGINAL_FORMAT,
     OTHERWISE,
     TARGET,
@@ -149,11 +153,12 @@ def apply_slicing(
 ) -> Optional[NewValue]:
     """Slice value from index to index.
 
+    :param value_to_slice: The value to slice
+    :type value_to_slice: MapValue
+
     :param slicing: :term:`slicing` object
     :type slicing: dict
 
-    :param value_to_slice: The value to slice
-    :type value_to_slice: MapValue
 
     :return: Success/Failure containers
     :rtype: MapValue
@@ -174,6 +179,36 @@ def apply_slicing(
         value_to_slice = str(value_to_slice)
 
     return value_to_slice[slicing[FROM]:slicing.get(TO)]
+
+
+def apply_regexp(
+    value_to_match: Optional[MapValue],
+    regexp: Dict[str, Any],
+) -> Optional[MapValue]:
+    """Match value by a certain regexp pattern.
+
+    :param value_to_match: The value to match
+    :type value_to_mathc: MapValue
+
+    :param regexp: :term: `matching` object which has parameters for
+        regexp match
+    :type regexp: dict
+
+    :return: Success/Failure container
+    :rtype: MapValue
+    """
+    if value_to_match is None:
+        return value_to_match
+
+    if not regexp:
+        return value_to_match
+
+    pattern = regexp[SEARCH_PATTERN]
+    groups = re.search(pattern, value_to_match)
+    if groups:
+        num_group: int = int(regexp.get(GROUP, DEFAULT_GROUP))
+        return groups.group(num_group)
+    return value_to_match
 
 
 def apply_casting(

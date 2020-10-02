@@ -24,6 +24,11 @@ PATH: Final = 'path'
 # 'path' from iterables
 # 'default'
 
+# Regexp
+SEARCH_PATTERN: Final[str] = 'pattern'
+GROUP: Final[str] = 'group'
+DEFAULT_GROUP: Final[int] = 0
+
 # IF STATEMENT
 CONDITION: Final = 'condition'
 IS: Final = 'is'
