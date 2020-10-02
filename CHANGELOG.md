@@ -9,7 +9,7 @@
 
 ## 2.0.0 - Iterables
 
-This release introduces a breaking change where `path_to_iterable` is renamed to `iterables`. `iterables` is also now a list of `iterable` objects that contain an `alias` and a `path`. This lets you iterate over multiple list recursively from 1 object.
+This release introduces a breaking change where `path_to_iterable` is renamed to `iterables`. `iterables` is also now a list of `iterable` objects that contain an `alias` and a `path`. This lets you iterate over multiple lists recursively from 1 object.
 
 * Breaking: Adds recursive multiple iteration with `iterables`
 * Fix: Points links in docs to read the docs

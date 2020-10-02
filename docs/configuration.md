@@ -31,7 +31,7 @@ An object has a name, it can have attributes, nested objects or a special type o
 
 ## Iterable
 
-Iterables are your bread and butter for looping lists in the input data and apply current objects mapping and all children to each an every one of the iterations.
+Iterables are your bread and butter for looping lists in the input data. For each an every one of the elements in the list we apply the current object and its childrens mapping configuration.
 
 | name | type | description |
 | --- | --- | --- |
