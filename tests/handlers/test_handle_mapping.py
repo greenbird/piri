@@ -1,17 +1,40 @@
 from returns.pipeline import is_successful
+from returns.result import Success
 
 from piri.handlers import handle_mapping
 
 
-def test_get_key_in_dict():
-    """Test that we can fetch key in dict."""
+def test_get_string_value_from_key():
+    """Test that we can find value."""
     input_data = {'key': 'val1'}
     config = {'path': ['key']}
 
     assert handle_mapping(
         input_data,
         config,
-    ).unwrap() == 'val1'
+    ) == Success('val1')
+
+
+def test_get_array_value_from_key():
+    """Test that we can find an array."""
+    input_data = {'key': ['array']}
+    config = {'path': ['key']}
+
+    assert handle_mapping(
+        input_data,
+        config,
+    ) == Success(['array'])
+
+
+def test_get_object_value_from_key():
+    """Test that we can find an object."""
+    input_data = {'key': {'obj': 'val1'}}
+    config = {'path': ['key']}
+
+    assert handle_mapping(
+        input_data,
+        config,
+    ) == Success({'obj': 'val1'})
 
 
 def test_default_value_is_used():
