@@ -913,7 +913,7 @@ Lets solve the above example!
 `iterables` is an array of `iterable` objects that _must_ contain an `alias` and a `path`. `alias` is will be the name of the `key` that you will then be able to reference and `path` is the path to the iterable list/array in the input data.
 
 !!! Note
-    In our mappings.path we reference the key name(`character`) which is the `alias` we set up. Behind the scenes what really happens is that we add this `character` key to the root input data and run mapping for each val/obj in the list.
+    In our mappings.path we reference the key name(`character`) which is the `alias` we set up. Behind the scenes what really happens is that we add this `character` key to the root input data and run mapping for each val/obj in the list. Its completely name the `alias` the same as the last key to the iterable. This is demonstrated in the next example.
 
     This means that you must be sure to use unique aliases since otherwise you will overwrite other data.
 
