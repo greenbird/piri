@@ -25,6 +25,7 @@ PATH: Final = 'path'
 # 'default'
 
 # Regexp
+REGEXP: Final[str] = 'regexp'
 SEARCH: Final[str] = 'search'
 GROUP: Final[str] = 'group'
 DEFAULT_GROUP: Final[int] = 0

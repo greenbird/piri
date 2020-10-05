@@ -37,6 +37,16 @@ def slicing_validator(schema):
 
 
 @pytest.fixture(scope='session')
+def regexp_validator(schema):
+    """Return validator for regexp part of schema."""
+    return SchemaValidator(
+        Draft7Validator(
+            schema['definitions']['regexp'],
+        ),
+    )
+
+
+@pytest.fixture(scope='session')
 def casting_validator(schema):
     """Return a validator for casting part of schema."""
     return SchemaValidator(

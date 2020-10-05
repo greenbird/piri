@@ -53,17 +53,17 @@
         },
         "regexp": {
             "description": "Let's you find value by REGEXP pattern",
-            "type": "string",
+            "type": "object",
             "properties": {
                 "search": {
                     "type": "string"
                 },
                 "group": {
-                    "type": ["integer", "string"],
+                    "type": ["integer", "array"],
                     "default": 0
-                },
-                "required": ["search"]
-            }
+                }
+            },
+            "required": ["search"]
         },
         "casting": {
             "type": "object",
@@ -107,6 +107,10 @@
                 },
                 "slicing": {
                     "$ref": "#definitions/slicing",
+                    "default": {}
+                },
+                "regexp": {
+                    "$ref": "#definitions/regexp",
                     "default": {}
                 },
                 "if_statements": {

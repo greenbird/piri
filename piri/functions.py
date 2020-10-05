@@ -184,7 +184,7 @@ def apply_slicing(
 def apply_regexp(
     value_to_match: Optional[MapValue],
     regexp: Dict[str, Any],
-) -> Optional[MapValue]:
+) -> Optional[Union[List[MapValue], MapValue]]:
     r"""Match value by a certain regexp pattern.
 
     :param value_to_match: The value to match
@@ -202,22 +202,40 @@ def apply_regexp(
         >>> apply_regexp('abcdef', {'search': '(?<=abc)def'})
         'def'
         >>> apply_regexp(
-    ...     'Isaac Newton, physicist',
-    ...     {'search': r'(\w+) (\w+)', 'group': 1},
-    ... )
-        'Isaac'
+        ...     'Isaac Newton, physicist',
+        ...     {'search': r'(\w+)', 'group': 1},
+        ... )
+        'Newton'
+        >>> apply_regexp(
+        ...     'r7/p4pN1/1pn4k/8/2bP3R/2P3R1/6PP/6K1 b - -',
+        ...     {'search': '(P[\d|\w])', 'group': [0, 2]},
+        ... )
+        ['P3', 'PP']
+        >>> apply_regexp(None, {'search': 'a+'})
+        >>> apply_regexp('lichess rocks!', {'search': None})
+        'lichess rocks!'
+        >>> apply_regexp('Open-source matters', None)
+        'Open-source matters'
+        >>> apply_regexp(
+        ...     'check, check, check, stalemate',
+        ...     {'search': 'wow'},
+        ... )
+        >>> 'check, check, check, stalemate'
     """
     if value_to_match is None:
         return value_to_match
 
-    if not regexp:
+    if not regexp or not regexp[SEARCH]:
         return value_to_match
 
     pattern = regexp[SEARCH]
-    groups = re.search(pattern, value_to_match)
+    groups = re.finditer(pattern, value_to_match)
+    matches: list = [gr.group(0) for gr in groups]
     if groups:
-        num_group: Union[int, str] = regexp.get(GROUP, DEFAULT_GROUP)
-        return groups.group(num_group)
+        num_group: Union[int, list] = regexp.get(GROUP, DEFAULT_GROUP)
+        if isinstance(num_group, list):
+            return [matches[ind] for ind in num_group]
+        return matches[num_group]
     return value_to_match
 
 
