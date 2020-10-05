@@ -51,6 +51,20 @@
             },
             "required": ["from"]
         },
+        "regexp": {
+            "description": "Let's you find value by REGEXP pattern",
+            "type": "string",
+            "properties": {
+                "search": {
+                    "type": "string"
+                },
+                "group": {
+                    "type": "integer",
+                    "default": 0
+                },
+                "required": ["search"]
+            }
+        },
         "casting": {
             "type": "object",
             "properties": {
