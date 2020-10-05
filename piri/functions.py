@@ -1,5 +1,5 @@
 import re
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, List, Optional, Union
 
 from returns.pipeline import flow
 from returns.pointfree import bind
@@ -15,9 +15,9 @@ from piri.constants import (  # noqa: WPS235
     IN,
     IS,
     NOT,
-    SEARCH_PATTERN,
     ORIGINAL_FORMAT,
     OTHERWISE,
+    SEARCH,
     TARGET,
     THEN,
     TO,
@@ -185,7 +185,7 @@ def apply_regexp(
     value_to_match: Optional[MapValue],
     regexp: Dict[str, Any],
 ) -> Optional[MapValue]:
-    """Match value by a certain regexp pattern.
+    r"""Match value by a certain regexp pattern.
 
     :param value_to_match: The value to match
     :type value_to_mathc: MapValue
@@ -196,6 +196,16 @@ def apply_regexp(
 
     :return: Success/Failure container
     :rtype: MapValue
+
+    Example
+        >>> from piri.functions import apply_regexp
+        >>> apply_regexp('abcdef', {'search': '(?<=abc)def'})
+        'def'
+        >>> apply_regexp(
+    ...     'Isaac Newton, physicist',
+    ...     {'search': r'(\w+) (\w+)', 'group': 1},
+    ... )
+        'Isaac'
     """
     if value_to_match is None:
         return value_to_match
@@ -203,10 +213,10 @@ def apply_regexp(
     if not regexp:
         return value_to_match
 
-    pattern = regexp[SEARCH_PATTERN]
+    pattern = regexp[SEARCH]
     groups = re.search(pattern, value_to_match)
     if groups:
-        num_group: int = int(regexp.get(GROUP, DEFAULT_GROUP))
+        num_group: Union[int, str] = regexp.get(GROUP, DEFAULT_GROUP)
         return groups.group(num_group)
     return value_to_match
 
