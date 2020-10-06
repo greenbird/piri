@@ -75,3 +75,10 @@ def test_abc_with_decimal_argument_fails():
     assert not is_successful(test)
     assert isinstance(test.failure(), ValueError)
     assert 'Illegal characters in value' in str(test.failure())
+
+
+def test_precision_is_maintained():
+    """Test high precision decimal value with one period."""
+    assert CastToDecimal()(
+        '1234567.89123456789',
+    ).unwrap() == Decimal('1234567.89123456789')
