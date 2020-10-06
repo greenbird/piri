@@ -220,7 +220,7 @@ def apply_regexp(
         ...     'check, check, check, stalemate',
         ...     {'search': 'wow'},
         ... )
-        >>> 'check, check, check, stalemate'
+        'check, check, check, stalemate'
     """
     if value_to_match is None:
         return value_to_match
@@ -231,10 +231,10 @@ def apply_regexp(
     pattern = regexp[SEARCH]
     groups = re.finditer(pattern, value_to_match)
     matches: list = [gr.group(0) for gr in groups]
-    if groups:
+    if matches:
         num_group: Union[int, list] = regexp.get(GROUP, DEFAULT_GROUP)
         if isinstance(num_group, list):
-            return [matches[ind] for ind in num_group]
+            return [matches[ind] for ind in num_group]  # typing: ignore
         return matches[num_group]
     return value_to_match
 
