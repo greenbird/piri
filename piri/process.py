@@ -13,7 +13,7 @@ from piri.schema import SchemaValidator
 @final
 @dataclass(frozen=True, slots=True)
 class Process(object):
-    """Process Callable Object."""
+    """Process Callable Object. """
 
     validate: Callable[[dict], ResultE[dict]] = SchemaValidator()
 
