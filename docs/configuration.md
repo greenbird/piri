@@ -111,6 +111,30 @@ You add a list of `strings` or `integers` that will get you to your data. so for
 
 >input() -> 'default'
 
+## Regexp
+
+Let's you match values by certain patterns in `search` and specify what matches and in what order to return in `group`.
+
+!!! Note
+    The default `group` value is `0`. It will return the first match. To return all values `group` should be equal to `[]`. You can also specify `group` as `[1, 3, 2]`, which will return 2nd, 4th and 3rd matched elements in exact order. To return 5th element from the end, you would need to get all matches `[]` and slice over array. Slicing over array's [issue](https://github.com/greenbird/piri/issues/121)
+
+| name | type | description | default |
+| --- | --- | --- | --- |
+| __search__ | string | Pattern for string matching | |
+| group | integer\|array | Index/-ces of matching sinstrings to return | 0 |
+
+```json
+{
+    "search": "(i\w)",
+    "group": [0, 2, 1]
+}
+```
+
+> input('Vladimir Kramnik') -> ['im', 'ik', 'ir']
+
+!!! Note
+    Values are returned as a string when `group` is integer or as an array of strings if `group` is an array.
+
 ## Slicing
 
 Lets you slice a value from index `from` to index `to`. Slicing is implemented exactly like pythons string[x:x] slicing. This means that when `from` is negative you count back from the end, and if `to` is `null` or left out then we consume the rest of the string.

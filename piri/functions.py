@@ -181,7 +181,7 @@ def apply_slicing(
     return value_to_slice[slicing[FROM]:slicing.get(TO)]
 
 
-def apply_regexp(
+def apply_regexp(  # noqa: WPS212, WPS234
     value_to_match: Optional[MapValue],
     regexp: Dict[str, Any],
 ) -> Optional[Union[List[MapValue], MapValue]]:
@@ -226,6 +226,11 @@ def apply_regexp(
         ...     {'search': '(e\d)', 'group': []},
         ... )
         ['e2', 'e4', 'e2', 'e7']
+        >>> apply_regexp(
+        ...     '[Event \"Live Chess\"]\n[Site \"Chess.com\"]\n[Date ',
+        ...     {'search': 'Event \\\"[\d\w ]+\\\"'}
+        ... )
+        'Event "Live Chess"'
     """
     if value_to_match is None:
         return value_to_match
