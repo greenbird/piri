@@ -37,3 +37,45 @@ def test_when_condition_in_target_string_or_array(if_statement_validator):
 
     assert not is_successful(validate_result)
     assert "not of type 'string', 'array'" in str(validate_result.failure())
+
+
+def test_then_and_otherwise_can_be_array(if_statement_validator):
+    """`then` and `otherwise` can be type `array`."""
+    test = {
+        'condition': 'is',
+        'target': 123,
+        'then': [1, 2, 4],
+        'otherwise': [1, 2, 3],
+    }
+    assert is_successful(if_statement_validator(test))
+
+
+def test_then_and_otherwise_can_be_object(if_statement_validator):
+    """`then` and `otherwise` can be type `object`."""
+    test = {
+        'condition': 'is',
+        'target': 123,
+        'then': {'bob': 'arne'},
+        'otherwise': {'bob': 'bob'},
+    }
+    assert is_successful(if_statement_validator(test))
+
+
+def test_condition_is_can_have_target_type_array(if_statement_validator):
+    """When condition is `is` target can be array."""
+    test = {
+        'condition': 'is',
+        'target': ['123'],
+        'then': ['test'],
+    }
+    assert is_successful(if_statement_validator(test))
+
+
+def test_condition_is_can_have_target_type_object(if_statement_validator):
+    """When condition is `is` target can be object."""
+    test = {
+        'condition': 'is',
+        'target': {'test': 'bob'},
+        'then': ['test'],
+    }
+    assert is_successful(if_statement_validator(test))

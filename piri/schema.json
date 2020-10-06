@@ -12,13 +12,13 @@
                     "enum": ["is", "not", "in", "contains"]
                 },
                 "target": {
-                    "type": ["string", "boolean", "number", "integer"]
+                    "type": ["object", "array", "string", "boolean", "number", "integer"]
                 },
                 "then": {
-                    "type": ["string", "boolean", "number", "integer", "null"]
+                    "type": ["object", "array", "string", "boolean", "number", "integer", "null"]
                 },
                 "otherwise": {
-                    "type": ["string", "boolean", "number", "integer", "null"]
+                    "type": ["object", "array", "string", "boolean", "number", "integer", "null"]
                 }
             },
             "required": ["condition", "target", "then"],

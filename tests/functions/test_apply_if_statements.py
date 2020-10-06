@@ -243,6 +243,21 @@ def test_if_contains_condition_objects_value():
     assert apply_if_statements(*test) == Success('value2')
 
 
+def test_if_contains_objects_in_array_value():
+    """Test that we can do if contains statement on objectss."""
+    test = [
+        [{'val': 'target'}],
+        [
+            {
+                'condition': 'contains',
+                'target': {'val': 'target'},
+                'then': 'value2',
+            },
+        ],
+    ]
+    assert apply_if_statements(*test) == Success('value2')
+
+
 def test_if_chained():
     """Test that two if (is) statement works."""
     test = [

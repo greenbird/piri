@@ -86,18 +86,20 @@ def _apply_statement(
     evaluation: bool = False
 
     condition = if_object[CONDITION]
+    target = if_object[TARGET]
 
     if condition == IS:
-        evaluation = if_value == if_object[TARGET]
+        evaluation = if_value == target
 
     if condition == NOT:
-        evaluation = if_value != if_object[TARGET]
+        evaluation = if_value != target
 
     if condition == IN:
-        evaluation = if_value in if_object[TARGET]
+        evaluation = if_value in target
 
     if condition == CONTAINS:
-        evaluation = if_object[TARGET] in str(if_value)
+        evaluation = target in if_value  # type: ignore
+        evaluation = evaluation or target in str(if_value)
 
     if evaluation:
         return if_object[THEN]
