@@ -221,6 +221,11 @@ def apply_regexp(
         ...     {'search': 'wow'},
         ... )
         'check, check, check, stalemate'
+        >>> apply_regexp(
+        ...     '1. e2 e4 d2 d4 2. Nc3 Nc6 3. Qe2 Qe7',
+        ...     {'search': '(e\d)', 'group': []}
+        ... )
+        ['e2', 'e4', 'e2', 'e7']
     """
     if value_to_match is None:
         return value_to_match
@@ -234,6 +239,8 @@ def apply_regexp(
     if matches:
         num_group: Union[int, list] = regexp.get(GROUP, DEFAULT_GROUP)
         if isinstance(num_group, list):
+            if not num_group:
+                return matches
             return [matches[ind] for ind in num_group]  # typing: ignore
         return matches[num_group]
     return value_to_match
