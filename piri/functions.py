@@ -223,7 +223,7 @@ def apply_regexp(
         'check, check, check, stalemate'
         >>> apply_regexp(
         ...     '1. e2 e4 d2 d4 2. Nc3 Nc6 3. Qe2 Qe7',
-        ...     {'search': '(e\d)', 'group': []}
+        ...     {'search': '(e\d)', 'group': []},
         ... )
         ['e2', 'e4', 'e2', 'e7']
     """
