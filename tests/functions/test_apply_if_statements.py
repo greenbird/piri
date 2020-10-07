@@ -258,6 +258,21 @@ def test_if_contains_objects_in_array_value():
     assert apply_if_statements(*test) == Success('value2')
 
 
+def test_if_contains_objects_in_array_value123123():
+    """Test that we can do if contains statement on objectss."""
+    test = [
+        [{'val': 'target'}],
+        [
+            {
+                'condition': 'contains',
+                'target': {'val': 'taasdfrget'},
+                'then': 'value2',
+            },
+        ],
+    ]
+    assert apply_if_statements(*test).unwrap() == Success('value2')
+
+
 def test_if_contains_works_with_non_strings():
     """Test that we can do if contains statement on objectss."""
     test = [
