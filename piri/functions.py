@@ -79,7 +79,7 @@ def apply_if_statements(if_value, if_objects) -> MapValue:
 
 
 @safe
-def _apply_statement(
+def _apply_statement(  # noqa: C901 'too_complex' but easy to read its fine
     if_value: Optional[MapValue],
     if_object: Dict[str, Any],
 ) -> Optional[MapValue]:
@@ -98,7 +98,8 @@ def _apply_statement(
         evaluation = if_value in target
 
     if condition == CONTAINS:
-        evaluation = target in if_value  # type: ignore
+        if isinstance(if_value, (dict, list)):  # type: ignore
+            evaluation = target in if_value  # type: ignore
         evaluation = evaluation or target in str(if_value)
 
     if evaluation:
