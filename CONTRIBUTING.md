@@ -10,50 +10,50 @@ Lately we have gotten a few great python environment managers. The first being [
 
 ## Setup the tools
 
-get pyenv - pyenv lets you work with multiple versions of python
+Get pyenv - pyenv lets you work with multiple versions of python.
 ```sh
-$ brew update
-$ brew install pyenv
+brew update
+brew install pyenv
 ```
 
-Put this command into the of `~/.bash_profile` or run `pyenv init` to make sure where to put it for for example zsh.
-```
-$ eval "$(pyenv init -)"
+If you are using bash, add the following to your `~/.bash_profile` to automatically load pyenv. If you are using another shell, run `pyenv init` and it will tell you how to set it up.
+```sh
+eval "$(pyenv init -)"
 ```
 
-install a version of python 3.7+: This installs a clean python to pyenvs folders and lets us reference that as a 'base' in our virtualenvs.
+Install a version of python 3.7+: This installs a clean python to pyenvs folders and lets us reference that as a 'base' in our virtualenvs.
 ```sh
-$ pyenv install 3.7.4
+pyenv install 3.7.4
 ```
 
-get poetry - dependency management:
+Get poetry - dependency management.
 ```sh
-$ curl -sSL https://raw.githubusercontent.com/sdispater/poetry/master/get-poetry.py | python
+curl -sSL https://raw.githubusercontent.com/sdispater/poetry/master/get-poetry.py | python
 ```
 
-Make poetry create virtualenv in project folder. This makes it easier for IDE's to run correct virtualenv while debuging/running linters etc.
+Make poetry create virtualenvs inside of project folders. This makes it easier for IDE's to run in the correct virtualenv while debuging/running linters etc.
 ```sh
-$ poetry config settings.virtualenvs.in-project true
+poetry config virtualenvs.in-project true
 ```
 
 ## Setup dev environment
 
-activate pyenv for the current shell
+Activate pyenv for the current shell.
 ```sh
-$ pyenv shell 3.7.4
+pyenv shell 3.7.4
 ```
 
-This creates a virtualenv and installs all dependencies including dev:
+This creates a virtualenv and installs all dependencies including dev.
 ```sh
-$ poetry install
+poetry install
 ```
 
-Now test that everything works. poetry run, runs a command in the virtualenv
+Now test that everything works. Poetry run runs a command in the virtualenv.
 ```sh
-$ poetry run pytest
+poetry run pytest
 ```
 
-initialize pre-commit hooks for git
+Initialize pre-commit hooks for git.
 ```sh
-$ poetry run pre-commit install
+poetry run pre-commit install
 ```
