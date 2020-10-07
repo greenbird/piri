@@ -258,19 +258,27 @@ def test_if_contains_objects_in_array_value():
     assert apply_if_statements(*test) == Success('value2')
 
 
-def test_if_contains_objects_in_array_value123123():
-    """Test that we can do if contains statement on objectss."""
+def test_if_contains_array_does_not_stringify():
+    """Test that we can do if contains statement on array[objects].
+
+    However its very important that list and object tests does not do
+    string casting for check since it would give the check two possible
+    ways to do the check and there should only be one.
+    for objects the 'in' checks if the key exist
+    for arrays the 'in' checks if the element exist inside the aray
+    for everything else we will stringify the test value.
+    """
     test = [
         [{'val': 'target'}],
         [
             {
                 'condition': 'contains',
-                'target': {'val': 'taasdfrget'},
+                'target': 'target',
                 'then': 'value2',
             },
         ],
     ]
-    assert apply_if_statements(*test).unwrap() == Success('value2')
+    assert apply_if_statements(*test) == Success([{'val': 'target'}])
 
 
 def test_if_contains_works_with_non_strings():
