@@ -140,9 +140,9 @@ This is where you can change found(or not found) data to something else based on
 | name | type | description | default |
 | --- | --- | --- | --- |
 | __condition__ | one of ["is", "not", "in", "contains"] | What condition to use when checking `value` against `target` | |
-| __target__ | str\|number\|bool\|array | Target what we do our condition against ie: `value == target` when condition is `is` | |
-| __then__ | str\|number\|bool | value that we will return if the condition is true | |
-| otherwise | str\|number\|bool | Optional value that we can return if the condition is false | `None` |
+| __target__ | str\|number\|bool\|array\|object | Target what we do our condition against ie: `value == target` when condition is `is` | |
+| __then__ | str\|number\|bool\|array\|object | value that we will return if the condition is true | |
+| otherwise | str\|number\|bool\|array\|object | Optional value that we can return if the condition is false | `None` |
 
 ```json
 {
@@ -155,6 +155,18 @@ This is where you can change found(or not found) data to something else based on
 > input('2') -> 'default_type'
 
 > input('1') -> 'first_type'
+
+If statements work a bit different depending on what value you expect to get. This table shows the exact operators used for all valuetypes
+
+| condition | valuetype | code | comment |
+| --- | --- | --- | --- |
+| is | all | `value == target` | |
+| not | all | `value != target` | |
+| in | array\|object | `value in target` | target must be an array or a string. where value must then equal one of the array `items` or a substring when target is a string. This means that the array values can be arrays or objects for when checking against array and object values |
+| contains | object | `target in value` | For objects this means that the `target is a key in object` |
+| contains | array | `target in value` | For arrays this means that `target equals one or more item in the array` |
+| contains | rest | `target in str(value)` | For the rest we string cast the value so that we can do this check for the rest of the types |
+
 
 ## Casting
 The casting object lets you cast whatever value is found to some new value. Currently integer, decimal and date are supported and original format is optional helper data that we need for some special cases where the format of the input value cannot be asserted automatically.
