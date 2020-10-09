@@ -7,6 +7,25 @@
 | otherwise | patch |
 
 
+## 2.1.0 - リミッター解除 - Removes Type Restriction
+
+This release focuses on removing the type restriction we previously had when finding values. This is a huge quality of life improvement for the users since you will be able to get whatever you want. With great power comes... some caveats, obviously casting objects won't work and slicing them will turn them into strings. So there are features that won't work with objects and arrays. However those that work nicely like `if statements` have gotten updated documentation.
+
+### Features
+* Removes type restriction when finding values with mapping.path
+* Slicing now works with arrays
+
+### Misc
+* Adds lots of test + ensures that we do not loose precicion on decimal casting.
+* Contribution Doc updates, poetry settings commands are now correct and contribution is easier to follow
+* Github actions run on push only to master
+* Github actions run on pull requests to master even from forks
+* Pre commit action for 'test files must end in `_test`' removed. We prefix our test files with `test_`
+
+[Docs 2.1.0](https://piri.readthedocs.io/en/2.1.0/)
+
+ps: The japanese just means `Limiter Release`, and is sometimes used in anime fighting scenes, I thought it was fitting.
+
 ## 2.0.0 - Iterables
 
 This release introduces a breaking change where `path_to_iterable` is renamed to `iterables`. `iterables` is also now a list of `iterable` objects that contain an `alias` and a `path`. This lets you iterate over multiple lists recursively from 1 object.
