@@ -316,6 +316,72 @@ Easy, we reference the `index` of the list. The first data in the list starts at
     We still have to reference the `"data"` key first, so our `path` goes first to `data` then it finds the value at index `1`
 
 
+### Mapping.path to list values and objects
+
+Consider the following json:
+```json
+{
+    "name": "neo",
+    "in_movies": [1, 2, 3, 4]
+}
+```
+
+When we are actually interested in keeping the array in the output then we can simply supply the path to the list and it'll be outputted as is.
+This works for objects aswell.
+
+=== "config.json"
+
+    ```json hl_lines="9 17"
+    {
+        "name": "root",
+        "array": false,
+        "attributes": [
+            {
+                "name": "character",
+                "mappings": [
+                    {
+                        "path": ["name"]
+                    }
+                ]
+            },
+            {
+                "name": "plays_in_movies",
+                "mappings": [
+                    {
+                        "path": ["in_movies"]
+                    }
+                ]
+            }
+        ]
+    }
+    ```
+
+=== "input.json"
+
+    ```json
+    {
+        "name": "neo",
+        "in_movies": [1, 2, 3, 4]
+    }
+    ```
+
+=== "output.json"
+
+    ```json hl_lines="3"
+    {
+        "character": "neo",
+        "plays_in_movies": [
+            1,
+            2,
+            3,
+            4
+        ]
+    }
+    ```
+
+!!! Note
+    When mapping objects and arrays values some other functionality like `casting` obviously won't work.
+
 ## Combining values
 
 Now lets learn how to combine values from multiple places in the input.
@@ -673,6 +739,9 @@ Using input.json the places that are highlighted is everywhere the value changes
 For input2.json the first if statement is false and no value change. The second if statement is true so value is changed to `boring-type-two`. The third if statement is false so no value change. The last if statement checks if the value is `not` `funky_type` which is true, so the value is changed to `junk`.
 
 You can even add if statements for every `mapping` object you add into `mappings` so this can handle some quite complicated condition with multiple values.
+
+!!! Note
+    If statements on `array` and `object` values behave a bit differently. Have a look in the [configuration](../configuration)
 
 ## Casting values
 
