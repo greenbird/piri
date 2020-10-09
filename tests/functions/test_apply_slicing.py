@@ -34,3 +34,11 @@ def test_slice_negative_from():
 def test_slice_negative_to():
     """Test that a negative to value ends cut at end minus to."""
     assert apply_slicing('01234', {'from': 0, 'to': -2}) == '012'
+
+
+def test_slice_list():
+    """Test that we can slice a list and that its not cast to string."""
+    assert apply_slicing(
+        [0, 1, 2],
+        {'from': 1, 'to': None},
+    ) == [1, 2]

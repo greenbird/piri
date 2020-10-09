@@ -8,6 +8,7 @@ ValueTypes = (str, int, float, bool, Decimal)
 Value = Union[str, int, float, bool, Decimal]
 ValueDict = Dict[str, Value]
 ValueDictList = List[ValueDict]
+NewValue = Union[dict, list, Value]
 
 MapValue = Value
 MapAttribute = Union[Value, ValueDict, ValueDictList]

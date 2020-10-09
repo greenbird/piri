@@ -18,7 +18,7 @@ from piri.constants import (  # noqa: WPS235
     THEN,
     TO,
 )
-from piri.valuetypes import MapValue, ValueTypes
+from piri.valuetypes import MapValue, NewValue, ValueTypes
 
 
 @safe
@@ -144,9 +144,9 @@ def apply_separator(
 
 
 def apply_slicing(
-    value_to_slice: Optional[MapValue],
+    value_to_slice: Optional[NewValue],
     slicing: Dict[str, Any],
-) -> Optional[MapValue]:
+) -> Optional[NewValue]:
     """Slice value from index to index.
 
     :param slicing: :term:`slicing` object
@@ -170,7 +170,10 @@ def apply_slicing(
     if not slicing:
         return value_to_slice
 
-    return str(value_to_slice)[slicing[FROM]:slicing.get(TO)]
+    if not isinstance(value_to_slice, list):
+        value_to_slice = str(value_to_slice)
+
+    return value_to_slice[slicing[FROM]:slicing.get(TO)]
 
 
 def apply_casting(
