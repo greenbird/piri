@@ -64,10 +64,10 @@ def handle_mapping(
         partial(fetch_data_by_keys, path=cfg.get(PATH, [])),
         fix(lambda _: None),  # type: ignore
         map_(partial(
-            apply_slicing, slicing=cfg.get(SLICING, {}),
+            apply_regexp, regexp=cfg.get(REGEXP, []),
         )),
         map_(partial(
-            apply_regexp, regexp=cfg.get(REGEXP, []),
+            apply_slicing, slicing=cfg.get(SLICING, {}),
         )),
         bind(partial(
             apply_if_statements, if_objects=cfg.get(IF_STATEMENTS, []),
