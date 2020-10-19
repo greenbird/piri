@@ -20,6 +20,65 @@
                                 }
                         }
                     ]
+                },
+                {
+                    "name": "site",
+                    "mappings": [
+                        {
+                            "path": ["pgn"],
+                            "regexp": {
+                                "search": "Site \\\"[\\w\\d. ]+\\\""
+                            },
+                            "slicing": {
+                                "from": 6,
+                                "to": -1
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "result",
+                    "mappings": [
+                        {
+                            "path": ["pgn"],
+                            "regexp": {
+                                "search": "Result \\\"[\\w\\d\/ -]+\\\""
+                            },
+                            "slicing": {
+                                "from": 8,
+                                "to": -1
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "eco",
+                    "mappings": [
+                        {
+                            "path": ["pgn"],
+                            "regexp": {
+                                "search": "ECO \\\"[\\w\\d ]+\\\""
+                            },
+                            "slicing": {
+                                "from": 5,
+                                "to": -1
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "moves",
+                    "mappings": [
+                        {
+                            "path": ["pgn"],
+                            "regexp": {
+                                "search": "\\s1\\..*"
+                            },
+                            "slicing": {
+                                "from": 1
+                            }
+                        }
+                    ]
                 }
             ]
         }
