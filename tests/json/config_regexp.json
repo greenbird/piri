@@ -15,8 +15,8 @@
                                     "search": "Event \\\"[\\w\\d ]+\\\""
                                 },
                                 "slicing": {
-                                    "from": 8,
-                                    "to": -2
+                                    "from": 7,
+                                    "to": -1
                                 }
                         }
                     ]
