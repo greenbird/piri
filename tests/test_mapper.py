@@ -452,7 +452,7 @@ def test_most_features():
     ).unwrap() == expected_result
 
 
-def test_regexp_feature():
+def test_regexp_feature():  # noqa: WPS210
     """Test Regexp on the example from the docs."""
     with open('tests/json/config_regexp.json', 'r') as config_file:
         config = json.load(config_file)
