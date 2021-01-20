@@ -1,5 +1,3 @@
-import json
-
 from returns.pipeline import is_successful
 
 from piri.mapper import map_data
@@ -445,23 +443,6 @@ def test_most_features():
             {'dataname': 'two', 'datavalue': 'extra2val'},
         ],
     }
-
-    assert map_data(
-        input_data,
-        config,
-    ).unwrap() == expected_result
-
-
-def test_regexp_feature():  # noqa: WPS210
-    """Test Regexp on the example from the docs."""
-    with open('tests/json/config_regexp.json', 'r') as config_file:
-        config = json.load(config_file)
-
-    with open('tests/json/input_regexp.json', 'r') as input_file:
-        input_data = json.load(input_file)
-
-    with open('tests/json/expected_regexp.json', 'r') as expected_file:
-        expected_result = json.load(expected_file)
 
     assert map_data(
         input_data,
