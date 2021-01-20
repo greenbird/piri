@@ -181,14 +181,15 @@ def apply_slicing(
     return value_to_slice[slicing[FROM]:slicing.get(TO)]
 
 
+@safe
 def apply_regexp(  # noqa: WPS212, WPS234
     value_to_match: Optional[MapValue],
     regexp: Dict[str, Any],
-) -> Optional[Union[List[MapValue], MapValue]]:
+) -> Union[List[MapValue], MapValue, None]:
     r"""Match value by a certain regexp pattern.
 
     :param value_to_match: The value to match
-    :type value_to_mathc: MapValue
+    :type value_to_match: MapValue
 
     :param regexp: :term: `matching` object which has parameters for
         regexp match
@@ -199,37 +200,37 @@ def apply_regexp(  # noqa: WPS212, WPS234
 
     Example
         >>> from piri.functions import apply_regexp
-        >>> apply_regexp('abcdef', {'search': '(?<=abc)def'})
+        >>> apply_regexp('abcdef', {'search': '(?<=abc)def'}).unwrap()
         'def'
         >>> apply_regexp(
         ...     'Isaac Newton, physicist',
         ...     {'search': r'(\w+)', 'group': 1},
-        ... )
+        ... ).unwrap()
         'Newton'
         >>> apply_regexp(
         ...     'r7/p4pN1/1pn4k/8/2bP3R/2P3R1/6PP/6K1 b - -',
         ...     {'search': '(P[\d|\w])', 'group': [0, 2]},
-        ... )
+        ... ).unwrap()
         ['P3', 'PP']
-        >>> apply_regexp(None, {'search': 'a+'})
-        >>> apply_regexp('lichess rocks!', {'search': None})
+        >>> apply_regexp(None, {'search': 'a+'}).unwrap()
+        >>> apply_regexp('lichess rocks!', {'search': None}).unwrap()
         'lichess rocks!'
-        >>> apply_regexp('Open-source matters', None)
+        >>> apply_regexp('Open-source matters', None).unwrap()
         'Open-source matters'
         >>> apply_regexp(
         ...     'check, check, check, stalemate',
         ...     {'search': 'wow'},
-        ... )
-        'check, check, check, stalemate'
+        ... ).failure()
+        IndexError('list index out of range')
         >>> apply_regexp(
         ...     '1. e2 e4 d2 d4 2. Nc3 Nc6 3. Qe2 Qe7',
         ...     {'search': '(e\d)', 'group': []},
-        ... )
+        ... ).unwrap()
         ['e2', 'e4', 'e2', 'e7']
         >>> apply_regexp(
         ...     '[Event \"Live Chess\"]\n[Site \"Chess.com\"]\n[Date ',
         ...     {'search': 'Event \\\"[\d\w ]+\\\"'}
-        ... )
+        ... ).unwrap()
         'Event "Live Chess"'
     """
     if value_to_match is None:
@@ -241,14 +242,12 @@ def apply_regexp(  # noqa: WPS212, WPS234
     pattern = regexp[SEARCH]
     groups = re.finditer(pattern, value_to_match)
     matches: list = [gr.group(0) for gr in groups]
-    if matches:
-        num_group: Union[int, list] = regexp.get(GROUP, DEFAULT_GROUP)
-        if isinstance(num_group, list):
-            if not num_group:
-                return matches
-            return [matches[ind] for ind in num_group]  # typing: ignore
-        return matches[num_group]
-    return value_to_match
+    num_group: Union[int, list] = regexp.get(GROUP, DEFAULT_GROUP)
+    if isinstance(num_group, list):
+        if not num_group:
+            return matches
+        return [matches[ind] for ind in num_group]  # typing: ignore
+    return matches[num_group]
 
 
 def apply_casting(

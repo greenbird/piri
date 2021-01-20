@@ -63,9 +63,11 @@ def handle_mapping(
         collection,
         partial(fetch_data_by_keys, path=cfg.get(PATH, [])),
         fix(lambda _: None),  # type: ignore
-        map_(partial(
-            apply_regexp, regexp=cfg.get(REGEXP, []),
-        )),
+        bind(
+            partial(
+                apply_regexp, regexp=cfg.get(REGEXP, {}),
+            ),
+        ),
         map_(partial(
             apply_slicing, slicing=cfg.get(SLICING, {}),
         )),
