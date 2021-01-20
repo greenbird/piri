@@ -68,6 +68,7 @@ def handle_mapping(
                 apply_regexp, regexp=cfg.get(REGEXP, {}),
             ),
         ),
+        fix(lambda _: None),  # type: ignore
         map_(partial(
             apply_slicing, slicing=cfg.get(SLICING, {}),
         )),
