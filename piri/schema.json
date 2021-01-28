@@ -24,7 +24,8 @@
             "type": "object",
             "properties": {
                 "search": {
-                    "type": "string"
+                    "type": "string",
+                    "format": "regex"
                 },
                 "group": {
                     "type": ["integer", "array"],

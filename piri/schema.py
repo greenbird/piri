@@ -2,7 +2,7 @@ import json
 import os
 
 from attr import dataclass
-from jsonschema import Draft7Validator
+from jsonschema import Draft7Validator, draft7_format_checker
 from returns.result import Failure, ResultE, Success, safe
 from typing_extensions import Final, final
 
@@ -18,7 +18,10 @@ SCHEMA: Final[dict] = ReadLocalFile()(
 class SchemaValidator(object):
     """Validates data with given JsonSchema Validator."""
 
-    validator: Draft7Validator = Draft7Validator(SCHEMA)
+    validator: Draft7Validator = Draft7Validator(
+        SCHEMA,
+        format_checker=draft7_format_checker,
+    )
 
     def __call__(
         self,

@@ -1,7 +1,7 @@
 import json
 
 import pytest
-from jsonschema import Draft7Validator
+from jsonschema import Draft7Validator, draft7_format_checker
 from returns.result import safe
 
 from piri.common import ReadLocalFile
@@ -22,6 +22,7 @@ def if_statement_validator(schema):
     return SchemaValidator(
         Draft7Validator(
             schema['definitions']['if_statement'],
+            format_checker=draft7_format_checker,
         ),
     )
 
@@ -32,6 +33,7 @@ def slicing_validator(schema):
     return SchemaValidator(
         Draft7Validator(
             schema['definitions']['slicing'],
+            format_checker=draft7_format_checker,
         ),
     )
 
@@ -42,6 +44,7 @@ def regexp_validator(schema):
     return SchemaValidator(
         Draft7Validator(
             schema['definitions']['regexp'],
+            format_checker=draft7_format_checker,
         ),
     )
 
@@ -52,6 +55,7 @@ def casting_validator(schema):
     return SchemaValidator(
         Draft7Validator(
             schema['definitions']['casting'],
+            format_checker=draft7_format_checker,
         ),
     )
 
@@ -62,6 +66,7 @@ def iterable_validator(schema):
     return SchemaValidator(
         Draft7Validator(
             schema['definitions']['iterable'],
+            format_checker=draft7_format_checker,
         ),
     )
 
@@ -72,6 +77,7 @@ def mapping_validator(schema):
     return SchemaValidator(
         Draft7Validator(
             schema['definitions']['mapping'],
+            format_checker=draft7_format_checker,
         ),
     )
 
@@ -82,6 +88,7 @@ def attribute_validator(schema):
     return SchemaValidator(
         Draft7Validator(
             schema['definitions']['attribute'],
+            format_checker=draft7_format_checker,
         ),
     )
 
@@ -102,6 +109,7 @@ def branching_object_validator(schema):
     return SchemaValidator(
         Draft7Validator(
             schema['definitions']['branching_object'],
+            format_checker=draft7_format_checker,
         ),
     )
 
