@@ -6,6 +6,15 @@
 | New Feature | minor |
 | otherwise | patch |
 
+## 2.2.0 - Regexp support
+
+This release adds support for regexp values. With regexp you can search for blocks of pattern that are important to you. This helps resolving cases such as "find 3rd occurance of certain string".
+
+* Adds Regexp feature
+* Adds Regexp entry to docs/configuration.md
+* Adds Regexp parth to docs/introduction.md
+
+[Docs 2.2.0](https://piri.readthedocs.io/en/2.2.0/)
 
 ## 2.1.0 - リミッター解除 - Removes Type Restriction
 
