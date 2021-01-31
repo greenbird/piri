@@ -37,3 +37,4 @@ nav:
       - Changelog: changelog.md
   - Usecases:
       - Usecases: usecases/usecases.md
+      - CSV to JSON: usecases/csv_to_json.md
